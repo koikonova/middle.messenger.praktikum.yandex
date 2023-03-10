@@ -1,0 +1,41 @@
+@import '../style';
+
+.email,
+.login,
+.first_name,
+.second_name,
+.display_name,
+.phone{
+  @include h4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $base-black;
+}
+
+#email,
+#login,
+#first_name,
+#second_name,
+#display_name,
+#phone{
+  width: 300px;
+  border:none;
+  padding: 10px 0;
+  outline: none;
+  color: $base-gray;
+  text-align: right;
+  background-color: $base-white;
+}
+
+.profile-box--buttons{
+  @include flex-column;
+  align-items: flex-start;
+  width: 100%;
+  position: absolute;
+  bottom: -10;
+}
+
+.link{
+  margin: 10px 0;
+}

@@ -1,0 +1,79 @@
+$base-black: #1E1E1E;
+$base-white: #FFFFFF;
+$base-white-back: #FBFBFB;
+$base-gray: #999999;
+$base-light-gray: #EAEAEA;
+$base-blue: #3369F3;
+$base-red: #FF0000;
+
+@mixin flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin h1{
+  font-size: 40px;
+  line-height: 40px;
+}
+
+@mixin h2{
+  font-size: 20px;
+  line-height: 20px;
+}
+
+@mixin h3{
+  font-size: 16px;
+  line-height: 16px;
+}
+
+@mixin h4{
+  font-size: 13px;
+  line-height: 13px;
+}
+
+@mixin h5{
+  font-size: 12px;
+  line-height: 15px;
+}
+
+@mixin h6{
+  font-size: 11px;
+  line-height: 11px;
+}
+
+@mixin h7{
+  font-size: 9px;
+  line-height: 9px;
+}
+
+.link{
+  @include h6;
+  text-decoration: none;
+  color: $base-blue;
+}
+
+.button{
+  @include flex-center;
+  @include h4;
+  width: 280px;
+  height: 37px;
+  background: $base-blue;
+  color: $base-white;
+  border: 0;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.separatory-line{
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background-color: $base-light-gray;
+  margin: 0;
+}

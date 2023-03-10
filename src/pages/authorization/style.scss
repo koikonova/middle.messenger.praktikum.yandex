@@ -1,0 +1,66 @@
+@import '../../utils/style-global';
+
+@mixin box{
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  background: $base-white;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  border-radius: 12px;
+}
+
+@mixin box--content{
+  box-sizing: border-box;
+  margin: auto;
+  padding-top: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.title{
+  @include h2;
+  color: $base-black;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.authorization .login,
+.authorization .password,
+.authorization .email,
+.authorization .first_name,
+.authorization .second_name,
+.authorization .phone{
+  @include flex-column;
+  @include h7;
+  align-items: flex-start;
+  color: $base-gray;
+  margin-bottom: 16px;
+}
+
+.authorization #login,
+.authorization #password,
+.authorization #email,
+.authorization #first_name,
+.authorization #second_name,
+.authorization #phone{
+  @include h4;
+  width: 100%;
+  border:none;
+  border-bottom: 1px solid $base-blue;
+  padding: 7px 0;
+  outline: none;
+  color: $base-black;
+}
+
+.box--buttons{
+  @include flex-column;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 30px;
+}
+
+.link{
+  margin-top: 14px;
+}
+
