@@ -1,0 +1,109 @@
+@import '../../utils/style-global';
+
+@mixin absolute-margin{
+  position: absolute;
+  margin: 0;
+}
+
+.chats{
+  @include flex-center;
+  width: 310px;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  color: $base-white-back;
+  border-right: 1px solid $base-light-gray;
+}
+
+.chats--content{
+  @include flex-column;
+  width: 290px;
+  height: 100%;
+}
+
+.link-profile{
+  @include h5;
+  color: $base-gray;
+  text-decoration: none;
+  margin: 21px 0 23px 0;
+  text-align: end;
+}
+
+.search{
+  @include h5;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 126px;
+  height: 32px;
+  color: $base-black;
+  border: 0;
+  border-radius: 5px;
+  background: $base-light-gray url("./search.svg") no-repeat 102px center;
+  margin-bottom: 14px;
+
+  &::placeholder {
+    color: $base-gray;
+  }
+}
+
+.correspondence-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 47px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.correspondence-avatar{
+  width: 47px;
+  height: 100%;
+  background: $base-light-gray;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info{
+  width: 190px;
+  margin-right: 45px;
+}
+
+.user-login{
+  @include h4;
+  @include absolute-margin;
+  color: $base-black;
+  top: 0;
+  font-weight: 600;
+}
+
+.message{
+  @include h5;
+  color: $base-gray;
+  margin: 20px 0 0 0;
+  font-weight: 500;
+}
+
+.date-info{
+  @include flex-column;
+  align-items: flex-end;
+}
+
+.date{
+  @include absolute-margin;
+  font-size: 9px;
+  color: $base-gray;
+  top: 0;
+}
+
+.unread-messages{
+  @include absolute-margin;
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  background: $base-blue;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
