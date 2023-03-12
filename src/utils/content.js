@@ -6,23 +6,25 @@ import profile from '../pages/profile/main/main';
 import login from '../pages/authorization/login/login';
 import signin from '../pages/authorization/signin/signin';
 
-export const Content = () => {
+const Content = () => {
     switch (window.location.pathname){
         case '/signin':
-            return signin;
+            return signin();
         case '/profile':
-            return profile;
+            return profile();
         case '/changePassword':
-            return changePassword;
+            return changePassword();
         case '/main':
-            return main;
+            return main();
         case '/error404':
-            return signin;
+            return error404();
         case '/error500':
-            return signin;
+            return error500();
         case '/login':
-            return login;
+            return login();
         default:
-            return login;
+            return login();
     }
 };
+
+export default Content;

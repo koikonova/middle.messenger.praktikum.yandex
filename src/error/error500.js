@@ -1,10 +1,9 @@
+import Handlebars from 'handlebars';
 import styles from "./style.scss";
+import errorTpl from './errorTpl';
 
-const error500 = `
-    <div class="error-content">
-      <h1 class="error">500</h1>
-      <h2 class="error-title">Мы уже фиксим</h2>
-      <a href="main" class="link error-link">Назад к чатам</a>
-    </div>`;
+const error500 = () => {
+    return Handlebars.compile(errorTpl)({error: '500', title: 'Мы уже фиксим'});
+};
 
 export default error500;

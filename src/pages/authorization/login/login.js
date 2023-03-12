@@ -1,18 +1,17 @@
 import styles from "./login.scss";
+import Handlebars from 'handlebars';
 
-const login = `
-    <div class="login-box">
+const authorization =
+    `<div class="login-box">
       <div class="login-box--content">
         <h2 class="title">Вход</h2>
         <form action="" class="authorization">
-          <div class="login">
-            <label for="login">Логин</label>
-            <input id="login" type="text" name="login">
-          </div>
-          <div class="password">
-            <label for="password">Пароль</label>
-            <input id="password" type="password" name="password">
-          </div>
+        {{#each characters}}
+            <div class="{{name}}">
+              <label for="{{name}}">{{title}}</label>
+              <input id="{{name}}" type="{{type}}" name="{{name}}">
+            </div>
+        {{/each}}
         </form>
         <div class="box--buttons">
           <a href="main" class="button">Войти</a>
@@ -20,5 +19,23 @@ const login = `
         </div>
       </div>
     </div>`;
+
+const date = {
+'characters': [
+    {
+        name: 'login',
+        type: 'text',
+        title: 'Логин'
+    },
+    {
+        name: 'password',
+        type: 'password',
+        title: 'Пароль'
+    }
+]};
+
+const login = () => {
+    return Handlebars.compile(authorization)(date);
+};
 
 export default login;
