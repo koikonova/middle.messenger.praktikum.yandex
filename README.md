@@ -3,6 +3,7 @@ Messenger for Yandex.Practicum
 
 ## Demo
 Check the demo launched on netlify here:
+https://sparkling-crepe-0c42e5.netlify.app
 
 ## Design
 https://www.figma.com/file/tIG9jZli3Ao8KJmr4wh3h7/Chat_external_link?node-id=0%3A1&t=S36qB2bPBVGyBYub-0
