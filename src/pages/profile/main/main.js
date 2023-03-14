@@ -3,9 +3,9 @@ import Handlebars from 'handlebars';
 
 const content = `
     <div class="back">
-      <a href="main" class="button-back"></a>
+      <button class="button-back" onClick="location.href='/main'"></button>
     </div>
-    <div class="profile-box">
+    <main class="profile-box">
       <div class="avatar"></div>
       <h3 class="chat-name">Иван</h3>
       <form action="" class="profile">
@@ -18,13 +18,13 @@ const content = `
         {{/each}}
       </form>
       <div class="profile-box--buttons">
-        <a href="" class="link change-date">Изменить данные</a>
+        <button class="link change-date">Изменить данные</button>
         <hr class="separatory-line">
-        <a href="changePassword" class="link change-password">Изменить пароль</a>
+        <button class="link change-password" onClick="location.href='/changePassword'">Изменить пароль</button>
         <hr class="separatory-line">
-        <a href="login/" class="link">Выйти</a>
+        <button class="link signout" onClick="location.href='/'">Выйти</button>
       </div>
-    </div>`;
+    </main>`;
 
 const date = {
 'characters': [
