@@ -1,44 +1,64 @@
 import styles from "./signin.scss";
+import Handlebars from 'handlebars';
 
-const signin =`
-    <div class="signin-box">
+const authorization =`
+    <main class="signin-box">
       <div class="signin-box--content">
         <h2 class="title">Регистрация</h2>
-        <form action="" class="authorization">
-          <div class="email">
-            <label for="email">Почта</label>
-            <input id="email" type="email" name="email">
-          </div>
-          <div class="login">
-            <label for="login">Логин</label>
-            <input id="login" type="text" name="login">
-          </div>
-          <div class="first_name">
-            <label for="first_name">Имя</label>
-            <input id="first_name" type="text" name="first_name">
-          </div>
-          <div class="second_name">
-            <label for="second_name">Фамилия</label>
-            <input id="second_name" type="text" name="second_name">
-          </div>
-          <div class="phone">
-            <label for="phone">Телефон</label>
-            <input id="phone" type="tel" name="phone">
-          </div>
-          <div class="password">
-            <label for="password">Пароль</label>
-            <input id="password" type="password" name="password">
-          </div>
-          <div class="password">
-            <label for="password">Пароль (ещё раз)</label>
-            <input id="password" type="password" name="password">
-          </div>
+        <form action="/main" class="authorization">
+            {{#each characters}}
+                <div class="{{name}}">
+                  <label for="{{name}}">{{title}}</label>
+                  <input id="{{name}}" type="{{type}}" name="{{name}}">
+                </div>
+            {{/each}}
+            <button class="button" type="submit">Зарегистрироваться</button>
         </form>
-        <div class="box--buttons">
-          <a href="main" class="button">Зарегистрироваться</a>
-          <a href="login.html/" class="link">Войти</a>
-        </div>
+        <button class="link" onClick="location.href='/'">Войти</button>
       </div>
-    </div>`;
+    </main>`;
+
+const date = {
+'characters': [
+    {
+        name: 'email',
+        type: 'email',
+        title: 'Почта'
+    },
+    {
+        name: 'login',
+        type: 'text',
+        title: 'Логин'
+    },
+    {
+        name: 'first_name',
+        type: 'text',
+        title: 'Имя'
+    },
+    {
+        name: 'second_name',
+        type: 'text',
+        title: 'Фамилия'
+    },
+    {
+        name: 'phone',
+        type: 'tel',
+        title: 'Телефон'
+    },
+    {
+        name: 'password',
+        type: 'password',
+        title: 'Пароль'
+    },
+    {
+        name: 'password',
+        type: 'password',
+        title: 'Пароль (ещё раз)'
+    }
+]};
+
+const signin = () => {
+    return Handlebars.compile(authorization)(date);
+};
 
 export default signin;

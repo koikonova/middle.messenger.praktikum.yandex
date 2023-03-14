@@ -1,10 +1,9 @@
+import Handlebars from 'handlebars';
 import styles from "./style.scss";
+import errorTpl from './errorTpl';
 
-const error404 = `
-    <div class="error-content">
-      <h1 class="error">404</h1>
-      <h2 class="error-title">Не туда попали</h2>
-      <a href="main" class="link error-link">Назад к чатам</a>
-    </div>`;
+const error404 = () => {
+    return Handlebars.compile(errorTpl)({error: '404', title: 'Не туда попали'});
+};
 
 export default error404;
