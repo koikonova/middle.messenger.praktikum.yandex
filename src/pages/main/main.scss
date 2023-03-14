@@ -21,10 +21,9 @@
   height: 100%;
 }
 
-.link-profile{
+.chats--content .link-profile{
   @include h5;
   color: $base-gray;
-  text-decoration: none;
   margin: 21px 0 23px 0;
   text-align: end;
 }

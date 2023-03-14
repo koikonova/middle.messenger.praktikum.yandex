@@ -3,12 +3,12 @@ import Handlebars from 'handlebars';
 
 const content = `
     <div class="back">
-      <a href="main" class="button-back"></a>
+      <button class="button-back" onClick="location.href='/main'"></button>
     </div>
-    <div class="profile-box">
+    <main class="profile-box">
       <div class="avatar"></div>
       <h3 class="chat-name">Иван</h3>
-      <form action="">
+      <form action="/profile">
         {{#each characters}}
             <div class="{{name}}">
               <label for="{{name}}">{{title}}</label>
@@ -16,11 +16,9 @@ const content = `
             </div>
             {{{separatory}}}
         {{/each}}
+        <button class="button" type="submit">Сохранить</button>
       </form>
-      <div class="change-password-box--buttons">
-        <a href="profile" class="button">Сохранить</a>
-      </div>
-    </div>`;
+    </main>`;
 
 const date = {
 'characters': [

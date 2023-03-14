@@ -2,27 +2,29 @@ import styles from "./main.scss";
 import Handlebars from 'handlebars';
 
 const content = `
-    <div class="chats">
-      <div class="chats--content">
-        <a href="profile" class="link-profile">Профиль &#62;</a>
-        <input class="search" type="text" type="search" placeholder="Поиск">
-        <hr class="separatory-line">
-       {{#each characters}}
-        <div class="correspondence-info">
-          <div class="correspondence-avatar"></div>
-          <div class="user-info">
-            <h4 class="user-login">{{name}}</h4>
-            <h5 class="message">{{message}}</h5>
-          </div>
-          <div class="date-info">
-            <p class="date">{{date}}</p>
-            <div class="unread-messages">{{unread}}</div>
+    <main>
+        <div class="chats">
+          <div class="chats--content">
+            <button class="link link-profile" onClick="location.href='/profile'">Профиль &#62;</button>
+            <input class="search" type="text" type="search" placeholder="Поиск">
+            <hr class="separatory-line">
+           {{#each characters}}
+            <div class="correspondence-info">
+              <div class="correspondence-avatar"></div>
+              <div class="user-info">
+                <h4 class="user-login">{{name}}</h4>
+                <h5 class="message">{{message}}</h5>
+              </div>
+              <div class="date-info">
+                <p class="date">{{date}}</p>
+                <div class="unread-messages">{{unread}}</div>
+              </div>
+            </div>
+            <hr class="separatory-line">
+           {{/each}}
           </div>
         </div>
-        <hr class="separatory-line">
-       {{/each}}
-      </div>
-    </div>`;
+    </main>`;
 
 const date = {
 'characters': [

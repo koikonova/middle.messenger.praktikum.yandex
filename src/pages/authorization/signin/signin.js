@@ -2,23 +2,21 @@ import styles from "./signin.scss";
 import Handlebars from 'handlebars';
 
 const authorization =`
-    <div class="signin-box">
+    <main class="signin-box">
       <div class="signin-box--content">
         <h2 class="title">Регистрация</h2>
-        <form action="" class="authorization">
-        {{#each characters}}
-            <div class="{{name}}">
-              <label for="{{name}}">{{title}}</label>
-              <input id="{{name}}" type="{{type}}" name="{{name}}">
-            </div>
-        {{/each}}
+        <form action="/main" class="authorization">
+            {{#each characters}}
+                <div class="{{name}}">
+                  <label for="{{name}}">{{title}}</label>
+                  <input id="{{name}}" type="{{type}}" name="{{name}}">
+                </div>
+            {{/each}}
+            <button class="button" type="submit">Зарегистрироваться</button>
         </form>
-        <div class="box--buttons">
-          <a href="main" class="button">Зарегистрироваться</a>
-          <a href="login.html/" class="link">Войти</a>
-        </div>
+        <button class="link" onClick="location.href='/'">Войти</button>
       </div>
-    </div>`;
+    </main>`;
 
 const date = {
 'characters': [

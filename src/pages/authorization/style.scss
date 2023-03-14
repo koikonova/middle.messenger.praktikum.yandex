@@ -52,15 +52,17 @@
   color: $base-black;
 }
 
-.box--buttons{
-  @include flex-column;
-  width: 100%;
+.login-box--content .button,
+.signin-box--content .button{
+  bottom: 55px;
   position: absolute;
-  bottom: 0;
-  margin-bottom: 30px;
 }
 
-.link{
-  margin-top: 14px;
+.login-box--content .link,
+.signin-box--content .link{
+  bottom: 30px;
+  position: absolute;
+  margin: 0;
+  width: 78px;
+  left: 101px;
 }
-

@@ -20,8 +20,6 @@ const Content = () => {
             return error404();
         case '/error500':
             return error500();
-        case '/login':
-            return login();
         default:
             return login();
     }
