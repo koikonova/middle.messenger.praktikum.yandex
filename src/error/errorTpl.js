@@ -1,8 +1,8 @@
 const errorTpl = `
-    <div class="error-content">
+    <main class="error-content">
       <h1 class="error">{{error}}</h1>
       <h2 class="error-title">{{title}}</h2>
-      <a href="main" class="link error-link">Назад к чатам</a>
-    </div>`;
+      <button class="link error-link" onClick="location.href='/main'">Назад к чатам</button>
+    </main>`;
 
 export default errorTpl;
