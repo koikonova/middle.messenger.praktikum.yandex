@@ -1,0 +1,8 @@
+/.github
+/.idea
+/.parcel-cache
+/dist
+/htmls
+/node_modules
+/.gitignore
+/README.md

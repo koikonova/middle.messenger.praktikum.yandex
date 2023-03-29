@@ -81,3 +81,16 @@ $base-red: #FF0000;
   background-color: $base-light-gray;
   margin: 0;
 }
+
+.validationError{
+  @include h7;
+  color: $base-red;
+  margin-top: 8px;
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+}
+
+.displayNone{
+  display: none;
+}

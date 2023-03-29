@@ -25,21 +25,18 @@
   margin-bottom: 40px;
 }
 
-.authorization .login,
-.authorization .password,
-.authorization .email,
-.authorization .first_name,
-.authorization .second_name,
-.authorization .phone{
+.labelInput{
   @include flex-column;
   @include h7;
   align-items: flex-start;
   color: $base-gray;
   margin-bottom: 16px;
+  position: relative;
 }
 
 .authorization #login,
 .authorization #password,
+.authorization #repeatPassword,
 .authorization #email,
 .authorization #first_name,
 .authorization #second_name,
