@@ -1,13 +1,5 @@
 @import '../style';
 
-.oldPassword, .newPassword, .repeatNewPassword{
-  @include h4;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: $base-black;
-}
-
 #oldPassword, #newPassword, #repeatNewPassword{
   width: 300px;
   border:none;

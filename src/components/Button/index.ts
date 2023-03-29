@@ -7,9 +7,7 @@ interface ButtonProps{
   buttonClassName: string;
   buttonClassNameSpecial?: string;
   buttonType?: string;
-  buttonEvents: {
-    click: () => void;
-  };
+  events: { click: () => void; };
   buttonHref?: string;
 }
 
@@ -27,7 +25,7 @@ export class Button extends Block {
     if(this.props.buttonHref){
       this.element!.setAttribute('onClick', `location.href='${this.props.buttonHref}'`);
     }
-    if(this.props.type){
+    if(this.props.buttonType){
       this.element!.setAttribute('type', this.props.buttonType);
     }
   }

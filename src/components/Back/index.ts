@@ -12,7 +12,7 @@ export class Back extends Block {
     this.element!.classList.add('back');
     this.children.buttonBack = new Button({
       buttonClassName: 'button-back',
-      buttonEvents: {
+      events: {
         click: () => {
           console.log('/main');
         }

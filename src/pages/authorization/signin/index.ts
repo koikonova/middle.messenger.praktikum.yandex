@@ -2,6 +2,7 @@ import './style.scss';
 import {Block} from "../../../utils/Block";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
+import {formSubmit} from "../../../utils/InputEvents";
 
 const loginTpl =
   ` <div class="signin-box--content">
@@ -71,17 +72,15 @@ export class Signin extends Block{
         this.children.formButton = new Button({
             buttonTitle: 'Зарегистрироваться',
             buttonClassName: 'button',
-            buttonType: 'submit',
-            buttonEvents: {
-                click: () => {
-                    console.log('/main');
-                }
+            buttonType: 'button',
+            events: {
+                click: formSubmit
             },
         });
         this.children.link = new Button({
             buttonTitle: 'Войти',
             buttonClassName: 'link',
-            buttonEvents: {
+            events: {
                 click: () => {
                     console.log('/');
                 }

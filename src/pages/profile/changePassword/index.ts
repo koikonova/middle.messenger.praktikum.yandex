@@ -28,40 +28,33 @@ export class ChangePassword extends Block{
         this.children.buttonBack = new Back({});
         this.children.oldPassword = new LabelInput({
             name: 'oldPassword',
+            labelInputClassName: 'profileInput',
             type: 'password',
             labelTitle: 'Старый пароль',
             value: '1111',
         });
         this.children.newPassword = new LabelInput({
             name: 'newPassword',
+            labelInputClassName: 'profileInput',
             type: 'password',
             labelTitle: 'Новый пароль',
         });
         this.children.repeatPassword = new LabelInput({
             name: 'repeatNewPassword',
+            labelInputClassName: 'profileInput',
             type: 'password',
             labelTitle: 'Повторите новый пароль',
-        });
-        this.children.changeDate = new Button({
-            buttonTitle: 'Изменить данные',
-            buttonClassName: 'link',
-            buttonClassNameSpecial: 'change-date',
-            buttonEvents: {
-                click: () => {
-                    console.log('change-date');
-                }
-            },
         });
         this.children.formButton = new Button({
             buttonTitle: 'Сохранить',
             buttonClassName: 'button',
-            buttonType: 'submit',
-            buttonEvents: {
+            buttonType: 'button',
+            events: {
                 click: () => {
                     console.log('/profile');
                 }
             },
-            buttonHref: '/profile',
+            buttonHref: '/profile'
         });
     }
 
