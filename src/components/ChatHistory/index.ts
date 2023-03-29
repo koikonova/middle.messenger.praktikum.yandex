@@ -44,7 +44,7 @@ export class ChatHistory extends Block {
     this.element!.classList.add('chat-box');
     this.children.optionsButton = new Button({
       buttonClassName: 'options',
-      buttonEvents: {
+      events: {
         click: () => {
           console.log('options');
         }
@@ -55,7 +55,7 @@ export class ChatHistory extends Block {
     this.children.sentMessage = new SentMessage(this.props);
     this.children.attachButton = new Button({
       buttonClassName: 'attach',
-      buttonEvents: {
+      events: {
         click: () => {
           console.log('attach');
         }
@@ -68,7 +68,7 @@ export class ChatHistory extends Block {
     });
     this.children.sendButton = new Button({
       buttonClassName: 'send',
-      buttonEvents: {
+      events: {
         click: () => {
           console.log('send');
         }

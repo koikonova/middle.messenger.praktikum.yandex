@@ -23,7 +23,7 @@ export class Error extends Block {
       buttonTitle: 'Назад к чатам',
       buttonClassName: 'link',
       buttonClassNameSpecial: 'error-link',
-      buttonEvents: {
+      events: {
         click: () => {
           console.log('/main');
         }

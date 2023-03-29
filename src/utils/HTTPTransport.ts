@@ -1,7 +1,11 @@
 export enum Method {
+  // eslint-disable-next-line no-unused-vars
   GET = 'GET',
+  // eslint-disable-next-line no-unused-vars
   POST = 'POST',
+  // eslint-disable-next-line no-unused-vars
   PUT = 'PUT',
+  // eslint-disable-next-line no-unused-vars
   DELETE = 'DELETE'
 }
 

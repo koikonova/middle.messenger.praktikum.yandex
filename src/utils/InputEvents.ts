@@ -21,9 +21,7 @@ const toggleInputError = (
   }
 };
 
-const submit = (event: Event): void => {
-  event.preventDefault();
-
+const formSubmit = (): void => {
   const inputValue: Record<string, string> = {};
   const inputList = document.querySelectorAll('input');
 
@@ -47,4 +45,4 @@ const blur = (event: Event): void => {
   toggleInputError(input, result);
 };
 
-export { focus, blur, submit };
+export { focus, blur, formSubmit };

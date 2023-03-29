@@ -28,7 +28,7 @@ export class Main extends Block {
             buttonTitle: 'Профиль >',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'link-profile',
-            buttonEvents: {
+            events: {
                 click: () => {
                     console.log('/profile');
                 }

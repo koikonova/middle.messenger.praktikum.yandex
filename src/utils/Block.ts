@@ -78,8 +78,8 @@ export class Block {
     this._element = this._createDocumentElement(tagName);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
  _init() {
-
   }
 
   init() {

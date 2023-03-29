@@ -40,36 +40,42 @@ export class ProfileInfo extends Block{
         this.children.buttonBack = new Back({});
         this.children.email = new LabelInput({
             name: 'email',
+            labelInputClassName: 'profileInput',
             type: 'email',
             labelTitle: 'Почта',
             placeholder: 'pochta@yandex.ru',
         });
         this.children.login = new LabelInput({
             name: 'login',
+            labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Логин',
             placeholder: 'ivanivanov',
         });
         this.children.first_name = new LabelInput({
             name: 'first_name',
+            labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя',
             placeholder: 'Иван',
         });
         this.children.second_name = new LabelInput({
             name: 'second_name',
+            labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Фамилия',
             placeholder: 'Иванов',
         });
         this.children.display_name = new LabelInput({
             name: 'display_name',
+            labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя в чате',
             placeholder: 'Иван',
         });
         this.children.phone = new LabelInput({
             name: 'phone',
+            labelInputClassName: 'profileInput',
             type: 'tel',
             labelTitle: 'Телефон',
             placeholder: '+7 (909) 967 30 30',
@@ -78,7 +84,7 @@ export class ProfileInfo extends Block{
             buttonTitle: 'Изменить данные',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-date',
-            buttonEvents: {
+            events: {
                 click: () => {
                     console.log('change-date');
                 }
@@ -88,7 +94,7 @@ export class ProfileInfo extends Block{
             buttonTitle: 'Изменить пароль',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-password',
-            buttonEvents: {
+            events: {
                 click: () => {
                     console.log('/changePassword');
                 }
@@ -99,7 +105,7 @@ export class ProfileInfo extends Block{
             buttonTitle: 'Выйти',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'signout',
-            buttonEvents: {
+            events: {
                 click: () => {
                     console.log('/');
                 }

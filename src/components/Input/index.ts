@@ -9,7 +9,9 @@ interface InputProps{
   value?: string;
   className?: string;
   events?: {
+    // eslint-disable-next-line no-unused-vars
     focus: (event: Event) => void;
+    // eslint-disable-next-line no-unused-vars
     blur: (event: Event) => void };
 }
 

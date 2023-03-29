@@ -49,3 +49,13 @@
   margin-top: 0;
   margin-bottom: 60px;
 }
+
+.profileInput{
+  @include h4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $base-black;
+}
+
+
