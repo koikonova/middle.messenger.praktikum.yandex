@@ -31,43 +31,50 @@ export class Signin extends Block{
             name: 'email',
             type: 'email',
             labelTitle: 'Почта',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.login = new LabelInput({
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.first_name = new LabelInput({
             name: 'first_name',
             type: 'text',
             labelTitle: 'Имя',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.second_name = new LabelInput({
             name: 'second_name',
             type: 'text',
             labelTitle: 'Фамилия',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.phone = new LabelInput({
             name: 'phone',
             type: 'tel',
             labelTitle: 'Телефон',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.repeatPassword = new LabelInput({
             name: 'repeatPassword',
             type: 'password',
             labelTitle: 'Пароль (ещё раз)',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputSignin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
             buttonTitle: 'Зарегистрироваться',

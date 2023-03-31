@@ -3,7 +3,8 @@ import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 
 // noinspection TypeScriptValidateTypes
-export class Block {
+// eslint-disable-next-line no-unused-vars
+export class Block<Props extends Record<string, any> = unknown> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -125,8 +126,14 @@ export class Block {
 
   _render() {
     const block = this.render();
+    this._removeEvents();
     this._element!.append(block);
     this._addEvents();
+  }
+
+
+  render(): string{
+    return'';
   }
 
   compile(template: string, context: any) {
@@ -154,10 +161,6 @@ export class Block {
     return temp.content;
   }
 
-  render(): string{
-    return'';
-  }
-
   getContent() {
     return this.element;
   }
@@ -182,6 +185,19 @@ export class Block {
         throw new Error('Отказано в доступе');
       },
     })
+  }
+
+  _removeEvents() {
+    const events: Record<string, () => void> = (this.props as any).events;
+
+    if (!events || !this._element) {
+      return;
+    }
+
+
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element!.removeEventListener(event, listener);
+    });
   }
 
   _createDocumentElement(tagName: string): HTMLElement {

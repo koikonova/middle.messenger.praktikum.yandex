@@ -3,6 +3,7 @@ import {Block} from "../../../utils/Block";
 import {Back} from "../../../components/Back";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
+import {formSubmit} from "../../../utils/InputEvents";
 
 const profileInfoTpl = `
     {{{buttonBack}}}
@@ -43,51 +44,55 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'email',
             labelTitle: 'Почта',
-            placeholder: 'pochta@yandex.ru',
+            value: 'pochta@yandex.ru',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.login = new LabelInput({
             name: 'login',
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Логин',
-            placeholder: 'ivanivanov',
+            value: 'ivanivanov',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.first_name = new LabelInput({
             name: 'first_name',
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя',
-            placeholder: 'Иван',
+            value: 'Иван',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.second_name = new LabelInput({
             name: 'second_name',
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Фамилия',
-            placeholder: 'Иванов',
+            value: 'Иванов',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.display_name = new LabelInput({
             name: 'display_name',
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя в чате',
-            placeholder: 'Иван',
+            value: 'Иван',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.phone = new LabelInput({
             name: 'phone',
             labelInputClassName: 'profileInput',
             type: 'tel',
             labelTitle: 'Телефон',
-            placeholder: '+7 (909) 967 30 30',
+            value: '+7 (909) 967 30 30',
+            bottomError: 'bottomErrorProfile',
         });
         this.children.changeDate = new Button({
             buttonTitle: 'Изменить данные',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-date',
             events: {
-                click: () => {
-                    console.log('change-date');
-                }
+                click: formSubmit
             },
         });
         this.children.changePassword = new Button({

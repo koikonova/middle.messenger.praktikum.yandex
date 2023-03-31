@@ -26,13 +26,15 @@ export class Login extends Block{
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputLogin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
-            labelInputClassName: 'labelInput',
+            labelInputClassName: 'labelInputLogin',
+            bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
             buttonTitle: 'Войти',

@@ -22,6 +22,18 @@ class Validation {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
       errorMessage: 'Некорректный пароль',
     },
+    oldPassword: {
+      pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
+      errorMessage: 'Некорректный пароль',
+    },
+    repeatNewPassword: {
+      pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
+      errorMessage: 'Некорректный пароль',
+    },
+    newPassword: {
+      pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
+      errorMessage: 'Некорректный пароль',
+    },
     first_name: {
       pattern: /^[А-ЯЁA-Z][А-ЯЁA-Zа-яёa-z-]+$/,
       errorMessage: 'Некорректное имя',
@@ -29,6 +41,10 @@ class Validation {
     second_name: {
       pattern: /^[А-ЯЁA-Z][А-ЯЁA-Zа-яёa-z-]+$/,
       errorMessage: 'Некорректная фамилия',
+    },
+    display_name: {
+      pattern: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
+      errorMessage: 'Некорректное имя',
     },
     phone: {
       pattern: /^[+-d]?\d{10,15}$/,

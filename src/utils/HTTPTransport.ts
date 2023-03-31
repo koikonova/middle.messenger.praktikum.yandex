@@ -14,6 +14,9 @@ type Options = {
   data?: any;
 };
 
+// eslint-disable-next-line no-unused-vars
+type HTTPMethod = (url: string, options?: Options) => Promise<unknown>;
+
 function queryStringify(data) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
@@ -26,35 +29,27 @@ function queryStringify(data) {
 }
 
 class HTTPTransport {
-  get = (url: string, options: Options) => {
-    return this.request(
-      url,
-      { ...options, method: Method.GET },
+  get: HTTPMethod = (url, options = {}) => {
+    return this.request(url,{ ...options, method: Method.GET },
     );
   };
 
-  put = (url: string, options: Options) => {
-    return this.request(
-      url,
-      { ...options, method: Method.PUT },
+  put: HTTPMethod = (url, options = {}) => {
+    return this.request(url,{ ...options, method: Method.PUT },
     );
   };
 
-  post = (url: string, options: Options) => {
-    return this.request(
-      url,
-      { ...options, method: Method.POST },
+  post: HTTPMethod = (url, options = {}) => {
+    return this.request(url,{ ...options, method: Method.POST },
     );
   };
 
-  delete = (url: string, options: Options) => {
-    return this.request(
-      url,
-      { ...options, method: Method.DELETE },
+  delete: HTTPMethod = (url, options = {}) => {
+    return this.request(url,{ ...options, method: Method.DELETE },
     );
   };
 
-  request = (url: string, options: Options) => {
+  request: HTTPMethod = (url, options = {}) => {
     const { method, data } = options;
 
     if (method === Method.GET && data) {

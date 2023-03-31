@@ -4,7 +4,7 @@ import {Button} from "../Button";
 const backTpl = `{{{buttonBack}}}`;
 
 export class Back extends Block {
-  constructor(props) {
+  constructor(props: Record<string, any> = {}) {
     super('div', props);
   }
 

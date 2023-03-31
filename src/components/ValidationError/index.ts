@@ -4,6 +4,7 @@ const validationErrorTpl = `{{{title}}}`;
 
 interface ValidationErrorProps{
   title: string;
+  bottomError: string;
 }
 
 export class ValidationError extends Block {
@@ -12,8 +13,7 @@ export class ValidationError extends Block {
   }
 
   _init() {
-    this.element!.classList.add('validationError', 'displayNone');
-
+    this.element!.classList.add('validationError', 'displayNone', this.props.bottomError);
   }
 
   render(): string {

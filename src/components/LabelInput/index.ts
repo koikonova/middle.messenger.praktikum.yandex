@@ -22,7 +22,7 @@ export class LabelInput extends Block {
   }
 
   _init() {
-    this.element!.classList.add(this.props.labelInputClassName);
+    this.element!.classList.add('labelInput', this.props.labelInputClassName);
     this.children.label = new Label(this.props);
     this.children.input = new Input({
       name: this.props.name,
@@ -35,7 +35,7 @@ export class LabelInput extends Block {
         blur: blur,
       },
     });
-    this.children.validationError = new ValidationError({});
+    this.children.validationError = new ValidationError(this.props);
   }
 
   render(): string {
