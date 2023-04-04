@@ -19,26 +19,24 @@
 
 .title{
   @include h2;
+  font-weight: 500;
   color: $base-black;
   margin-top: 0;
   margin-bottom: 40px;
 }
 
-.authorization .login,
-.authorization .password,
-.authorization .email,
-.authorization .first_name,
-.authorization .second_name,
-.authorization .phone{
+.labelInputLogin, .labelInputSignin{
   @include flex-column;
   @include h7;
   align-items: flex-start;
   color: $base-gray;
   margin-bottom: 16px;
+  position: relative;
 }
 
 .authorization #login,
 .authorization #password,
+.authorization #repeatPassword,
 .authorization #email,
 .authorization #first_name,
 .authorization #second_name,

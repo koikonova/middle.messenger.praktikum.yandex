@@ -17,7 +17,7 @@
   margin: auto;
   cursor: pointer;
   border: none;
-  background: url("../back.png") no-repeat;
+  background: url("../img/back.png") no-repeat;
 }
 
 .profile-box{
@@ -36,10 +36,10 @@
   height: 130px;
   margin: auto;
   margin-bottom: 20px;
-  background-image: url("../avatar.png");
+  background-image: url("../img/avatar.png");
 
   &:hover{
-    background-image: url("../avatar-mousehover.png");
+    background-image: url("../img/avatar-mousehover.png");
   }
 }
 
@@ -49,3 +49,14 @@
   margin-top: 0;
   margin-bottom: 60px;
 }
+
+.profileInput{
+  @include h4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $base-black;
+  position: relative;
+}
+
+

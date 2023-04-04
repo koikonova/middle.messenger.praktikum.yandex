@@ -1,9 +1,10 @@
 $base-black: #1E1E1E;
 $base-white: #FFFFFF;
-$base-white-back: #FBFBFB;
+$base-white-back: #F8F8F8;
 $base-gray: #999999;
 $base-light-gray: #EAEAEA;
 $base-blue: #3369F3;
+$base-light-blue: #E4EDFD;
 $base-red: #FF0000;
 
 @mixin flex-column{
@@ -79,4 +80,24 @@ $base-red: #FF0000;
   border: 0;
   background-color: $base-light-gray;
   margin: 0;
+}
+
+.validationError{
+  @include h7;
+  color: $base-red;
+  margin-top: 8px;
+  position: absolute;
+  right: 0;
+}
+
+.bottomErrorAuthorization{
+  bottom: 8px;
+}
+
+.bottomErrorProfile{
+  bottom: -2px;
+}
+
+.displayNone{
+  display: none;
 }
