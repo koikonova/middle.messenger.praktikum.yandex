@@ -1,4 +1,5 @@
 import Validation from "./Validation";
+import authController from "../controllers/AuthController";
 
 const errorText = (input: HTMLElement) => {
   return input.closest('.labelInput')?.querySelector('.validationError');
@@ -28,7 +29,7 @@ const formSubmit = (): void => {
   inputList.forEach((input: any) => {
     inputValue[input.name] = input.value;
   });
-
+  authController.signUp(inputValue);
   console.log(inputValue);
 };
 

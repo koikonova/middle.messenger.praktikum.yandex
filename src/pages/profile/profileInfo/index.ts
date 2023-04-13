@@ -4,6 +4,8 @@ import {Back} from "../../../components/Back";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
 import {formSubmit} from "../../../utils/InputEvents";
+import {withStore} from "../../../utils/Store";
+import authController from "../../../controllers/AuthController";
 
 const profileInfoTpl = `
     {{{buttonBack}}}
@@ -28,16 +30,18 @@ const profileInfoTpl = `
         <hr class="separatory-line">
         {{{changePassword}}}
         <hr class="separatory-line">
-        {{{signout}}}
+        {{{logout}}}
       </div>
     </main>`;
 
-export class ProfileInfo extends Block{
+class ProfileInfo extends Block{
     constructor(props) {
         super('div', props);
     }
 
     _init() {
+        authController.fetchUser();
+
         this.children.buttonBack = new Back({});
         this.children.email = new LabelInput({
             name: 'email',
@@ -106,13 +110,13 @@ export class ProfileInfo extends Block{
             },
             buttonHref: '/changePassword',
         });
-        this.children.signout = new Button({
+        this.children.logout = new Button({
             buttonTitle: 'Выйти',
             buttonClassName: 'link',
-            buttonClassNameSpecial: 'signout',
+            buttonClassNameSpecial: 'logout',
             events: {
                 click: () => {
-                    console.log('/');
+                    authController.logout();
                 }
             },
             buttonHref: '/',
@@ -123,3 +127,8 @@ export class ProfileInfo extends Block{
         return this.compile(profileInfoTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ProfileInfoPage = withUser(ProfileInfo);
+
