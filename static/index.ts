@@ -7,13 +7,13 @@ import authController from "../src/controllers/AuthController";
 
 document.addEventListener('DOMContentLoaded', async () => {
   const router = new Router();
-  const signin = new Signin();
-  const login = new Login();
+  // const signin = new Signin();
+  // const login = new Login();
   // const profileInfoPage = new ProfileInfoPage();
 
   router
-    .use('/signin', signin)
-    .use('/signup', login)
+    .use('/signin', Signin)
+    .use('/signup', Login)
     .use('/profile', ProfileInfoPage);
 
 
