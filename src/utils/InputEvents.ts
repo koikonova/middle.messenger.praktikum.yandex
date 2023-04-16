@@ -23,13 +23,13 @@ const toggleInputError = (
 };
 
 const formSubmit = (): void => {
-  const inputValue: Record<string, string> = {};
+  const inputValue: { [key: string]: any } = {};
   const inputList = document.querySelectorAll('input');
 
-  inputList.forEach((input: any) => {
+  inputList.forEach((input: HTMLInputElement) => {
     inputValue[input.name] = input.value;
   });
-  authController.signUp(inputValue);
+
   console.log(inputValue);
 };
 

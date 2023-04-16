@@ -49,10 +49,10 @@ export class Login extends Block{
             buttonClassName: 'link',
             events: {
                 click: () => {
-                    console.log('/signin');
+                    console.log('/signup');
                 }
             },
-            buttonHref: '/signin',
+            buttonHref: '/signup',
         });
     }
 

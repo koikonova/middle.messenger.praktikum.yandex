@@ -3,9 +3,13 @@ import {Block} from "../../../utils/Block";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
 import {formSubmit} from "../../../utils/InputEvents";
+import authController from "../../../controllers/AuthController";
+import {ControllerSignUp, SignupData} from "../../../utils/Types";
+import {withStore} from "../../../utils/Store";
+import {Input} from "../../../components/Input";
 
-const loginTpl =
-  ` <div class="signin-box--content">
+const signupTpl =
+  ` <div class="signup-box--content">
         <h2 class="title">Регистрация</h2>
         <form class="authorization">
             {{{email}}}
@@ -20,60 +24,60 @@ const loginTpl =
         {{{link}}}
       </div>`;
 
-export class Signin extends Block{
+export class Signup extends Block{
     constructor(props) {
         super('main', props);
     }
 
     _init() {
-        this.element!.classList.add('signin-box');
+        this.element!.classList.add('signup-box');
         this.children.email = new LabelInput({
             name: 'email',
             type: 'email',
             labelTitle: 'Почта',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.login = new LabelInput({
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.first_name = new LabelInput({
             name: 'first_name',
             type: 'text',
             labelTitle: 'Имя',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.second_name = new LabelInput({
             name: 'second_name',
             type: 'text',
             labelTitle: 'Фамилия',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.phone = new LabelInput({
             name: 'phone',
             type: 'tel',
             labelTitle: 'Телефон',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.repeatPassword = new LabelInput({
             name: 'repeatPassword',
             type: 'password',
             labelTitle: 'Пароль (ещё раз)',
-            labelInputClassName: 'labelInputSignin',
+            labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
@@ -81,7 +85,7 @@ export class Signin extends Block{
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: formSubmit
+                click: (e) => this.onSubmit(e),
             },
         });
         this.children.link = new Button({
@@ -96,7 +100,22 @@ export class Signin extends Block{
         });
     }
 
+    onSubmit(event: Event) {
+        event.preventDefault();
+        const inputs = document.querySelectorAll('input');
+        const data: Record<string, unknown> = {};
+        Array.from(inputs).forEach((input) => {
+            data[input.name] = input.value;
+        });
+
+        authController.signUp(data as SignupData);
+    }
+
     render(): string {
-        return this.compile(loginTpl, this.props);
+        return this.compile(signupTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const SignupPage = withUser(Signup);

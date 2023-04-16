@@ -25,7 +25,7 @@
   margin-bottom: 40px;
 }
 
-.labelInputLogin, .labelInputSignin{
+.labelInputLogin, .labelInputSignup{
   @include flex-column;
   @include h7;
   align-items: flex-start;
@@ -51,13 +51,13 @@
 }
 
 .login-box--content .button,
-.signin-box--content .button{
+.signup-box--content .button{
   bottom: 55px;
   position: absolute;
 }
 
 .login-box--content .link,
-.signin-box--content .link{
+.signup-box--content .link{
   bottom: 30px;
   position: absolute;
   margin: 0;

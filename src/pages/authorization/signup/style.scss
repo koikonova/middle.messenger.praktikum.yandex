@@ -1,6 +1,6 @@
 @import '../style';
 
-.signin-box{
+.signup-box{
   @include box;
   width: 340px;
   height: 615px;
@@ -8,7 +8,7 @@
   margin-left: -170px;
 }
 
-.signin-box--content{
+.signup-box--content{
   @include box--content;
   width: 280px;
   height: 615px;

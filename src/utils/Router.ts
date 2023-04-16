@@ -22,11 +22,11 @@ class Route {
   }
 
   leave() {
-    console.log(this._block);
+      console.log(this._block);
 
-    if (this._block) {
-      this._block.getContent()?.remove();
-    }
+      if (this._block) {
+        this._block.getContent()?.remove();
+      }
   }
 
   match(pathname) {
@@ -34,18 +34,20 @@ class Route {
   }
 
   render() {
+    const root = document.querySelector('.root');
+
     if (!this._block) {
       this._block = new this._blockClass();
-    }
 
-    const root = document.querySelector(this._props.rootQuery);
+      root.innerHTML = '';
+      root.appendChild(this._block?.getContent());
+
+      return;
+    }
 
     if (!root) {
       throw new Error('Root not found');
     }
-
-    root.innerHTML = '';
-    root.appendChild(this._block?.getContent());
   }
 }
 
