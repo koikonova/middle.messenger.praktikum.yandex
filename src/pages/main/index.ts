@@ -4,15 +4,21 @@ import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
 import {Correspondence} from "../../components/Correspondence";
 import {ChatHistory} from "../../components/ChatHistory";
+import {AddChat} from "./addChat";
+import {withStore} from "../../utils/Store";
+import {router} from "../../utils/Router";
+import {CorrespondenceProps} from "../../utils/Types";
+import {chatsController} from "../../controllers/ChatController";
 
 const mainTpl = `
+    {{{addChat}}}
     <div class="chats">
       <div class="chats--content">
         {{{profileButton}}}
         {{{search}}}
         <hr class="separatory-line">
-        {{{correspondence1}}}
-        {{{correspondence2}}}
+          {{{chats}}}
+        {{{addButton}}}
       </div>
     </div>
     {{{chatHistory}}}
@@ -24,34 +30,34 @@ export class Main extends Block {
     }
 
     _init() {
+        this.children.addChat = new AddChat({});
         this.children.profileButton = new Button({
             buttonTitle: 'Профиль >',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'link-profile',
             events: {
                 click: () => {
-                    console.log('/profile');
+                    router.go('/settings')
                 }
             },
-            buttonHref: '/profile',
         });
         this.children.search = new Input({
             type: 'search',
             placeholder: 'Поиск',
             className: 'search',
         });
-        this.children.correspondence1 = new Correspondence({
-            name: 'Илья',
-            message: 'Друзья, у меня для вас особенный выпуск новостей!...',
-            date: '15:12',
-            unread: '2',
-        });
-        this.children.correspondence2 = new Correspondence({
-            name: 'тет-а-теты',
-            message: 'И Human Interface Guidelines и Material Design рекомендуют...',
-            date: 'Ср',
-            unread: '4',
-        });
+        // this.children.correspondence1 = new Correspondence({
+        //     name: 'Илья',
+        //     message: 'Друзья, у меня для вас особенный выпуск новостей!...',
+        //     date: '15:12',
+        //     unread: '2',
+        // });
+        // this.children.correspondence2 = new Correspondence({
+        //     name: 'тет-а-теты',
+        //     message: 'И Human Interface Guidelines и Material Design рекомендуют...',
+        //     date: 'Ср',
+        //     unread: '4',
+        // });
         this.children.chatHistory = new ChatHistory({
             chatLogin: 'Вадим',
             chatDate: '19 июня',
@@ -63,9 +69,29 @@ export class Main extends Block {
             sentMessage: 'Круто!',
             sentMessageDate: '12:00',
         });
+        this.children.addButton = new Button({
+            buttonTitle: 'Добавить чат',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.addChat(e);
+                }
+            },
+        });
+    }
+
+    addChat(event: Event){
+        event.preventDefault();
+        const addChat = document.querySelectorAll('.displayNone');
+        addChat[0].classList.remove('displayNone');
+        addChat[0].classList.add('addChatBoxBackground');
     }
 
     render(): string {
         return this.compile(mainTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const MainPage = withUser(Main);

@@ -2,11 +2,10 @@ import './style.scss';
 import {Block} from "../../../utils/Block";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
-import authController from "../../../controllers/AuthController";
-import {ControllerSignUp, SignupData} from "../../../utils/Types";
 import {withStore} from "../../../utils/Store";
-import {Input} from "../../../components/Input";
+import {SignupData} from "../../../utils/Types";
+import {authController} from "../../../controllers/AuthController";
+import {router} from "../../../utils/Router";
 
 const signupTpl =
   ` <div class="signup-box--content">
@@ -85,7 +84,7 @@ export class Signup extends Block{
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: (e) => this.onSubmit(e),
+                click: () => this.onSubmit(),
             },
         });
         this.children.link = new Button({
@@ -93,22 +92,20 @@ export class Signup extends Block{
             buttonClassName: 'link',
             events: {
                 click: () => {
-                    console.log('/');
+                    router.go('/');
                 }
             },
-            buttonHref: '/',
         });
     }
 
-    onSubmit(event: Event) {
-        event.preventDefault();
+    onSubmit() {
         const inputs = document.querySelectorAll('input');
         const data: Record<string, unknown> = {};
         Array.from(inputs).forEach((input) => {
             data[input.name] = input.value;
         });
 
-        authController.signUp(data as SignupData);
+        authController.signup(data as SignupData);
     }
 
     render(): string {

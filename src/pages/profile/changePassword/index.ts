@@ -3,7 +3,8 @@ import {Block} from "../../../utils/Block";
 import {Back} from "../../../components/Back";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
+import {withStore} from "../../../utils/Store";
+import {profileController} from "../../../controllers/ProfileController";
 
 const changePasswordTpl = `
     {{{buttonBack}}}
@@ -32,7 +33,6 @@ export class ChangePassword extends Block{
             labelInputClassName: 'profileInput',
             type: 'password',
             labelTitle: 'Старый пароль',
-            value: '1111',
             bottomError: 'bottomErrorProfile',
         });
         this.children.newPassword = new LabelInput({
@@ -54,12 +54,34 @@ export class ChangePassword extends Block{
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: formSubmit
+                click: (event) => this.changePassword(event),
             },
         });
+    }
+
+    getValue(selector) {
+        return document.querySelector(selector).value;
+    }
+
+    changePassword(event: Event) {
+        event.preventDefault()
+        const oldPasswordValue = this.getValue('#oldPassword');
+        const newPasswordValue = this.getValue('#newPassword');
+        const repeatPasswordValue = this.getValue('#repeatNewPassword');
+        const data = { oldPassword: oldPasswordValue, newPassword: newPasswordValue }
+        if (newPasswordValue === repeatPasswordValue){
+            if (oldPasswordValue !== newPasswordValue) {
+                profileController.changePassword(data)
+                console.log(data)
+            }
+        }
     }
 
     render(): string {
         return this.compile(changePasswordTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ChangePasswordPage = withUser(ChangePassword);

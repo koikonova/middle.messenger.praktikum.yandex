@@ -1,118 +1,99 @@
+import {router} from "./Router";
+
 export enum Method {
   // eslint-disable-next-line no-unused-vars
-  GET = 'GET',
+  Get = 'Get',
   // eslint-disable-next-line no-unused-vars
-  POST = 'POST',
+  Post = 'Post',
   // eslint-disable-next-line no-unused-vars
-  PUT = 'PUT',
+  Put = 'Put',
   // eslint-disable-next-line no-unused-vars
-  DELETE = 'DELETE'
+  Patch = 'Patch',
+  // eslint-disable-next-line no-unused-vars
+  Delete = 'Delete'
 }
 
-interface Options {
+type Options = {
   method: Method;
-  data?: unknown;
-}
+  data?: any;
+};
 
-// eslint-disable-next-line no-unused-vars
-type HTTPMethod = (url: string, options?: Options) => Promise<unknown>;
-
-export function queryStringify(data) {
-  if (typeof data !== 'object') {
-    throw new Error('Data must be object');
-  }
-
-  const keys = Object.keys(data);
-  return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-  }, '?');
-}
-
-class HTTPTransport {
+export class HTTPTransport {
   static API_URL = 'https://ya-praktikum.tech/api/v2';
-  protected endpoint: string;
+
+  protected endpoint: string
 
   constructor(endpoint: string) {
-    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`
   }
 
-  get: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: Method.GET });
+  public get<Response>(path = '/'): Promise<Response> {
+    return this.request<Response>(this.endpoint + path)
   }
 
-  put: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: Method.PUT });
+  public post<Response = void>(path: string, data?: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Post,
+      data,
+    })
   }
 
-  post: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: Method.POST });
+  public put<Response = void>(path: string, data: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Put,
+      data,
+    })
   }
 
-  delete: HTTPMethod = (url) => {
-    return this.request(url, { method: Method.DELETE });
+  public patch<Response = void>(path: string, data: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Patch,
+      data,
+    })
   }
 
-  request: HTTPMethod = (url, options = { method: Method.GET }) => {
-    const { headers, data, method } = options;
+  public delete<Response>(path: string, data?: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Delete,
+      data,
+    })
+  }
 
-    if (method === Method.GET && data) {
-      url = url + queryStringify(data);
-    }
-
-    const isFormData = headers?.["Content-Type"] === "multipart/form-data";
+  private request<Response>(url: string, options: Options = { method: Method.Get }): Promise<Response> {
+    const { method, data } = options
 
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-
-      if (!method) {
-        reject('Нет метода');
-      }
-
-      xhr.open(method || Method.GET, `${this.endpoint}${url}`);
-
-      if (!isFormData) {
-        xhr.setRequestHeader("Content-Type", "application/json");
-      }
-
-      if (headers) {
-        Object.entries(headers).forEach((item) => {
-          const [key, value] = item;
-          if (!isFormData) {
-            xhr.setRequestHeader(key, value);
-          }
-        });
-      }
+      const xhr = new XMLHttpRequest()
+      xhr.open(method, url)
 
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {
-            resolve(xhr.response);
+            resolve(xhr.response)
+          } else if (xhr.status === 404){
+            router.go('/error404')
+          } else if (xhr.status >= 500 && xhr.status < 600 ){
+            router.go('/error500')
           } else {
-            reject(xhr.response);
+            reject(xhr.response)
           }
         }
-      };
-
-      xhr.onabort = () => reject({ reason: "abort" });
-      xhr.onerror = () => reject({ reason: "network error" });
-      xhr.ontimeout = () => reject({ reason: "timeout" });
-
-      xhr.onload = function () {
-        resolve(xhr);
-      };
-
-      xhr.withCredentials = true;
-      xhr.responseType = 'json';
-
-      if (method === Method.GET || !data) {
-        xhr.send();
-      } else if (isFormData) {
-        xhr.send(data as XMLHttpRequestBodyInit);
-      } else {
-        xhr.send(JSON.stringify(data));
       }
-    });
-  };
-}
 
-export default HTTPTransport;
+      xhr.onabort = () => reject({ reason: 'abort' })
+      xhr.onerror = () => reject({ reason: 'network error' })
+      xhr.ontimeout = () => reject({ reason: 'timeout' })
+      if (!(data instanceof FormData)) {
+        xhr.setRequestHeader('Content-Type', 'application/json')
+      }
+      xhr.withCredentials = true
+      xhr.responseType = 'json'
+
+      if (method === Method.Get || !data) {
+        xhr.send()
+      } else {
+        xhr.send(data instanceof FormData ? data : JSON.stringify(data))
+      }
+    })
+  }
+}

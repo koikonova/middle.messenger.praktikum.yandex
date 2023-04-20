@@ -1,8 +1,9 @@
 import { Block } from "../../utils/Block";
+import {User} from "../../utils/Types";
 
 const inputTpl = '';
 
-interface InputProps{
+interface InputProps extends User {
   type: string;
   name: string;
   placeholder?: string;

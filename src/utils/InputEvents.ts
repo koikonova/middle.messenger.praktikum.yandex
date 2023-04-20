@@ -1,5 +1,4 @@
 import Validation from "./Validation";
-import authController from "../controllers/AuthController";
 
 const errorText = (input: HTMLElement) => {
   return input.closest('.labelInput')?.querySelector('.validationError');
@@ -20,17 +19,6 @@ const toggleInputError = (
   } else {
     errorElement?.classList.add('displayNone');
   }
-};
-
-const formSubmit = (): void => {
-  const inputValue: { [key: string]: any } = {};
-  const inputList = document.querySelectorAll('input');
-
-  inputList.forEach((input: HTMLInputElement) => {
-    inputValue[input.name] = input.value;
-  });
-
-  console.log(inputValue);
 };
 
 const focus = (event: Event): void => {

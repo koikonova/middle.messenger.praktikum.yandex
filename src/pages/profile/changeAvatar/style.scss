@@ -1,0 +1,54 @@
+@import '../style';
+
+.changeAvatarBoxBackground{
+  @include flex-center;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: #1e1e1ead;
+  position: absolute;
+}
+
+.changeAvatarBox{
+  @include flex-column;
+  justify-content: space-between;
+  align-items: center;
+  width: 340px;
+  height: 257px;
+  background: $base-white;
+  border-radius: 12px;
+}
+
+.changeAvatarText{
+  @include h3;
+  margin-top: 40px;
+}
+
+.changeAvatarLabelInput{
+  @include flex-column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.changeAvatarLabelInput label{
+  @include h4;
+  text-decoration-line: underline;
+  color: $base-blue;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.changeAvatar{
+  opacity: 0;
+  margin-top: -37px;
+  margin-left: -140px;
+  cursor: pointer;
+}
+
+.changeAvatarButton{
+  margin-bottom: 30px;
+}
+
+

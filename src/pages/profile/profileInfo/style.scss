@@ -1,5 +1,47 @@
 @import '../style';
 
+.avatar, .changImgBox, .avatarImg {
+  width: 130px;
+  height: 130px;
+  border-radius: 130px;
+}
+
+.avatar{
+  margin: auto;
+  margin-bottom: 20px;
+  background-image: url("../img/avatar.png");
+  position: relative;
+}
+
+.avatarImg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.changImgBox{
+  background-color: $base-black;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+
+  &:hover{
+    opacity: 1;
+    background-color: #1e1e1ead;
+  }
+}
+
+.changeImg{
+  @include h4;
+  color: $base-white;
+  margin-top: 20px;
+}
+
 .profile #email,
 .profile #login,
 .profile #first_name,

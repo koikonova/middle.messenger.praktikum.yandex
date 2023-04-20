@@ -1,5 +1,6 @@
 import { Block } from '../../utils/Block';
 import {Button} from "../Button";
+import {router} from "../../utils/Router";
 
 const backTpl = `{{{buttonBack}}}`;
 
@@ -14,10 +15,9 @@ export class Back extends Block {
       buttonClassName: 'button-back',
       events: {
         click: () => {
-          console.log('/main');
+          router.go('/messenger')
         }
-      },
-      buttonHref: '/main',
+      }
     });
   }
 

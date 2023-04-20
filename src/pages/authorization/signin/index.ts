@@ -2,10 +2,11 @@ import './style.scss';
 import {Block} from "../../../utils/Block";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
+import {authController} from "../../../controllers/AuthController";
+import {withStore} from "../../../utils/Store";
 
-const loginTpl =
-    ` <div class="login-box--content">
+const signinTpl =
+    ` <div class="signin-box--content">
         <h2 class="title">Вход</h2>
         <form class="authorization">
             {{{login}}}
@@ -15,25 +16,25 @@ const loginTpl =
         {{{link}}}
       </div>`;
 
-export class Login extends Block{
+export class Signin extends Block{
     constructor(props) {
         super('main', props);
     }
 
     _init() {
-        this.element!.classList.add('login-box');
+        this.element!.classList.add('signin-box');
         this.children.login = new LabelInput({
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
-            labelInputClassName: 'labelInputLogin',
+            labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
-            labelInputClassName: 'labelInputLogin',
+            labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
@@ -41,7 +42,7 @@ export class Login extends Block{
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: formSubmit
+                click: (e) => this.onClick(e),
             },
         });
         this.children.link = new Button({
@@ -49,14 +50,28 @@ export class Login extends Block{
             buttonClassName: 'link',
             events: {
                 click: () => {
-                    console.log('/signup');
+                    authController.logout();
                 }
             },
-            buttonHref: '/signup',
         });
     }
 
+    onClick(event: Event) {
+        event.preventDefault()
+        const inputs = document.querySelectorAll('input');
+        const data: Record<string, unknown> = {};
+        Array.from(inputs).forEach((input) => {
+            data[input.name] = input.value;
+        });
+
+        authController.signin(data);
+    }
+
     render(): string {
-        return this.compile(loginTpl, this.props);
+        return this.compile(signinTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const SigninPage = withUser(Signin);

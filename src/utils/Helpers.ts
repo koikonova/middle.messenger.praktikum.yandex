@@ -1,76 +1,43 @@
-type Indexed<T = any> = {
+export type Indexed<T = any> = {
   // eslint-disable-next-line no-unused-vars
   [key in string]: T;
 };
 
-function merge(lhs: Indexed, rhs: Indexed): Indexed {
+export const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
   for (const p in rhs) {
     if (!rhs.hasOwnProperty(p)) {
-      continue;
+      continue
     }
-
     try {
       if (rhs[p].constructor === Object) {
-        rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
+        rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed)
       } else {
-        lhs[p] = rhs[p];
+        lhs[p] = rhs[p]
       }
-    } catch(e) {
-      lhs[p] = rhs[p];
+    } catch (e) {
+      lhs[p] = rhs[p]
     }
   }
 
-  return lhs;
+  return lhs
 }
 
-function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-  if(typeof object !== 'object' || object === null){
-    return object;
+export const set = (object: Indexed | unknown, path: string, value: unknown): Indexed | unknown => {
+  if (typeof object !== 'object' || object === null) {
+    return object
   }
-  if(typeof path !== 'string'){
-    throw new Error('path must be string');
+
+  if (typeof path !== 'string') {
+    throw new Error('path must be string')
   }
+
   const result = path.split('.').reduceRight<Indexed>((acc, key) => ({
     [key]: acc,
-  }), value as any);
-  return merge(object as Indexed, result);
+  }), value as any)
+
+  return merge(object as Indexed, result)
 }
+// eslint-disable-next-line no-unused-vars
+type IsEqual = (lhs: string, rhs: string) => boolean
 
-function isPlainObject(value: unknown): value is Indexed {
-  return typeof value === 'object'
-    && value !== null
-    && value.constructor === Object
-    && Object.prototype.toString.call(value) === '[object Object]';
-}
-
-function isArray(value: unknown): value is [] {
-  return Array.isArray(value);
-}
-
-function isArrayOrObject(value: unknown): value is [] | Indexed {
-  return isPlainObject(value) || isArray(value);
-}
-
-function isEqual(lhs: Indexed, rhs: Indexed) {
-  if (Object.keys(lhs).length !== Object.keys(rhs).length) {
-    return false;
-  }
-
-  for (const [key, value] of Object.entries(lhs)) {
-    const rightValue = rhs[key];
-    if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-      if (isEqual(value, rightValue)) {
-        continue;
-      }
-      return false;
-    }
-
-    if (value !== rightValue) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-export { merge, set, isEqual };
+export const isEqual: IsEqual = (lhs, rhs) => lhs === rhs

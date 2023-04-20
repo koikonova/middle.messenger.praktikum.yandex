@@ -1,37 +1,49 @@
-import '../static/style.scss';
-import {Login} from "./pages/authorization/login";
+// import { authController } from './controllers/auth-controller'
+// import { LoginPage } from './pages/signin-page/signin'
+// import { RegisterPage } from './pages/register-page/register'
+// import { MessengerPage } from './pages/messenger-page/messenger'
+// import { ProfilePage } from './pages/profile-page/profile'
+// import { chatsController } from './controllers/chats-controller'
+// import { Routes } from './types/routes'
+// import { router } from './utils/router'
+
+import {authController} from "./controllers/AuthController";
 import {SignupPage} from "./pages/authorization/signup";
+import {SigninPage} from "./pages/authorization/signin";
 import {ProfileInfoPage} from "./pages/profile/profileInfo";
-import Router from "./utils/Router";
-import authController from "./controllers/AuthController";
+import {ChangePasswordPage} from "./pages/profile/changePassword";
+import {MainPage} from "./pages/main";
+import {router} from "./utils/Router";
 
-document.addEventListener('DOMContentLoaded', async () => {
- Router
-    .use('/signup', SignupPage)
-    .use('/profile', ProfileInfoPage);
+window.addEventListener('DOMContentLoaded', async () => {
+  router
+    .use('/', SigninPage)
+    .use('/sign-up', SignupPage)
+    .use('/settings', ProfileInfoPage)
+    .use('/settings/password', ChangePasswordPage)
+    .use('/messenger', MainPage)
 
-  let isProtectedRoute = true;
+  let isProtectedRoute = true
 
   switch (window.location.pathname) {
-
     case '/':
-    case '/signup':
-      isProtectedRoute = false;
-      break;
+    case '/sign-up':
+      isProtectedRoute = false
+      break
+    default: break
   }
 
   try {
-    await authController.fetchUser();
-    Router.start();
+    await authController.fetchUser()
+    router.start()
+    // await chatsController.fetchChats()
     if (!isProtectedRoute) {
-      Router.go(Router.go('/profile'));
+      router.go('/messenger')
     }
   } catch (e) {
-    Router.start();
+    router.start()
     if (isProtectedRoute) {
-      Router.go( Router.go('/signup'));
+      router.go('/')
     }
-    console.log(e);
-    console.log('router error')
   }
-});
+})

@@ -1,0 +1,57 @@
+@import '../../../utils/style-global';
+
+.addChatBoxBackground{
+  @include flex-center;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: #1e1e1ead;
+  position: absolute;
+}
+
+.addChatBox{
+  @include flex-column;
+  justify-content: space-between;
+  align-items: center;
+  width: 340px;
+  height: 280px;
+  background: $base-white;
+  border-radius: 12px;
+}
+
+.addChatText{
+  @include h3;
+  margin-top: 40px;
+}
+
+.labelInputChatName, .labelInputAddId{
+  @include flex-column;
+  @include h7;
+  align-items: flex-start;
+  color: $base-gray;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.addChat #chatName,
+.addChat #addId,{
+  @include h4;
+  width: 100%;
+  border:none;
+  border-bottom: 1px solid $base-blue;
+  padding: 7px 0;
+  outline: none;
+  color: $base-black;
+}
+
+.addChatButton{
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.labelInputChatName .validationError,
+.labelInputAddId .validationError{
+  margin-top: 22px;
+}

@@ -1,49 +1,48 @@
+import {set} from "./Helpers";
 import EventBus from "./EventBus";
-import {isEqual, set} from "./Helpers";
+import {State} from "./Types";
 import {Block} from "./Block";
-import {State} from "./Types"
 
 export enum StoreEvents {
   // eslint-disable-next-line no-unused-vars
-  Updated = 'Updated'
+  Updated = 'updated'
 }
 
-class Store extends EventBus {
-  private state: State = {};
+export class Store extends EventBus {
+  private state: any = {}
 
-  public set(keypath: keyof State, value: unknown) {
-    set(this.state, keypath, value);
+  public set(keypath: string, data: unknown) {
+    set(this.state, keypath, data)
 
-    this.emit(StoreEvents.Updated);
+    this.emit(StoreEvents.Updated, this.getState())
   }
 
   public getState() {
-    return this.state;
+    return this.state
   }
 }
 
-const store = new Store();
-
+export const store = new Store()
 // eslint-disable-next-line no-unused-vars
-const withStore = (mapStateToProps: (state: State) => Record<string, unknown>) => {
-  let mappedState;
-  return (Component: typeof Block) => {
+export function withStore<SP extends Partial<any>>(mapStateToProps: (state: State) => SP) {
+  return function wrap<P>(Component: typeof Block<SP & P>) {
     return class WithStore extends Component {
-      constructor(props: any) {
-        mappedState = mapStateToProps(store.getState());
-        super({...props, ...mappedState});
+      constructor(props: Omit<P, keyof SP>) {
+        let mappedState = mapStateToProps(store.getState())
+
+        super({ ...(props as P), ...mappedState })
 
         store.on(StoreEvents.Updated, () => {
-          const newMappedState = mapStateToProps(store.getState());
-          if(!isEqual(mappedState, newMappedState)){
-            this.setProps({
-              ...newMappedState
-            })
-          }
-        });
+          const stateProps = mapStateToProps(store.getState())
+
+          mappedState = stateProps
+
+          this.setProps({ ...stateProps })
+        })
       }
     }
   }
 }
 
-export { store, withStore };
+
+

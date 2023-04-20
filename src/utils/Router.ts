@@ -1,111 +1,121 @@
-import { Block } from "./Block";
-import {isEqual} from "./Helpers";
+import {Block} from './Block';
+import {isEqual} from './Helpers';
 
-class Route {
-  private _pathname: string;
-  private _blockClass: typeof Block;
-  private _block: Block | null;
-  private _props: any;
+export const render = (query: string, block: Block) => {
+  const root = document.querySelector(query);
 
-  constructor(pathname, view, props) {
-    this._pathname = pathname;
-    this._blockClass = view;
-    this._block = null;
-    this._props = props;
+  if (root === null) {
+    throw new Error(`root not found by selector "${query}"`);
   }
 
-  navigate(pathname) {
-    if (this.match(pathname)) {
-      this._pathname = pathname;
-      this.render();
-    }
+  root.innerHTML = '';
+
+  root.append(block.getContent());
+  return root;
+}
+
+export interface BlockClass<P extends Record<string, any> = any> {
+  // eslint-disable-next-line no-unused-vars
+  new(props: P): Block<P>;
+}
+
+export class Route {
+  private block: Block | null = null;
+  private pathname: string;
+  private readonly blockClass: BlockClass;
+  private readonly query: string;
+
+  constructor(pathname, view, query) {
+    this.pathname = pathname;
+    this.blockClass = view;
+    this.block = null;
+    this.query = query;
   }
 
   leave() {
-      console.log(this._block);
-
-      if (this._block) {
-        this._block.getContent()?.remove();
-      }
+    this.block = null
   }
 
-  match(pathname) {
-    return isEqual(pathname, this._pathname);
+  match(pathname: string) {
+    return isEqual(pathname, this.pathname)
   }
 
   render() {
-    const root = document.querySelector('.root');
+    if (!this.block) {
+      this.block = new this.blockClass({})
 
-    if (!this._block) {
-      this._block = new this._blockClass();
-
-      root.innerHTML = '';
-      root.appendChild(this._block?.getContent());
-
-      return;
-    }
-
-    if (!root) {
-      throw new Error('Root not found');
+      render(this.query, this.block)
     }
   }
 }
 
-class Router {
-  private static __instance: Router;
-  private routes: Route[] = [];
-  private history = window.history;
-  private _currentRoute: Route | null = null;
+export class Router {
+  private static __instance: Router
 
-  constructor() {
+  private routes: Route[] = []
+
+  private currentRoute: Route | null = null
+
+  private readonly rootQuery: string
+
+  private history = window.history
+
+  constructor(rootQuery) {
+    this.rootQuery = rootQuery;
+
     if (Router.__instance) {
-      return Router.__instance;
+      return Router.__instance
     }
 
-    this.routes = [];
-    this.history = window.history;
-    this._currentRoute = null;
+    this.routes = []
 
-    Router.__instance = this;
+    Router.__instance = this
   }
 
-  use(pathname, block) {
-    const route = new Route(pathname, block, {rootQuery: '.app'});
+  public use(pathname: string, block: BlockClass) {
+    const route = new Route(pathname, block, this.rootQuery)
+    this.routes.push(route)
 
-    this.routes.push(route);
-
-    return this;
+    return this
   }
 
-  start() {
-    window.onpopstate = () => {
-      this._onRoute(window.location.pathname);
-    };
+  public go(pathname: string) {
+    this.history.pushState({}, '', pathname)
 
-    this._onRoute(window.location.pathname);
+    this._onRoute(pathname)
   }
 
-  _onRoute(pathname) {
-    const route = this.getRoute(pathname);
+  public back() {
+    this.history.back()
+  }
+
+  public forward() {
+    this.history.forward()
+  }
+
+  public start() {
+    window.onpopstate = (event: PopStateEvent) => {
+      const target = event.currentTarget as Window
+      this._onRoute(target.location.pathname)
+    }
+    this._onRoute(window.location.pathname)
+  }
+
+  private _onRoute(pathname: string) {
+    const route = this.getRoute(pathname)
     if (!route) {
-      return;
+      return
     }
-
-    if (this._currentRoute) {
-      this._currentRoute.leave();
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave()
     }
-
-    route.render(route, pathname);
+    this.currentRoute = route
+    route.render()
   }
 
-  go(pathname) {
-    this.history.pushState({}, "", pathname);
-    this._onRoute(pathname);
-  }
-
-  getRoute(pathname) {
-    return this.routes.find(route => route.match(pathname));
+  private getRoute(pathname: string) {
+    return this.routes.find((route) => route.match(pathname))
   }
 }
 
-export default new Router();
+export const router = new Router('.root')

@@ -50,6 +50,14 @@ class Validation {
       pattern: /^[+-d]?\d{10,15}$/,
       errorMessage: 'Некорректный номер телефона',
     },
+    chatName: {
+      pattern: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
+      errorMessage: 'Некорректное имя',
+    },
+    addId: {
+      pattern: /^\d+$/,
+      errorMessage: 'Некорректный номер',
+    },
   };
 
   static validate(inputName: string, inputValue: string) {

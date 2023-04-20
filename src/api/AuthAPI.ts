@@ -1,28 +1,26 @@
-import BaseAPI from "./BaseAPI";
+import { BaseApi } from './BaseApi'
 import {SigninData, SignupData, User} from "../utils/Types";
 
-export class AuthAPI extends BaseAPI {
-  constructor() {
-    super('/auth');
-  }
+export class AuthApi extends BaseApi {
+    constructor() {
+        super('/auth')
+    }
 
-  signUp(data: SignupData): Promise<unknown> {
-    return this.http.post('/signup', data);
-  }
+    signin(data: SigninData) {
+        return this.http.post('/signin', data)
+    }
 
-  singIn(data: SigninData): Promise<unknown> {
-    return this.http.post('/signup', data);
-  }
+    signup(data: SignupData) {
+        return this.http.post('/signup', data)
+    }
 
-  logout(): Promise<unknown> {
-    return this.http.post('/logout');
-  }
+    read(): Promise<User> {
+        return this.http.get('/user')
+    }
 
-  read(): Promise<User> {
-    return this.http.get('/user');
-  }
-
-  create = undefined;
-  update = undefined;
-  delete = undefined;
+    logout() {
+        return this.http.post('/logout')
+    }
 }
+
+export const authApi = new AuthApi()
