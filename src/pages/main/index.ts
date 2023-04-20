@@ -2,13 +2,10 @@ import './style.scss'
 import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
-import {Correspondence} from "../../components/Correspondence";
-import {ChatHistory} from "../../components/ChatHistory";
 import {AddChat} from "./addChat";
 import {withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
-import {CorrespondenceProps} from "../../utils/Types";
-import {chatsController} from "../../controllers/ChatController";
+import {CorrespondenceList} from "../../components/CorrespondenceList";
 
 const mainTpl = `
     {{{addChat}}}
@@ -17,7 +14,7 @@ const mainTpl = `
         {{{profileButton}}}
         {{{search}}}
         <hr class="separatory-line">
-          {{{chats}}}
+        {{{CorrespondenceList}}}
         {{{addButton}}}
       </div>
     </div>
@@ -30,6 +27,7 @@ export class Main extends Block {
     }
 
     _init() {
+        console.log(this.props);
         this.children.addChat = new AddChat({});
         this.children.profileButton = new Button({
             buttonTitle: 'Профиль >',
@@ -42,10 +40,13 @@ export class Main extends Block {
             },
         });
         this.children.search = new Input({
+            name: 'search',
             type: 'search',
             placeholder: 'Поиск',
             className: 'search',
         });
+
+        this.children.CorrespondenceList = new CorrespondenceList({...this.props});
         // this.children.correspondence1 = new Correspondence({
         //     name: 'Илья',
         //     message: 'Друзья, у меня для вас особенный выпуск новостей!...',
@@ -58,17 +59,17 @@ export class Main extends Block {
         //     date: 'Ср',
         //     unread: '4',
         // });
-        this.children.chatHistory = new ChatHistory({
-            chatLogin: 'Вадим',
-            chatDate: '19 июня',
-            receivedMessage:'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.\n' +
-              '<br>\n' +
-              '<br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-            receivedMessageDate: '11:56',
-            receivedMessageImgDate: '11:56',
-            sentMessage: 'Круто!',
-            sentMessageDate: '12:00',
-        });
+        // this.children.chatHistory = new ChatHistory({
+        //     chatLogin: 'Вадим',
+        //     chatDate: '19 июня',
+        //     receivedMessage:'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.\n' +
+        //       '<br>\n' +
+        //       '<br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
+        //     receivedMessageDate: '11:56',
+        //     receivedMessageImgDate: '11:56',
+        //     sentMessage: 'Круто!',
+        //     sentMessageDate: '12:00',
+        // });
         this.children.addButton = new Button({
             buttonTitle: 'Добавить чат',
             buttonClassName: 'button',

@@ -101,14 +101,14 @@ export class Block<Props extends Record<string, any> = unknown> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: any, newProps: any) {
+  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
   // eslint-disable-next-line no-unused-vars
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(oldProps: unknown, newProps: unknown) {
     return true;
   }
 

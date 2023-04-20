@@ -5,6 +5,7 @@ import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
 import {withStore} from "../../../utils/Store";
 import {profileController} from "../../../controllers/ProfileController";
+import {router} from "../../../utils/Router";
 
 const changePasswordTpl = `
     {{{buttonBack}}}
@@ -72,7 +73,7 @@ export class ChangePassword extends Block{
         if (newPasswordValue === repeatPasswordValue){
             if (oldPasswordValue !== newPasswordValue) {
                 profileController.changePassword(data)
-                console.log(data)
+                router.go('/settings')
             }
         }
     }

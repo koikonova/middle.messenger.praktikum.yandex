@@ -4,6 +4,7 @@ import {Input} from "../../../components/Input";
 import {Label} from "../../../components/Label";
 import {Button} from "../../../components/Button";
 import {profileController} from "../../../controllers/ProfileController";
+import {router} from "../../../utils/Router";
 
 const changeAvatarTpl = `
   <div class="changeAvatarBox">
