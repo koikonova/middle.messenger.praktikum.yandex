@@ -1,5 +1,6 @@
 import { Block } from '../../utils/Block';
 import {ChatInfo} from "../../utils/Types";
+import {withStore} from "../../utils/Store";
 
 const correspondenceListTpl ='';
 
@@ -33,3 +34,7 @@ export class CorrespondenceList extends Block <ChatInfo[]> {
     return this.compile(correspondenceListTpl, this.props);
   }
 }
+
+const withChats = withStore((state) => ({ chats: [...(state.chats || [])] }));
+
+export const ChatsList = withChats(CorrespondenceList);

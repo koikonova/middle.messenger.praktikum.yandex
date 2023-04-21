@@ -33,7 +33,7 @@ export interface ChangePassword {
 export interface State {
   user: User
   chats: ChatInfo[]
-  messages: Record<number, Message[]>
+  // messages: Record<number, Message[]>
   selectedChat?: number
 }
 
