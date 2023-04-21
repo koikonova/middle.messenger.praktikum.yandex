@@ -9,6 +9,7 @@ import {authController} from "../../../controllers/AuthController";
 import {store, withStore} from "../../../utils/Store";
 import {profileController} from "../../../controllers/ProfileController";
 import {router} from "../../../utils/Router";
+import {User} from "../../../utils/Types";
 
 const profileInfoTpl = `
     {{{buttonBack}}}
@@ -164,6 +165,12 @@ export class ProfileInfo extends Block{
         });
 
         profileController.updateProfile(data);
+    }
+
+    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        if (newProps){
+            this.props = newProps;
+        }
     }
 
     render(): string {

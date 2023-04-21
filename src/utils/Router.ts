@@ -70,6 +70,12 @@ export class Router {
     this.routes = []
 
     Router.__instance = this
+
+    const currentRoute = localStorage.getItem('currentRoute');
+    if (currentRoute) {
+      history.pushState({}, '', currentRoute);
+      this._onRoute(currentRoute);
+    }
   }
 
   public use(pathname: string, block: BlockClass) {
@@ -81,7 +87,10 @@ export class Router {
 
   public go(pathname: string) {
     this.history.pushState({}, '', pathname)
-
+    if(localStorage.getItem('currentRoute')){
+      localStorage.clear();
+    }
+    localStorage.setItem('currentRoute', pathname);
     this._onRoute(pathname)
   }
 

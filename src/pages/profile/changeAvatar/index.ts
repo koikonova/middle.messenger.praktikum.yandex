@@ -4,7 +4,7 @@ import {Input} from "../../../components/Input";
 import {Label} from "../../../components/Label";
 import {Button} from "../../../components/Button";
 import {profileController} from "../../../controllers/ProfileController";
-import {router} from "../../../utils/Router";
+import {User} from "../../../utils/Types";
 
 const changeAvatarTpl = `
   <div class="changeAvatarBox">
@@ -51,10 +51,16 @@ export class ChangeAvatar extends Block {
     if (file !== undefined) {
       const formData = new FormData();
       formData.append('avatar', file, file.name);
-      profileController.changeAvatar(formData);
+      profileController.changeAvatar(formData)
     }
     const changeAvatarBox = document.querySelectorAll('.changeAvatarBoxBackground');
     changeAvatarBox[0].classList.add('displayNone');
+  }
+
+  protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+    if (newProps){
+      this.props = newProps;
+    }
   }
 
   render(): string {

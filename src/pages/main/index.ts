@@ -47,7 +47,7 @@ export class Main extends Block {
             className: 'search',
         });
 
-        this.children.CorrespondenceList = new ChatsList({ isLoaded: false, createChatMode: false })
+        // this.children.CorrespondenceList = new ChatsList({ isLoaded: false, createChatMode: false })
 
         this.children.addButton = new Button({
             buttonTitle: 'Добавить чат',
@@ -58,11 +58,11 @@ export class Main extends Block {
                 }
             },
         });
-        chatsController.fetchChats().finally(() => {
-            (this.children.chatsList as Block).setProps({
-                isLoaded: true,
-            })
-        })
+        // chatsController.fetchChats().finally(() => {
+        //     (this.children.chatsList as Block).setProps({
+        //         isLoaded: true,
+        //     })
+        // })
     }
 
     addChat(event: Event){

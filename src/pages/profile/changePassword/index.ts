@@ -6,6 +6,7 @@ import {LabelInput} from "../../../components/LabelInput";
 import {withStore} from "../../../utils/Store";
 import {profileController} from "../../../controllers/ProfileController";
 import {router} from "../../../utils/Router";
+import {User} from "../../../utils/Types";
 
 const changePasswordTpl = `
     {{{buttonBack}}}
@@ -75,6 +76,12 @@ export class ChangePassword extends Block{
                 profileController.changePassword(data)
                 router.go('/settings')
             }
+        }
+    }
+
+    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        if (newProps){
+            this.props = newProps;
         }
     }
 

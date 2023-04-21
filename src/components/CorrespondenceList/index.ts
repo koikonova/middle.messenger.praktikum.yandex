@@ -2,6 +2,7 @@ import { Block } from '../../utils/Block';
 import {ChatInfo} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
 import {chatsController} from "../../controllers/ChatController";
+import {Correspondence} from "../Correspondence";
 
 const correspondenceListTpl ='';
 
@@ -25,16 +26,18 @@ export class CorrespondenceList extends Block <ChatsListProps> {
     return true
   }
 
-  private createChats(props: ChatsListProps) {
-    console.log(props)
-    return props.chats.map((data) => new Chat({
-      ...data,
-      events: {
-        click: () => {
-          chatsController.selectChat(data.id)
-        },
-      },
-    }))
+  private createChats() {
+    const chats = chatsController.fetchChats();
+    console.log(chats)
+
+   // return props.chats.map((data) => new Correspondence({
+   //    ...data,
+   //    events: {
+   //      click: () => {
+   //        chatsController.selectChat(data.id)
+   //      },
+   //    },
+   //  }))
   }
 
   protected render(): string {
