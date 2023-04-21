@@ -5,7 +5,8 @@ import {Input} from "../../components/Input";
 import {AddChat} from "./addChat";
 import {withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
-import {ChatsList, CorrespondenceList} from "../../components/CorrespondenceList";
+import {ChatsList} from "../../components/CorrespondenceList";
+import {chatsController} from "../../controllers/ChatController";
 
 const mainTpl = `
     {{{addChat}}}
@@ -46,7 +47,7 @@ export class Main extends Block {
             className: 'search',
         });
 
-        this.children.CorrespondenceList = new ChatsList();
+        this.children.CorrespondenceList = new ChatsList({ isLoaded: false, createChatMode: false })
 
         this.children.addButton = new Button({
             buttonTitle: 'Добавить чат',
@@ -57,6 +58,11 @@ export class Main extends Block {
                 }
             },
         });
+        chatsController.fetchChats().finally(() => {
+            (this.children.chatsList as Block).setProps({
+                isLoaded: true,
+            })
+        })
     }
 
     addChat(event: Event){

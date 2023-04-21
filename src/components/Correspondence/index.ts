@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block';
+import {ChatInfo} from "../../utils/Types";
 
 const correspondenceTpl = `
   <div class="correspondence-info">
@@ -18,7 +19,7 @@ interface CorrespondenceProps{
   id: number;
   title: string;
   unread_count: number;
-  // selectedChat: ChatInfo;
+  selectedChat: ChatInfo;
   events: {
     click: () => void;
   }
@@ -29,7 +30,10 @@ export class Correspondence extends Block {
     super('div', props);
   }
 
-  render(): string {
-    return this.compile(correspondenceTpl, this.props);
+  protected render(): string {
+    return this.compile(correspondenceTpl, {
+      ...this.props,
+      isSelected: this.props.id === this.props.selectedChat?.id
+    })
   }
 }

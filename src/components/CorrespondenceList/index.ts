@@ -1,37 +1,44 @@
 import { Block } from '../../utils/Block';
 import {ChatInfo} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
+import {chatsController} from "../../controllers/ChatController";
 
 const correspondenceListTpl ='';
 
-export class CorrespondenceList extends Block <ChatInfo[]> {
-  constructor(props: ChatInfo[]) {
-    super('div', props);
+interface ChatsListProps {
+  chats: ChatInfo[]
+  isLoaded: boolean
+  createChatMode: boolean
+}
+
+export class CorrespondenceList extends Block <ChatsListProps> {
+  constructor(props: ChatsListProps) {
+    super({ ...props })
   }
 
   _init() {
     this.children.chats = this.createChats(this.props)
   }
 
-  protected componentDidUpdate(_oldProps: ChatInfo[], newProps: ChatInfo[]): boolean {
+  protected componentDidUpdate(_oldProps: ChatsListProps, newProps: ChatsListProps): boolean {
     this.children.chats = this.createChats(newProps)
     return true
   }
 
-  private createChats(props: ChatInfo[]) {
+  private createChats(props: ChatsListProps) {
     console.log(props)
-    // return props.map((data) => new Correspondence({
-    //   ...data,
-    //   events: {
-    //     // click: () => {
-    //     //   chatsController.selectChat(data.id)
-    //     // },
-    //   },
-    // }))
+    return props.chats.map((data) => new Chat({
+      ...data,
+      events: {
+        click: () => {
+          chatsController.selectChat(data.id)
+        },
+      },
+    }))
   }
 
-  render(): string {
-    return this.compile(correspondenceListTpl, this.props);
+  protected render(): string {
+    return this.compile(correspondenceListTpl, { ...this.props})
   }
 }
 
