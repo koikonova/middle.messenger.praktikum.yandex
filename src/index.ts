@@ -1,12 +1,3 @@
-// import { authController } from './controllers/auth-controller'
-// import { LoginPage } from './pages/signin-page/signin'
-// import { RegisterPage } from './pages/register-page/register'
-// import { MessengerPage } from './pages/messenger-page/messenger'
-// import { ProfilePage } from './pages/profile-page/profile'
-// import { chatsController } from './controllers/chats-controller'
-// import { Routes } from './types/routes'
-// import { router } from './utils/router'
-
 import {authController} from "./controllers/AuthController";
 import {SignupPage} from "./pages/authorization/signup";
 import {SigninPage} from "./pages/authorization/signin";
@@ -29,21 +20,20 @@ window.addEventListener('DOMContentLoaded', async () => {
   switch (window.location.pathname) {
     case '/':
     case '/sign-up':
-      isProtectedRoute = false
-      break
-    default: break
+      isProtectedRoute = false;
+      break;
   }
 
   try {
     await authController.fetchUser()
+    console.log('прошел')
     router.start()
-    await chatsController.fetchChats()
-    if (!isProtectedRoute) {
+    if (isProtectedRoute) {
       router.go('/messenger')
     }
   } catch (e) {
     router.start()
-    if (isProtectedRoute) {
+    if (!isProtectedRoute) {
       router.go('/')
     }
   }

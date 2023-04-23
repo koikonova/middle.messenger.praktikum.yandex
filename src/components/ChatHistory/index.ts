@@ -4,6 +4,7 @@ import {Button} from "../Button";
 import {ReceivedMessage} from "../ReceivedMessageText";
 import {ReceivedMessageImg} from "../ReceivedMessageImg";
 import {SentMessage} from "../SentMessageText";
+import {messagesController} from "../../controllers/MessageController";
 
 
 const chatHistoryTpl = `
@@ -69,11 +70,18 @@ export class ChatHistory extends Block {
     this.children.sendButton = new Button({
       buttonClassName: 'send',
       events: {
-        click: () => {
-          console.log('send');
-        }
+        // click: () => this.send()
       },
     });
+  }
+
+  getValue(selector) {
+    return document.querySelector(selector).value;
+  }
+
+  send(){
+    const message = this.getValue('#message');
+    messagesController.sendMessage(this.props.selectedChat!, message)
   }
 
   render(): string {

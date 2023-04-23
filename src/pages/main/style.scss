@@ -65,8 +65,12 @@
   justify-content: space-between;
   align-items: center;
   height: 47px;
-  margin: 10px 0;
+  padding: 10px 0;
   position: relative;
+  cursor: pointer;
+  &:hover{
+    background-color: $base-light-blue;
+  }
 }
 
 .correspondence-avatar{
@@ -75,18 +79,19 @@
   background: $base-light-gray;
   border-radius: 50%;
   margin-right: 10px;
+  margin-left: 5px;
 }
 
 .user-info{
   width: 190px;
-  margin-right: 45px;
+  margin-right: 40px;
 }
 
 .user-login{
   @include h4;
   @include absolute-margin;
   color: $base-black;
-  top: 0;
+  top: 10px;
   font-weight: 600;
 }
 
@@ -113,7 +118,8 @@
   @include absolute-margin;
   width: 20px;
   height: 20px;
-  bottom: 0;
+  bottom: 10px;
+  right: 10px;
   background: $base-blue;
   border-radius: 50%;
   font-size: 11px;

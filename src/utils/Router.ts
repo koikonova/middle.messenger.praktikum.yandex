@@ -11,6 +11,9 @@ export const render = (query: string, block: Block) => {
   root.innerHTML = '';
 
   root.append(block.getContent());
+
+  block.dispatchComponentDidMoun();
+
   return root;
 }
 
@@ -22,18 +25,17 @@ export interface BlockClass<P extends Record<string, any> = any> {
 export class Route {
   private block: Block | null = null;
   private pathname: string;
-  private readonly blockClass: BlockClass;
+  private readonly blockClass: typeof Block;
   private readonly query: string;
 
   constructor(pathname, view, query) {
     this.pathname = pathname;
     this.blockClass = view;
-    this.block = null;
     this.query = query;
   }
 
   leave() {
-    this.block = null
+    this.block = null;
   }
 
   match(pathname: string) {
@@ -45,6 +47,7 @@ export class Route {
       this.block = new this.blockClass({})
 
       render(this.query, this.block)
+      return
     }
   }
 }
@@ -70,27 +73,26 @@ export class Router {
     this.routes = []
 
     Router.__instance = this
-
-    const currentRoute = localStorage.getItem('currentRoute');
-    if (currentRoute) {
-      history.pushState({}, '', currentRoute);
-      this._onRoute(currentRoute);
-    }
   }
 
-  public use(pathname: string, block: BlockClass) {
+  public use(pathname: string, block: typeof Block) {
     const route = new Route(pathname, block, this.rootQuery)
     this.routes.push(route)
 
     return this
   }
 
+  public start() {
+    window.onpopstate = (event: PopStateEvent) => {
+      const target = event.currentTarget as Window
+      this._onRoute(target.location.pathname)
+    }
+    this._onRoute(window.location.pathname)
+  }
+
   public go(pathname: string) {
     this.history.pushState({}, '', pathname)
-    if(localStorage.getItem('currentRoute')){
-      localStorage.clear();
-    }
-    localStorage.setItem('currentRoute', pathname);
+
     this._onRoute(pathname)
   }
 
@@ -100,14 +102,6 @@ export class Router {
 
   public forward() {
     this.history.forward()
-  }
-
-  public start() {
-    window.onpopstate = (event: PopStateEvent) => {
-      const target = event.currentTarget as Window
-      this._onRoute(target.location.pathname)
-    }
-    this._onRoute(window.location.pathname)
   }
 
   private _onRoute(pathname: string) {

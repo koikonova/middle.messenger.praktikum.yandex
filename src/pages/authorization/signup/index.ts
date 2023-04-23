@@ -98,6 +98,10 @@ export class Signup extends Block{
         });
     }
 
+    getValue(selector) {
+        return document.querySelector(selector).value;
+    }
+
     onSubmit() {
         const inputs = document.querySelectorAll('input');
         const data: Record<string, unknown> = {};
@@ -105,7 +109,11 @@ export class Signup extends Block{
             data[input.name] = input.value;
         });
 
-        authController.signup(data as SignupData);
+        const password = this.getValue('#password');
+        const repeatPassword = this.getValue('#repeatPassword');
+        if (password === repeatPassword){
+            authController.signup(data as SignupData);
+        }
     }
 
     render(): string {

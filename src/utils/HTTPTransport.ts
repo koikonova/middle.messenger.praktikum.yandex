@@ -1,5 +1,3 @@
-import {router} from "./Router";
-
 export enum Method {
   // eslint-disable-next-line no-unused-vars
   Get = 'Get',
@@ -70,10 +68,6 @@ export class HTTPTransport {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {
             resolve(xhr.response)
-          } else if (xhr.status === 404){
-            router.go('/error404')
-          } else if (xhr.status >= 500 && xhr.status < 600 ){
-            router.go('/error500')
           } else {
             reject(xhr.response)
           }

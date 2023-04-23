@@ -4,6 +4,7 @@ import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
 import {authController} from "../../../controllers/AuthController";
 import {withStore} from "../../../utils/Store";
+import {router} from "../../../utils/Router";
 
 const signinTpl =
     ` <div class="signin-box--content">
@@ -50,7 +51,7 @@ export class Signin extends Block{
             buttonClassName: 'link',
             events: {
                 click: () => {
-                    authController.logout();
+                    router.go('/sign-up')
                 }
             },
         });

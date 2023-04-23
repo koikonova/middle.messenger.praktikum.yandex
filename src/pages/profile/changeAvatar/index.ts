@@ -39,7 +39,7 @@ export class ChangeAvatar extends Block {
       buttonClassNameSpecial: 'changeAvatarButton',
       buttonType: 'button',
       events: {
-        click: (e) => this.changeAvatar(e),
+        click: (e) => {this.changeAvatar(e)},
       }
     });
   }
@@ -52,6 +52,9 @@ export class ChangeAvatar extends Block {
       const formData = new FormData();
       formData.append('avatar', file, file.name);
       profileController.changeAvatar(formData)
+        .then(() => {
+          window.location.reload();
+        })
     }
     const changeAvatarBox = document.querySelectorAll('.changeAvatarBoxBackground');
     changeAvatarBox[0].classList.add('displayNone');

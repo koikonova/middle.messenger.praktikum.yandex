@@ -34,4 +34,4 @@ const blur = (event: Event): void => {
   toggleInputError(input, result);
 };
 
-export { focus, blur, formSubmit };
+export { focus, blur};

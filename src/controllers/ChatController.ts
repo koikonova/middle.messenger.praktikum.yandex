@@ -1,5 +1,6 @@
 import {store} from "../utils/Store";
 import {chatsApi, ChatsApi} from "../api/ChatApi";
+import {messagesController} from "./MessageController";
 
 class ChatsController {
     private readonly api: ChatsApi
@@ -15,13 +16,17 @@ class ChatsController {
 
     async fetchChats() {
         const chats = await this.api.read()
-        chats.map(async (chat) => {
-            const token = await this.getToken(chat.id)
-            if (token) {
-                // await messagesController.connect(chat.id, token)
-            }
-        })
         store.set('chats', chats)
+
+        // chats.map(async (chat) => {
+        //     const token = await this.getToken(chat.id)
+        //     if (token) {
+        //         await messagesController.connect(chat.id, token);
+        //     }
+        // })
+
+        console.log('fetchChats')
+        console.log(store)
     }
 
     async addUser(userId: number[], chatId: number) {
@@ -44,6 +49,7 @@ class ChatsController {
 
     selectChat(id: number) {
         store.set('selectedChat', id)
+        console.log(store)
     }
 }
 

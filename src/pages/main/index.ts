@@ -3,10 +3,13 @@ import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
 import {AddChat} from "./addChat";
-import {withStore} from "../../utils/Store";
+import {store, withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
-import {ChatsList} from "../../components/CorrespondenceList";
 import {chatsController} from "../../controllers/ChatController";
+import {chatList, ChatsList, CorrespondenceList} from "../../components/CorrespondenceList";
+import {Correspondence} from "../../components/Correspondence";
+import {User} from "../../utils/Types";
+import {ChatHistory} from "../../components/ChatHistory";
 
 const mainTpl = `
     {{{addChat}}}
@@ -15,7 +18,7 @@ const mainTpl = `
         {{{profileButton}}}
         {{{search}}}
         <hr class="separatory-line">
-        {{{CorrespondenceList}}}
+        {{{chatList}}}
         {{{addButton}}}
       </div>
     </div>
@@ -23,12 +26,15 @@ const mainTpl = `
 `;
 
 export class Main extends Block {
-    constructor(props) {
-        super('main', props);
+    constructor() {
+        super('main' );
     }
 
     _init() {
-        console.log(this.props);
+        chatsController.fetchChats();
+        this.children.chatList = new ChatsList();
+        // this.children.chatHistory = new ChatHistory();
+
         this.children.addChat = new AddChat({});
         this.children.profileButton = new Button({
             buttonTitle: 'Профиль >',
@@ -47,8 +53,6 @@ export class Main extends Block {
             className: 'search',
         });
 
-        // this.children.CorrespondenceList = new ChatsList({ isLoaded: false, createChatMode: false })
-
         this.children.addButton = new Button({
             buttonTitle: 'Добавить чат',
             buttonClassName: 'button',
@@ -58,11 +62,6 @@ export class Main extends Block {
                 }
             },
         });
-        // chatsController.fetchChats().finally(() => {
-        //     (this.children.chatsList as Block).setProps({
-        //         isLoaded: true,
-        //     })
-        // })
     }
 
     addChat(event: Event){
@@ -72,11 +71,20 @@ export class Main extends Block {
         addChat[0].classList.add('addChatBoxBackground');
     }
 
+    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        if (newProps){
+            this.props = newProps;
+        }
+    }
+
     render(): string {
         return this.compile(mainTpl, this.props);
     }
 }
 
-const withUser = withStore((state) => ({ ...state.user }));
+const withMain = withStore((state) => ({
+    chats: { ...state.chats },
+    user: { ...state.user },
+}));
 
-export const MainPage = withUser(Main);
+export const MainPage = withMain(Main);

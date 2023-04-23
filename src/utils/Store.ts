@@ -43,6 +43,3 @@ export function withStore<SP extends Partial<any>>(mapStateToProps: (state: Stat
     }
   }
 }
-
-
-
