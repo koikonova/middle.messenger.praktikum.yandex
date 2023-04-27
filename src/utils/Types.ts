@@ -48,3 +48,12 @@ export interface ChatInfo {
     content: string;
   }
 }
+
+export interface CorrespondenceProps{
+  last_message: number;
+  title: string;
+  unread_count: number;
+  events: {
+    click: () => void;
+  }
+}

@@ -1,16 +1,10 @@
 import { Block } from '../../utils/Block';
-import {chat, Correspondence} from "../Correspondence";
-import {store} from "../../utils/Store";
+import {Correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatInfo} from "../../utils/Types";
+import {ChatInfo, User} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
 
-const correspondenceListTpl = `
-{{{chat1}}}
-{{{chat2}}}
-{{{chat3}}}
-{{{chat4}}}
-`;
+const correspondenceListTpl = `{{{chats}}}`;
 
 interface Chatlist {
   chats?: {
@@ -23,63 +17,44 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
+  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+    if (_oldProps){
+      this.children.chats =this.children.chats;
+    } else {
+      this.children.chats = this.createChatsList(newProps);
+      return true;
+    }
+  }
+
   render(): string {
     if (this.props.chats == undefined){
     } else {
-      console.log(this.props.chats);
-
-      // this.children.chat1 = this.createChatsList();
-
-      this.children.chat1 = new Correspondence({
-        last_message: this.props.chats[0].last_message,
-        title: this.props.chats[0].title,
-        unread_count: this.props.chats[0].unread_count,
-      });
-      this.children.chat2 = new Correspondence({
-        last_message: this.props.chats[1].last_message,
-        title: this.props.chats[1].title,
-        unread_count: this.props.chats[1].unread_count,
-      });
-      this.children.chat3 = new Correspondence({
-        last_message: this.props.chats[2].last_message,
-        title: this.props.chats[2].title,
-        unread_count: this.props.chats[2].unread_count,
-      });
-      this.children.chat4 = new Correspondence({
-        last_message: this.props.chats[3].last_message,
-        title: this.props.chats[3].title,
-        unread_count: this.props.chats[3].unread_count,
-        events: {
-          click: () => {
-            chatsController.selectChat(this.props.chats[3].id)
-          },
-        },
-      });
-
-      // this.children.chats = this.props.chats.map(
-      //   (chat: ChatInfo) => {
-      //     return new Correspondence({
-      //         last_message: chat.last_message,
-      //         title: chat.title,
-      //         unread_count: chat.unread_count,
-      //       });
-      //   },
-      // );
+      this.children.chats = this.createChatsList(this.props.chats);
     }
 
     return this.compile(correspondenceListTpl, this.props);
   }
 
-  createChatsList(){
-  //   return this.props.chats.map(
-  //     (chat: ChatInfo) => {
-  //       return new Correspondence({
-  //         last_message: chat.last_message,
-  //         title: chat.title,
-  //         unread_count: chat.unread_count,
-  //       });
-  //     },
-  //   );
+  chatHistory(){
+    const chat = document.querySelector('.chat-box');
+    chat.classList.remove('displayNone');
+  }
+
+  createChatsList(props) {
+    return Object.keys(props).map((chat) => {
+      return new Correspondence({
+        last_message: props[chat].last_message,
+        title: props[chat].title,
+        unread_count: props[chat].unread_count,
+        events: {
+          click: (event: Event) => {
+            event.preventDefault();
+            chatsController.getToken(props[chat].id)
+            this.chatHistory();
+          }
+        }
+      });
+    });
   }
 }
 

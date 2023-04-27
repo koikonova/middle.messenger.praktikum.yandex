@@ -1,7 +1,5 @@
 import { Block } from '../../utils/Block';
-import {ChatInfo} from "../../utils/Types";
-import {withStore} from "../../utils/Store";
-import {ProfileInfo} from "../../pages/profile/profileInfo";
+import {CorrespondenceProps} from "../../utils/Types";
 
 const correspondenceTpl = `
   <div class="correspondence-info">
@@ -11,21 +9,10 @@ const correspondenceTpl = `
       <h5 class="message-info">{{last_message}}</h5>
     </div>
     <div class="date-info">
-<!--      <p class="date">{{date}}</p>-->
       <div class="unread-messages">{{unread_count}}</div>
     </div>
   </div>
   <hr class="separatory-line">`;
-
-interface CorrespondenceProps{
-  last_message: number;
-  title: string;
-  unread_count: number;
-  // selectedChat: ChatInfo;
-  events: {
-    click: () => void;
-  }
-}
 
 export class Correspondence extends Block {
   constructor(props: CorrespondenceProps) {
@@ -34,17 +21,9 @@ export class Correspondence extends Block {
 
   render(): string {
     return this.compile(correspondenceTpl, {
-      last_message: this.props.last_message,
+      last_message: this.props.last_message ? this.props.last_message : 'Нет сообщений',
       title: this.props.title,
       unread_count: this.props.unread_count,
-      // isSelected: this.props.id === this.props.selectedChat?.id,
     });
   }
 }
-//
-// export const withSelectedChat = withStore((state) => ({
-//   selectedChat: state.chats
-//     .find(({ id }) => id === state.selectedChat),
-// }))
-//
-// export const chat = withSelectedChat(Correspondence)

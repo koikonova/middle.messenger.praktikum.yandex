@@ -5,6 +5,7 @@ import {ReceivedMessage} from "../ReceivedMessageText";
 import {ReceivedMessageImg} from "../ReceivedMessageImg";
 import {SentMessage} from "../SentMessageText";
 import {messagesController} from "../../controllers/MessageController";
+import {store} from "../../utils/Store";
 
 
 const chatHistoryTpl = `
@@ -42,7 +43,8 @@ export class ChatHistory extends Block {
   }
 
   _init() {
-    this.element!.classList.add('chat-box');
+    this.element!.classList.add('chat-box', 'displayNone');
+
     this.children.optionsButton = new Button({
       buttonClassName: 'options',
       events: {
@@ -69,8 +71,9 @@ export class ChatHistory extends Block {
     });
     this.children.sendButton = new Button({
       buttonClassName: 'send',
+      buttonType: 'button',
       events: {
-        // click: () => this.send()
+        click: () => this.send()
       },
     });
   }
@@ -80,8 +83,12 @@ export class ChatHistory extends Block {
   }
 
   send(){
+    const props = store.getState();
+    console.log(props);
+
     const message = this.getValue('#message');
-    messagesController.sendMessage(this.props.selectedChat!, message)
+    messagesController.sendMessage(props.chats[0].id, message)
+    console.log(props.chats[0].id)
   }
 
   render(): string {

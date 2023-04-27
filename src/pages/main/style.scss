@@ -98,8 +98,10 @@
 .message-info{
   @include chat-history-text;
   color: $base-gray;
-  margin: 20px 0 0 0;
+  margin: 0;
   font-weight: 500;
+  position: absolute;
+  bottom: 15px;
 }
 
 .date-info{

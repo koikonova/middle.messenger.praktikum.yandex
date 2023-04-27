@@ -33,7 +33,7 @@ export class Main extends Block {
     _init() {
         chatsController.fetchChats();
         this.children.chatList = new ChatsList();
-        // this.children.chatHistory = new ChatHistory();
+        this.children.chatHistory = new ChatHistory();
 
         this.children.addChat = new AddChat({});
         this.children.profileButton = new Button({
