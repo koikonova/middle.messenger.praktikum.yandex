@@ -41,25 +41,23 @@ class ChatsController {
     }
 
     async getToken(id: number) {
-        await this.api.getToken(id)
-          .then(() => {
-              store.set('chat.id', id);
-          })
+      const token = await this.api.getToken(id)
+      store.set('chat.id', id);
+      return token;
     }
 
-    selectChat(id: number) {
+    async selectChat(id: number) {
         store.set('selectedChat', id)
-        console.log(id)
-        // const token = store.getState();
-        // console.log(token)
-        // messagesController.connect(id, `token`)
-        const token = this.getToken(id)
-        console.log(token)
 
+        const token = await this.getToken(id)
         if (token) {
+            console.log('Connecting to chat with token:', token);
             messagesController.connect(id, token)
+        } else {
+            console.log('Failed to get token for chat:', id);
         }
     }
+
 
 
 }

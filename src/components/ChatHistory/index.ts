@@ -108,7 +108,7 @@ export class ChatHistory extends Block {
 
   private createMessages(props: chatHistoryProps) {
     console.log('createMess')
-    console.log(props)
+    console.log(props.messages)
     return props.messages.map((data) => new ReceivedMessage({ ...data, isMine: props.userId === data.user_id }))
   }
 
