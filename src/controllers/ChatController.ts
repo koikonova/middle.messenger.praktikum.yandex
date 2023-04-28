@@ -16,10 +16,14 @@ class ChatsController {
 
     async fetchChats() {
         const chats = await this.api.read()
+        // chats.map(async (chat) => {
+        //     const token = await this.getToken(chat.id)
+        //     store.set(`${chat.id}token`, token);
+        //     // if (token) {
+        //     //     await messagesController.connect(chat.id, token)
+        //     // }
+        // })
         store.set('chats', chats)
-
-        console.log('fetchChats')
-        console.log(store)
     }
 
     async addUser(userId: number[], chatId: number) {
@@ -41,13 +45,23 @@ class ChatsController {
           .then(() => {
               store.set('chat.id', id);
           })
-        console.log(id);
     }
-    //
-    // selectChat(id: number) {
-    //     store.set('selectedChat', id)
-    //     console.log(id)
-    // }
+
+    selectChat(id: number) {
+        store.set('selectedChat', id)
+        console.log(id)
+        // const token = store.getState();
+        // console.log(token)
+        // messagesController.connect(id, `token`)
+        const token = this.getToken(id)
+        console.log(token)
+
+        if (token) {
+            messagesController.connect(id, token)
+        }
+    }
+
+
 }
 
 export const chatsController = new ChatsController()

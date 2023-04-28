@@ -4,8 +4,8 @@ import {Button} from "../Button";
 import {ReceivedMessage} from "../ReceivedMessageText";
 import {ReceivedMessageImg} from "../ReceivedMessageImg";
 import {SentMessage} from "../SentMessageText";
-import {messagesController} from "../../controllers/MessageController";
-import {store} from "../../utils/Store";
+import {messagesController, Message} from "../../controllers/MessageController";
+import {store, withStore} from "../../utils/Store";
 
 
 const chatHistoryTpl = `
@@ -16,10 +16,11 @@ const chatHistoryTpl = `
      <hr class="separatory-line">
    </div>
    <div class="chat-history">
-     <h5 class="chat-date">{{{chatDate}}}</h5>
-      {{{receivedMessage}}}
-      {{{receivedMessageImg}}}
-      {{{sentMessage}}}
+<!--     <h5 class="chat-date">{{{chatDate}}}</h5>-->
+<!--      {{{receivedMessage}}}-->
+<!--      {{{receivedMessageImg}}}-->
+<!--      {{{sentMessage}}}-->
+        {{{messages}}}
    </div>
    <div class="send-message-box">
        <hr class="separatory-line">
@@ -32,9 +33,15 @@ const chatHistoryTpl = `
        </form>
    </div>`;
 
-interface chatHistoryProps{
-  chatDate: string;
-  chatLogin: string;
+// interface chatHistoryProps{
+//   chatDate: string;
+//   chatLogin: string;
+// }
+
+interface chatHistoryProps {
+  selectedChat: number | undefined;
+  messages: Message[];
+  userId: number;
 }
 
 export class ChatHistory extends Block {
@@ -53,9 +60,10 @@ export class ChatHistory extends Block {
         }
       },
     });
-    this.children.receivedMessage = new ReceivedMessage(this.props);
-    this.children.receivedMessageImg = new ReceivedMessageImg(this.props);
-    this.children.sentMessage = new SentMessage(this.props);
+    // this.children.receivedMessage = new ReceivedMessage(this.props);
+    // this.children.receivedMessageImg = new ReceivedMessageImg(this.props);
+    // this.children.sentMessage = new SentMessage(this.props);
+    this.children.messages = this.createMessages(this.props)
     this.children.attachButton = new Button({
       buttonClassName: 'attach',
       events: {
@@ -83,15 +91,48 @@ export class ChatHistory extends Block {
   }
 
   send(){
-    const props = store.getState();
-    console.log(props);
-
     const message = this.getValue('#message');
-    messagesController.sendMessage(props.chats[0].id, message)
-    console.log(props.chats[0].id)
+    messagesController.sendMessage(this.props.selectedChat, message)
+    console.log(message)
+    console.log(this.props.selectedChat)
+  }
+
+  protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
+    if (_oldProps){
+      this.children.messages =this.children.messages;
+    } else {
+      this.children.messages = this.createMessages(newProps)
+      return true
+    }
+  }
+
+  private createMessages(props: chatHistoryProps) {
+    console.log('createMess')
+    console.log(props)
+    return props.messages.map((data) => new ReceivedMessage({ ...data, isMine: props.userId === data.user_id }))
   }
 
   render(): string {
     return this.compile(chatHistoryTpl, this.props);
   }
 }
+
+const withSelectedChatHistory = withStore((state) => {
+  const selectedChatId = state.selectedChat
+
+  if (!selectedChatId) {
+    return {
+      messages: [],
+      selectedChat: undefined,
+      userId: state.user.id,
+    }
+  }
+
+  return {
+    messages: (state.messages || {})[selectedChatId] || [],
+    selectedChat: state.selectedChat,
+    userId: state.user.id,
+  }
+})
+
+export const chatHistory = withSelectedChatHistory(ChatHistory)

@@ -1,5 +1,6 @@
 import { Block } from '../../utils/Block';
 import {CorrespondenceProps} from "../../utils/Types";
+import {withStore} from "../../utils/Store";
 
 const correspondenceTpl = `
   <div class="correspondence-info">
@@ -19,11 +20,28 @@ export class Correspondence extends Block {
     super('div', props);
   }
 
+  // protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
+  //   if (_oldProps){
+  //     this.props =this.props;
+  //   } else {
+  //     this.props = newProps;
+  //     return true;
+  //   }
+  // }
+
   render(): string {
     return this.compile(correspondenceTpl, {
-      last_message: this.props.last_message ? this.props.last_message : 'Нет сообщений',
+      last_message: this.props.last_message ? 'Тут должна быть сообщенька' : 'Нет сообщений',
       title: this.props.title,
       unread_count: this.props.unread_count,
+      isSelected: this.props.id === this.props.selectedChat?.id,
     });
   }
 }
+
+export const withSelectedChat = withStore((state) => ({
+  selectedChat: (state.chats || [])
+    .find(({ id }) => id === state.selectedChat),
+}));
+
+export const correspondence = withSelectedChat(Correspondence);

@@ -2,16 +2,16 @@ import { Block } from '../../utils/Block';
 
 const receivedMessageTpl = `
     <h5 class="received-message">
-      {{{receivedMessage}}}
+      {{{content}}}
     </h5>
-    <h7 class="message-time received-message-time">
-      {{{receivedMessageDate}}}
-    </h7>
+<!--    <h7 class="message-time received-message-time">-->
+<!--      {{{receivedMessageDate}}}-->
+<!--    </h7>-->
 `;
 
 interface ReceivedMessageProps{
-  receivedMessage: string;
-  receivedMessageDate: string;
+  content: string;
+  isMine: string;
 }
 
 export class ReceivedMessage extends Block {

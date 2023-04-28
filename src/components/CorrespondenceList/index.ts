@@ -1,7 +1,7 @@
 import { Block } from '../../utils/Block';
-import {Correspondence} from "../Correspondence";
+import {correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatInfo, User} from "../../utils/Types";
+import {ChatInfo} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
 
 const correspondenceListTpl = `{{{chats}}}`;
@@ -42,14 +42,15 @@ export class CorrespondenceList extends Block<Chatlist> {
 
   createChatsList(props) {
     return Object.keys(props).map((chat) => {
-      return new Correspondence({
+      return new correspondence({
         last_message: props[chat].last_message,
         title: props[chat].title,
         unread_count: props[chat].unread_count,
         events: {
           click: (event: Event) => {
             event.preventDefault();
-            chatsController.getToken(props[chat].id)
+            chatsController.getToken(props[chat].id);
+            chatsController.selectChat(props[chat].id);
             this.chatHistory();
           }
         }
@@ -59,8 +60,7 @@ export class CorrespondenceList extends Block<Chatlist> {
 }
 
 const withChats = withStore((state) => ({
-  chats: { ...state.chats },
-  // user: { ...state.user },
+  chats: { ...state.chats }
 }));
 
 export const ChatsList = withChats(CorrespondenceList)

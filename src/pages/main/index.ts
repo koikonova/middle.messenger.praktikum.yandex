@@ -9,7 +9,7 @@ import {chatsController} from "../../controllers/ChatController";
 import {chatList, ChatsList, CorrespondenceList} from "../../components/CorrespondenceList";
 import {Correspondence} from "../../components/Correspondence";
 import {User} from "../../utils/Types";
-import {ChatHistory} from "../../components/ChatHistory";
+import {ChatHistory, chatHistory} from "../../components/ChatHistory";
 
 const mainTpl = `
     {{{addChat}}}
@@ -33,7 +33,7 @@ export class Main extends Block {
     _init() {
         chatsController.fetchChats();
         this.children.chatList = new ChatsList();
-        this.children.chatHistory = new ChatHistory();
+        this.children.chatHistory = new chatHistory();
 
         this.children.addChat = new AddChat({});
         this.children.profileButton = new Button({

@@ -53,6 +53,7 @@ export interface CorrespondenceProps{
   last_message: number;
   title: string;
   unread_count: number;
+  selectedChat: ChatInfo;
   events: {
     click: () => void;
   }
