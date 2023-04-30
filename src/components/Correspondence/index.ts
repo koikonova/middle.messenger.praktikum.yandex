@@ -20,14 +20,14 @@ export class Correspondence extends Block {
     super('div', props);
   }
 
-  // protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
-  //   if (_oldProps){
-  //     this.props =this.props;
-  //   } else {
-  //     this.props = newProps;
-  //     return true;
-  //   }
-  // }
+  protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
+    if (_oldProps){
+      this.props =this.props;
+    } else {
+      this.props = newProps;
+      return true;
+    }
+  }
 
   render(): string {
     return this.compile(correspondenceTpl, {

@@ -72,6 +72,9 @@ export class Main extends Block {
     }
 
     protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        // if (_oldProps){
+        //     this.props = this.props
+        // } else
         if (newProps){
             this.props = newProps;
         }

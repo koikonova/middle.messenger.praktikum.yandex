@@ -50,6 +50,8 @@ export class ChatHistory extends Block {
   }
 
   _init() {
+    console.log('props')
+    console.log(this.props)
     this.element!.classList.add('chat-box', 'displayNone');
 
     this.children.optionsButton = new Button({
@@ -99,7 +101,7 @@ export class ChatHistory extends Block {
 
   protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
     if (_oldProps){
-      this.children.messages =this.children.messages;
+      this.props = this.props;
     } else {
       this.children.messages = this.createMessages(newProps)
       return true
@@ -109,7 +111,10 @@ export class ChatHistory extends Block {
   private createMessages(props: chatHistoryProps) {
     console.log('createMess')
     console.log(props.messages)
-    return props.messages.map((data) => new ReceivedMessage({ ...data, isMine: props.userId === data.user_id }))
+
+    return props.messages.map((data) => new ReceivedMessage({
+      content: data.content,
+      isMine: props.userId === data.user_id }))
   }
 
   render(): string {

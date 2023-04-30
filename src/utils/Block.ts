@@ -141,7 +141,7 @@ export class Block<Props extends Record<string, any> = unknown> {
 
     Object.entries(this.children).forEach(([name, component]) => {
           if (Array.isArray(component)) {
-            contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`)
+            contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`).join('')
           } else {
             contextAndStubs[name] = `<div data-id="${component.id}"></div>`
           }
@@ -163,7 +163,7 @@ export class Block<Props extends Record<string, any> = unknown> {
 
         stub.replaceWith(component.getContent()!)
       };
-
+      // eslint-disable-next-line
       Object.entries(this.children).forEach(([_, component]) => {
         if (Array.isArray(component)) {
           component.forEach(replaceStub)

@@ -1,7 +1,7 @@
 import { Block } from '../../utils/Block';
 import {correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatInfo} from "../../utils/Types";
+import {ChatInfo, CorrespondenceProps} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
 
 const correspondenceListTpl = `{{{chats}}}`;
@@ -17,9 +17,9 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
-  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+  protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
     if (_oldProps){
-      this.children.chats =this.children.chats;
+      this.children.chats = this.children.chats;
     } else {
       this.children.chats = this.createChatsList(newProps);
       return true;
@@ -49,7 +49,6 @@ export class CorrespondenceList extends Block<Chatlist> {
         events: {
           click: (event: Event) => {
             event.preventDefault();
-            chatsController.getToken(props[chat].id);
             chatsController.selectChat(props[chat].id);
             this.chatHistory();
           }
