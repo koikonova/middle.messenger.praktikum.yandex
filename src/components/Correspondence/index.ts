@@ -21,12 +21,11 @@ export class Correspondence extends Block {
   }
 
   protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
-    if (_oldProps){
-      this.props =this.props;
-    } else {
-      this.props = newProps;
-      return true;
-    }
+    // if (_oldProps){
+    //   this.props = this.props;
+    // } else if (newProps){
+    //   this.props = newProps;
+    // }
   }
 
   render(): string {
@@ -40,6 +39,7 @@ export class Correspondence extends Block {
 }
 
 export const withSelectedChat = withStore((state) => ({
+  // selectedChat: { ...state.chats }
   selectedChat: (state.chats || [])
     .find(({ id }) => id === state.selectedChat),
 }));

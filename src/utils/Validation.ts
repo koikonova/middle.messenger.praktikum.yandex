@@ -58,6 +58,10 @@ class Validation {
       pattern: /^\d+$/,
       errorMessage: 'Некорректный номер',
     },
+    deleteId: {
+      pattern: /^\d+$/,
+      errorMessage: 'Некорректный номер',
+    },
   };
 
   static validate(inputName: string, inputValue: string) {

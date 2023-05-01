@@ -2,24 +2,24 @@ import './style.scss'
 import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
-import {AddChat} from "./addChat";
-import {store, withStore} from "../../utils/Store";
+import {PopUp} from "../../components/PopUp";
+import { withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
 import {chatsController} from "../../controllers/ChatController";
-import {chatList, ChatsList, CorrespondenceList} from "../../components/CorrespondenceList";
-import {Correspondence} from "../../components/Correspondence";
-import {User} from "../../utils/Types";
-import {ChatHistory, chatHistory} from "../../components/ChatHistory";
+import {ChatsList} from "../../components/CorrespondenceList";
+import {chatHistory} from "../../components/ChatHistory";
 
 const mainTpl = `
     {{{addChat}}}
+    {{{addId}}}
+    {{{deleteId}}}
     <div class="chats">
       <div class="chats--content">
         {{{profileButton}}}
         {{{search}}}
         <hr class="separatory-line">
         {{{chatList}}}
-        {{{addButton}}}
+        {{{addChatButton}}}
       </div>
     </div>
     {{{chatHistory}}}
@@ -32,10 +32,48 @@ export class Main extends Block {
 
     _init() {
         chatsController.fetchChats();
-        this.children.chatList = new ChatsList();
-        this.children.chatHistory = new chatHistory();
+        this.children.chatList = new ChatsList(this.props);
+        this.children.chatHistory = new chatHistory(this.props);
 
-        this.children.addChat = new AddChat({});
+        this.children.addChat = new PopUp({
+            classBox: 'addChat',
+            name: 'chatName',
+            type: 'text',
+            className: 'chatName',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'Название чата',
+            buttonTitle: 'Добавить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'button',
+        });
+
+        this.children.addId = new PopUp({
+            classBox: 'addId',
+            name: 'addId',
+            type: 'text',
+            className: 'addId',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'ID пользователя',
+            buttonTitle: 'Добавить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'button',
+        });
+
+        this.children.deleteId = new PopUp({
+            classBox: 'deleteId',
+            name: 'deleteId',
+            type: 'text',
+            className: 'deleteId',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'ID пользователя',
+            buttonTitle: 'Удалить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'button',
+        });
+
         this.children.profileButton = new Button({
             buttonTitle: 'Профиль >',
             buttonClassName: 'link',
@@ -53,28 +91,30 @@ export class Main extends Block {
             className: 'search',
         });
 
-        this.children.addButton = new Button({
+        this.children.addChatButton = new Button({
             buttonTitle: 'Добавить чат',
             buttonClassName: 'button',
             events: {
                 click: (e) => {
-                    this.addChat(e);
+                    this.popUp(e,'.addChat');
                 }
             },
         });
     }
 
-    addChat(event: Event){
+    popUp(event: Event, selector){
         event.preventDefault();
-        const addChat = document.querySelectorAll('.displayNone');
-        addChat[0].classList.remove('displayNone');
-        addChat[0].classList.add('addChatBoxBackground');
+        const popUp = document.querySelector(selector);
+        popUp.classList.remove('displayNone');
+        popUp.classList.add('boxBackground');
     }
 
-    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
-        // if (_oldProps){
+    protected componentDidUpdate(_oldProps, newProps): boolean {
+        //  if (_oldProps){
         //     this.props = this.props
-        // } else
+        // } else if (newProps){
+        //     this.props = newProps;
+        // }
         if (newProps){
             this.props = newProps;
         }

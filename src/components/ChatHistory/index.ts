@@ -4,15 +4,18 @@ import {Button} from "../Button";
 import {ReceivedMessage} from "../ReceivedMessageText";
 import {ReceivedMessageImg} from "../ReceivedMessageImg";
 import {SentMessage} from "../SentMessageText";
-import {messagesController, Message} from "../../controllers/MessageController";
+import {messagesController} from "../../controllers/MessageController";
 import {store, withStore} from "../../utils/Store";
+import {Message} from "../../utils/Types";
 
 
 const chatHistoryTpl = `
    <div class="chat-info">
      <div class="chat-avatar"></div>
-     <h4 class="chat-login">{{{chatLogin}}}</h4>
-     {{{optionsButton}}}
+     <div class="buttons">
+      {{{addButton}}}
+      {{{deleteButton}}}
+     </div>
      <hr class="separatory-line">
    </div>
    <div class="chat-history">
@@ -50,21 +53,31 @@ export class ChatHistory extends Block {
   }
 
   _init() {
-    console.log('props')
+    // this.element!.classList.add('chat-box', 'displayNone');
+    this.element!.classList.add('chat-box');
+    console.log('chatHistory')
     console.log(this.props)
-    this.element!.classList.add('chat-box', 'displayNone');
 
-    this.children.optionsButton = new Button({
-      buttonClassName: 'options',
+    this.children.addButton = new Button({
+      buttonTitle: 'Добавить пользователя',
+      buttonClassName: 'button',
       events: {
-        click: () => {
-          console.log('options');
+        click: (e) => {
+          this.popUp(e,'.addId');
         }
       },
     });
-    // this.children.receivedMessage = new ReceivedMessage(this.props);
-    // this.children.receivedMessageImg = new ReceivedMessageImg(this.props);
-    // this.children.sentMessage = new SentMessage(this.props);
+
+    this.children.deleteButton = new Button({
+      buttonTitle: 'Удалить пользователя',
+      buttonClassName: 'button',
+      events: {
+        click: (e) => {
+          this.popUp(e,'.deleteId');
+        }
+      },
+    });
+
     this.children.messages = this.createMessages(this.props)
     this.children.attachButton = new Button({
       buttonClassName: 'attach',
@@ -88,6 +101,13 @@ export class ChatHistory extends Block {
     });
   }
 
+  popUp(event: Event, selector){
+    event.preventDefault();
+    const popUp = document.querySelector(selector);
+    popUp.classList.remove('displayNone');
+    popUp.classList.add('boxBackground');
+  }
+
   getValue(selector) {
     return document.querySelector(selector).value;
   }
@@ -95,23 +115,20 @@ export class ChatHistory extends Block {
   send(){
     const message = this.getValue('#message');
     messagesController.sendMessage(this.props.selectedChat, message)
-    console.log(message)
-    console.log(this.props.selectedChat)
   }
 
   protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
-    if (_oldProps){
-      this.props = this.props;
-    } else {
-      this.children.messages = this.createMessages(newProps)
-      return true
+    if (newProps){
+      if (newProps.selectedChat != undefined){
+        console.log('newProps')
+        console.log(newProps)
+        this.children.messages = this.createMessages(newProps)
+        return true
+      }
     }
   }
 
-  private createMessages(props: chatHistoryProps) {
-    console.log('createMess')
-    console.log(props.messages)
-
+  createMessages(props: chatHistoryProps) {
     return props.messages.map((data) => new ReceivedMessage({
       content: data.content,
       isMine: props.userId === data.user_id }))

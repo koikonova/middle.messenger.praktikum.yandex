@@ -149,13 +149,19 @@
   margin: 10px 0;
 }
 
-.chat-login{
-  @include h5;
-  position: absolute;
-  left: 45px;
-  top: 20px;
-  margin: 0;
-  color: $base-black;
+.chat-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-info .buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-info .button{
+  margin-left: 10px;
 }
 
 .options{
@@ -306,4 +312,60 @@
 .chats--content .button{
   margin-top: 20px;
   width: 290px;
+}
+
+.boxBackground{
+  @include flex-center;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: #1e1e1ead;
+  position: absolute;
+}
+
+.popUpBox{
+  @include flex-column;
+  justify-content: space-between;
+  align-items: center;
+  width: 340px;
+  height: 230px;
+  background: $base-white;
+  border-radius: 12px;
+}
+
+.popUpText{
+  @include h3;
+  margin-top: 40px;
+}
+
+.labelInputPopUp{
+  @include flex-column;
+  @include h7;
+  align-items: flex-start;
+  color: $base-gray;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.popUpForm #chatName,
+.popUpForm #addId,
+.popUpForm #deleteId{
+  @include h4;
+  width: 100%;
+  border:none;
+  border-bottom: 1px solid $base-blue;
+  padding: 7px 0;
+  outline: none;
+  color: $base-black;
+}
+
+.popUpButton{
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.labelInputPopUp .validationError{
+  margin-top: 22px;
 }

@@ -17,10 +17,10 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
-  protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
-    if (_oldProps){
-      this.children.chats = this.children.chats;
-    } else {
+  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+   if (_oldProps){
+      this.children.chats = this.createChatsList(this.props.chats);
+    } else if (newProps){
       this.children.chats = this.createChatsList(newProps);
       return true;
     }

@@ -17,6 +17,8 @@ export class Button extends Block {
   }
 
   _init() {
+    this.element!.addEventListener('click', this.props.events.click)
+
     if (this.props.buttonClassNameSpecial){
       this.element!.classList.add(this.props.buttonClassName, this.props.buttonClassNameSpecial);
     } else {
