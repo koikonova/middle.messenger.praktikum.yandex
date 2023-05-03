@@ -19,10 +19,6 @@ const chatHistoryTpl = `
      <hr class="separatory-line">
    </div>
    <div class="chat-history">
-<!--     <h5 class="chat-date">{{{chatDate}}}</h5>-->
-<!--      {{{receivedMessage}}}-->
-<!--      {{{receivedMessageImg}}}-->
-<!--      {{{sentMessage}}}-->
         {{{messages}}}
    </div>
    <div class="send-message-box">
@@ -41,7 +37,7 @@ const chatHistoryTpl = `
 //   chatLogin: string;
 // }
 
-interface chatHistoryProps {
+export interface chatHistoryProps {
   selectedChat: number | undefined;
   messages: Message[];
   userId: number;
@@ -123,10 +119,10 @@ export class ChatHistory extends Block {
   }
 
   protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
-    if (newProps){
+   if (newProps){
       if (newProps.selectedChat != undefined){
         this.children.messages = this.createMessages(newProps)
-        return true
+        return true;
       }
     }
   }
@@ -155,3 +151,5 @@ const withSelectedChatHistory = withStore((state) => {
 })
 
 export const chatHistory = withSelectedChatHistory(ChatHistory)
+
+

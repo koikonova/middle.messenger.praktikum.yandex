@@ -4,6 +4,7 @@ import {SigninPage} from "./pages/authorization/signin";
 import {ProfileInfoPage} from "./pages/profile/profileInfo";
 import {ChangePasswordPage} from "./pages/profile/changePassword";
 import {MainPage} from "./pages/main";
+import {Main} from "./pages/main";
 import {router} from "./utils/Router";
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -12,7 +13,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use('/sign-up', SignupPage)
     .use('/settings', ProfileInfoPage)
     .use('/settings/password', ChangePasswordPage)
-    .use('/messenger', MainPage)
+    .use('/messenger', Main)
 
   let isProtectedRoute = true
 
@@ -36,3 +37,5 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 })
+
+

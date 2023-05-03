@@ -64,6 +64,7 @@ export interface ChatInfo {
     time: string;
     content: string;
   }
+  token: string;
 }
 
 export interface CorrespondenceProps{

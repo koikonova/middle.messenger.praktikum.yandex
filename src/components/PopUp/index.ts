@@ -63,6 +63,7 @@ export class PopUp extends Block {
     if (value) {
       chatsController.create(value)
         .then(() => {
+          console.log('addChat')
           // this.props.updateChatsList();
         })
         .catch((e) => {
@@ -103,3 +104,5 @@ export class PopUp extends Block {
     return this.compile(popUpTpl, this.props);
   }
 }
+
+
