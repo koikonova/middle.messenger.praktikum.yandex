@@ -3,7 +3,7 @@ import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
 import {PopUp} from "../../components/PopUp";
-import { withStore} from "../../utils/Store";
+import {store, withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
 import {chatsController} from "../../controllers/ChatController";
 import {ChatsList} from "../../components/CorrespondenceList";
@@ -32,10 +32,13 @@ export class Main extends Block {
 
     _init() {
         chatsController.fetchChats();
-        this.children.chatList = new ChatsList(this.props);
-        this.children.chatHistory = new chatHistory(this.props);
+
+        this.children.chatHistory = new chatHistory();
+        this.children.chatList = new ChatsList();
 
         this.children.addChat = new PopUp({
+            // updateChatsList: this.updateChatsList.bind(this),
+
             classBox: 'addChat',
             name: 'chatName',
             type: 'text',
@@ -102,6 +105,19 @@ export class Main extends Block {
         });
     }
 
+    // updateChatsList() {
+    //     chatsController.fetchChats()
+    //       .then(() => {
+    //           // const chats = store.getState().chats;
+    //           // const arr = []
+    //           // arr.push(chats[0])
+    //           this.children.chatList.setProps({...this.props});
+    //       })
+    //       .catch((e) => {
+    //           console.error(e);
+    //       });
+    // }
+
     popUp(event: Event, selector){
         event.preventDefault();
         const popUp = document.querySelector(selector);
@@ -110,11 +126,6 @@ export class Main extends Block {
     }
 
     protected componentDidUpdate(_oldProps, newProps): boolean {
-        //  if (_oldProps){
-        //     this.props = this.props
-        // } else if (newProps){
-        //     this.props = newProps;
-        // }
         if (newProps){
             this.props = newProps;
         }

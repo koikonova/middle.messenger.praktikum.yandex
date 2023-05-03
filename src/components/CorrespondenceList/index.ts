@@ -3,6 +3,7 @@ import {correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
 import {ChatInfo, CorrespondenceProps} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
+import {isEqual} from "../../utils/Helpers";
 
 const correspondenceListTpl = `{{{chats}}}`;
 
@@ -17,22 +18,11 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
-  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
-   if (_oldProps){
-      this.children.chats = this.createChatsList(this.props.chats);
-    } else if (newProps){
-      this.children.chats = this.createChatsList(newProps);
-      return true;
-    }
-  }
-
-  render(): string {
+  _init() {
     if (this.props.chats == undefined){
     } else {
       this.children.chats = this.createChatsList(this.props.chats);
     }
-
-    return this.compile(correspondenceListTpl, this.props);
   }
 
   chatHistory(){
@@ -50,11 +40,34 @@ export class CorrespondenceList extends Block<Chatlist> {
           click: (event: Event) => {
             event.preventDefault();
             chatsController.selectChat(props[chat].id);
-            this.chatHistory();
+            // this.chatHistory();
           }
         }
       });
     });
+  }
+
+  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+    if (_oldProps){
+      // console.log('_oldProps')
+      // console.log(_oldProps)
+      this.children.chats = this.createChatsList(this.props.chats);
+    } else
+      if (newProps){
+      // console.log('newProps')
+      // console.log(newProps.chats)
+      this.children.chats = this.createChatsList(newProps.chats);
+      return true;
+    }
+  }
+
+  render(): string {
+    // if (this.props.chats == undefined){
+    // } else {
+    //   this.children.chats = this.createChatsList(this.props.chats);
+    // }
+
+    return this.compile(correspondenceListTpl, this.props);
   }
 }
 

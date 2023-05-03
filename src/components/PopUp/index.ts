@@ -17,6 +17,7 @@ const popUpTpl = `
 
 interface PopUpProps{
   classBox: string;
+  // updateChatsList: () => void;
 }
 
 export class PopUp extends Block {
@@ -61,6 +62,12 @@ export class PopUp extends Block {
     const value = this.getValue('#chatName');
     if (value) {
       chatsController.create(value)
+        .then(() => {
+          // this.props.updateChatsList();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
     const addChat = document.querySelector('.addChat');
     addChat.classList.remove('boxBackground');

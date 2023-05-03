@@ -21,11 +21,9 @@ export class Correspondence extends Block {
   }
 
   protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
-    // if (_oldProps){
-    //   this.props = this.props;
-    // } else if (newProps){
-    //   this.props = newProps;
-    // }
+    if (newProps){
+        this.props = newProps;
+      }
   }
 
   render(): string {

@@ -55,8 +55,6 @@ export class ChatHistory extends Block {
   _init() {
     // this.element!.classList.add('chat-box', 'displayNone');
     this.element!.classList.add('chat-box');
-    console.log('chatHistory')
-    console.log(this.props)
 
     this.children.addButton = new Button({
       buttonTitle: 'Добавить пользователя',
@@ -94,9 +92,9 @@ export class ChatHistory extends Block {
     });
     this.children.sendButton = new Button({
       buttonClassName: 'send',
-      buttonType: 'button',
+      buttonType: 'submit',
       events: {
-        click: () => this.send()
+        click: (e) => this.send(e)
       },
     });
   }
@@ -112,26 +110,25 @@ export class ChatHistory extends Block {
     return document.querySelector(selector).value;
   }
 
-  send(){
+  send(event: Event){
+    event.preventDefault();
     const message = this.getValue('#message');
     messagesController.sendMessage(this.props.selectedChat, message)
-  }
-
-  protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
-    if (newProps){
-      if (newProps.selectedChat != undefined){
-        console.log('newProps')
-        console.log(newProps)
-        this.children.messages = this.createMessages(newProps)
-        return true
-      }
-    }
   }
 
   createMessages(props: chatHistoryProps) {
     return props.messages.map((data) => new ReceivedMessage({
       content: data.content,
       isMine: props.userId === data.user_id }))
+  }
+
+  protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
+    if (newProps){
+      if (newProps.selectedChat != undefined){
+        this.children.messages = this.createMessages(newProps)
+        return true
+      }
+    }
   }
 
   render(): string {

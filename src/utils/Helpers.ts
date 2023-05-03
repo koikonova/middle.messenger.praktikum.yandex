@@ -38,6 +38,30 @@ export const set = (object: Indexed | unknown, path: string, value: unknown): In
   return merge(object as Indexed, result)
 }
 // eslint-disable-next-line no-unused-vars
-type IsEqual = (lhs: string, rhs: string) => boolean
+// type IsEqual = (lhs: string, rhs: string) => boolean
 
-export const isEqual: IsEqual = (lhs, rhs) => lhs === rhs
+// export const isEqual: IsEqual = (lhs, rhs) => lhs === rhs
+
+function isObject(object: Indexed) {
+  return object != null && typeof object === "object";
+}
+
+export function isEqual(a: Indexed, b: Indexed): boolean {
+  const keys1 = Object.keys(a);
+  const keys2 = Object.keys(b);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    const val1: Indexed = a[key];
+    const val2: Indexed = b[key];
+    const areObjects: boolean = isObject(val1) && isObject(val2);
+    if (
+      (areObjects && !isEqual(val1, val2)) ||
+      (!areObjects && val1 !== val2)
+    ) {
+      return false;
+    }
+  }
+  return true;
+}

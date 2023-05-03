@@ -11,7 +11,7 @@ class ChatsController {
 
     async create(title: string) {
         await this.api.create(title)
-        this.fetchChats()
+        // this.fetchChats()
     }
 
     async fetchChats() {
