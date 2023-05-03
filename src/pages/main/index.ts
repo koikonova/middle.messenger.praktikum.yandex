@@ -33,11 +33,11 @@ export class Main extends Block {
     _init() {
         chatsController.fetchChats();
 
-        this.children.chatHistory = new chatHistory();
+        this.children.chatHistory = new chatHistory(this.props);
         this.children.chatList = new ChatsList();
 
         this.children.addChat = new PopUp({
-            // updateChatsList: this.updateChatsList.bind(this),
+            updateChatsList: this.updateChatsList.bind(this),
 
             classBox: 'addChat',
             name: 'chatName',
@@ -105,18 +105,9 @@ export class Main extends Block {
         });
     }
 
-    // updateChatsList() {
-    //     chatsController.fetchChats()
-    //       .then(() => {
-    //           // const chats = store.getState().chats;
-    //           // const arr = []
-    //           // arr.push(chats[0])
-    //           this.children.chatList.setProps({...this.props});
-    //       })
-    //       .catch((e) => {
-    //           console.error(e);
-    //       });
-    // }
+    updateChatsList() {
+        this.children.chatList.setProps({...this.props});
+    }
 
     popUp(event: Event, selector){
         event.preventDefault();
@@ -125,7 +116,7 @@ export class Main extends Block {
         popUp.classList.add('boxBackground');
     }
 
-    protected componentDidUpdate(_oldProps, newProps): boolean {
+    componentDidUpdate(_oldProps, newProps): boolean {
         if (newProps){
             this.props = newProps;
         }

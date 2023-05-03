@@ -39,7 +39,11 @@ export class CorrespondenceList extends Block<Chatlist> {
         events: {
           click: (event: Event) => {
             event.preventDefault();
-            chatsController.selectChat(props[chat].id);
+            chatsController.selectChat(props[chat].id)
+              .then(() => {
+                // console.log('props')
+                // console.log(props[chat].id)
+              })
             // this.chatHistory();
           }
         }

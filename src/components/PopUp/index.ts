@@ -17,7 +17,7 @@ const popUpTpl = `
 
 interface PopUpProps{
   classBox: string;
-  // updateChatsList: () => void;
+  updateChatsList: () => void;
 }
 
 export class PopUp extends Block {
@@ -63,7 +63,7 @@ export class PopUp extends Block {
     if (value) {
       chatsController.create(value)
         .then(() => {
-          // this.props.updateChatsList();
+          this.props.updateChatsList();
         })
         .catch((e) => {
           console.error(e);

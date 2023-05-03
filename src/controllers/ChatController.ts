@@ -11,6 +11,20 @@ class ChatsController {
 
     async create(title: string) {
         await this.api.create(title)
+        console.log('create')
+        const chats = await this.api.read()
+        console.log(chats)
+        const token = await this.getToken(chats[0])
+        store.set(`${chats[0].id}token`, token)
+
+        if (token) {
+            console.log(chats[0].id)
+            console.log(token)
+
+            await messagesController.connect(chats[0].id, token)
+        }
+
+        store.set('chats', chats)
         // this.fetchChats()
     }
 
@@ -37,7 +51,7 @@ class ChatsController {
     async delete(id: number) {
         await this.api.delete(id)
 
-        this.fetchChats()
+        // this.fetchChats()
     }
 
     async getToken(id: number) {
@@ -49,9 +63,6 @@ class ChatsController {
     async selectChat(id: number) {
         store.set('selectedChat', id)
     }
-
-
-
 }
 
 export const chatsController = new ChatsController()
