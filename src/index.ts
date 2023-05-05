@@ -3,7 +3,6 @@ import {SignupPage} from "./pages/authorization/signup";
 import {SigninPage} from "./pages/authorization/signin";
 import {ProfileInfoPage} from "./pages/profile/profileInfo";
 import {ChangePasswordPage} from "./pages/profile/changePassword";
-import {MainPage} from "./pages/main";
 import {Main} from "./pages/main";
 import {router} from "./utils/Router";
 
@@ -37,5 +36,3 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 })
-
-

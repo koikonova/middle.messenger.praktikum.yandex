@@ -1,9 +1,10 @@
 import { Block } from '../../utils/Block';
 import {correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatInfo, CorrespondenceProps} from "../../utils/Types";
+import {ChatInfo} from "../../utils/Types";
 import {withStore} from "../../utils/Store";
 import {isEqual} from "../../utils/Helpers";
+import {messagesController} from "../../controllers/MessageController";
 
 const correspondenceListTpl = `{{{chats}}}`;
 
@@ -18,10 +19,33 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
-  _init() {
-    if (this.props.chats == undefined){
-    } else {
-      this.children.chats = this.createChatsList(this.props.chats);
+  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+    if (_oldProps != undefined && !isEqual(_oldProps, newProps.chats)){
+      const sumNewChats = Object.keys(newProps.chats).length - Object.keys(_oldProps).length;
+      if (sumNewChats > 1){
+        this.children.chats = this.createChatsList(newProps.chats);
+        return true;
+      } else {
+        const props = newProps.chats[Object.keys(newProps.chats).length - 1];
+
+        messagesController.connect(props.id, props.token)
+          .then(() => {
+            console.log(`чат ${props.id} подключен`);
+          });
+
+        this.children.chats = new correspondence({
+          last_message: props.last_message,
+          title: props.title,
+          unread_count: props.unread_count,
+          events: {
+            click: (event: Event) => {
+              event.preventDefault();
+              chatsController.selectChat(props.id);
+            }
+          }
+        });
+        return true;
+      }
     }
   }
 
@@ -40,6 +64,7 @@ export class CorrespondenceList extends Block<Chatlist> {
           click: (event: Event) => {
             event.preventDefault();
             chatsController.selectChat(props[chat].id);
+            console.log('click')
             // this.chatHistory();
           }
         }
@@ -47,26 +72,7 @@ export class CorrespondenceList extends Block<Chatlist> {
     });
   }
 
-  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
-    if (_oldProps){
-      // console.log('_oldProps')
-      // console.log(_oldProps)
-      this.children.chats = this.createChatsList(this.props.chats);
-    } else
-      if (newProps){
-      // console.log('newProps')
-      // console.log(newProps.chats)
-      this.children.chats = this.createChatsList(newProps.chats);
-      return true;
-    }
-  }
-
   render(): string {
-    // if (this.props.chats == undefined){
-    // } else {
-    //   this.children.chats = this.createChatsList(this.props.chats);
-    // }
-
     return this.compile(correspondenceListTpl, this.props);
   }
 }
@@ -75,4 +81,4 @@ const withChats = withStore((state) => ({
   chats: { ...state.chats }
 }));
 
-export const ChatsList = withChats(CorrespondenceList)
+export const chatsList = withChats(CorrespondenceList)

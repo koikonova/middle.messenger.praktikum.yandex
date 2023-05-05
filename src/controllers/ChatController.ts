@@ -10,20 +10,35 @@ class ChatsController {
     }
 
     async create(title: string) {
-        await this.api.create(title)
-        // this.fetchChats()
+        const { id } = await this.api.create(title);
+        const token = await this.api.getToken(id);
+        const chat = {
+            created_by: store.getState().user.id,
+            last_message: null,
+            unread_count: 0,
+            avatar: null,
+            title,
+            token,
+            id,
+        };
+
+        const chats = [...store.getState().chats, chat];
+
+        store.set('chats', chats);
     }
 
     async fetchChats() {
-        const chats = await this.api.read()
-        chats.map(async (chat) => {
-            const token = await this.getToken(chat.id)
-            store.set(`${chat.id}token`, token);
-            if (token) {
-                await messagesController.connect(chat.id, token)
-            }
-        })
-        store.set('chats', chats)
+        const chats = await this.api.read();
+
+        const promises = chats.map((chat) => this.getToken(chat.id).then((token) => ({ ...chat, token })));
+
+        const result = await Promise.allSettled(promises);
+
+        const chatsWithToken = result
+          .filter((res) => res.status === 'fulfilled')
+          .map((res) => res.value);
+
+        store.set('chats', chatsWithToken)
     }
 
     async addUser(userId: number[], chatId: number) {
@@ -55,3 +70,4 @@ class ChatsController {
 }
 
 export const chatsController = new ChatsController()
+

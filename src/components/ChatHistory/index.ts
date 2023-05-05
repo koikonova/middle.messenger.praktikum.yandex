@@ -7,6 +7,7 @@ import {SentMessage} from "../SentMessageText";
 import {messagesController} from "../../controllers/MessageController";
 import {store, withStore} from "../../utils/Store";
 import {Message} from "../../utils/Types";
+import {isEqual} from "../../utils/Helpers";
 
 
 const chatHistoryTpl = `
@@ -32,15 +33,10 @@ const chatHistoryTpl = `
        </form>
    </div>`;
 
-// interface chatHistoryProps{
-//   chatDate: string;
-//   chatLogin: string;
-// }
-
 export interface chatHistoryProps {
-  selectedChat: number | undefined;
+  // selectedChat: number | undefined;
   messages: Message[];
-  userId: number;
+  // userId: number;
 }
 
 export class ChatHistory extends Block {
@@ -71,8 +67,9 @@ export class ChatHistory extends Block {
         }
       },
     });
+    // console.log(this.props)
+    // this.children.messages = this.createMessages(this.props);
 
-    this.children.messages = this.createMessages(this.props)
     this.children.attachButton = new Button({
       buttonClassName: 'attach',
       events: {
@@ -109,21 +106,33 @@ export class ChatHistory extends Block {
   send(event: Event){
     event.preventDefault();
     const message = this.getValue('#message');
-    messagesController.sendMessage(this.props.selectedChat, message)
+    messagesController.sendMessage(store.getState().selectedChat, message)
   }
 
   createMessages(props: chatHistoryProps) {
     return props.messages.map((data) => new ReceivedMessage({
       content: data.content,
-      isMine: props.userId === data.user_id }))
+      // isMine: props.userId === data.user_id
+    }))
+  }
+
+  unwrap(value) {
+    if (value instanceof Object) {
+      return value.valueOf();
+    }
+    return value;
   }
 
   protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
-   if (newProps){
-      if (newProps.selectedChat != undefined){
-        this.children.messages = this.createMessages(newProps)
-        return true;
-      }
+    console.log('_oldProps')
+    console.log(_oldProps)
+    console.log('newProps')
+    console.log(newProps)
+
+    if (_oldProps != undefined && !isEqual(_oldProps, newProps.messages)){
+      console.log(isEqual(_oldProps, newProps))
+      this.children.messages = this.createMessages(newProps);
+      return true;
     }
   }
 
@@ -132,24 +141,29 @@ export class ChatHistory extends Block {
   }
 }
 
-const withSelectedChatHistory = withStore((state) => {
-  const selectedChatId = state.selectedChat
+// const withSelectedChatHistory = withStore((state) => {
+//   const selectedChatId = state.selectedChat
+//
+//   if (!selectedChatId) {
+//     return {
+//       messages: [],
+//       selectedChat: undefined,
+//       userId: state.user.id,
+//     }
+//   }
+//
+//   return {
+//     messages: (state.messages || {})[selectedChatId] || [],
+//     selectedChat: state.selectedChat,
+//     userId: state.user.id,
+//   }
+// })
 
-  if (!selectedChatId) {
-    return {
-      messages: [],
-      selectedChat: undefined,
-      userId: state.user.id,
-    }
-  }
-
-  return {
-    messages: (state.messages || {})[selectedChatId] || [],
-    selectedChat: state.selectedChat,
-    userId: state.user.id,
-  }
-})
+const withSelectedChatHistory = withStore((state) => ({
+    messages: (state.messages || {})[state.selectedChat] || [],
+    // selectedChat: state.selectedChat,
+    // userId: state.user.id,
+}));
 
 export const chatHistory = withSelectedChatHistory(ChatHistory)
-
 

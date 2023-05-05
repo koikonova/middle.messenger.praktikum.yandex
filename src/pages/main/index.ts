@@ -6,8 +6,10 @@ import {PopUp} from "../../components/PopUp";
 import {store, withStore} from "../../utils/Store";
 import {router} from "../../utils/Router";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatsList} from "../../components/CorrespondenceList";
+import {chatsList} from "../../components/CorrespondenceList";
 import {chatHistory} from "../../components/ChatHistory";
+import {messagesController} from "../../controllers/MessageController";
+import {correspondence} from "../../components/Correspondence";
 
 const mainTpl = `
     {{{addChat}}}
@@ -31,10 +33,18 @@ export class Main extends Block {
     }
 
     _init() {
-        chatsController.fetchChats();
+        chatsController.fetchChats()
+          .then(() => {
+              Object.keys(store.getState().chats).map((chat) => {
+                  messagesController.connect(store.getState().chats[chat].id, store.getState().chats[chat].token)
+                    .then(() => {
+                        console.log(`чат ${store.getState().chats[chat].id} подключен`);
+                    });
+              });
+          });
 
+        this.children.chatList = new chatsList();
         this.children.chatHistory = new chatHistory();
-        this.children.chatList = new ChatsList();
 
         this.children.addChat = new PopUp({
             // updateChatsList: this.updateChatsList.bind(this),
@@ -106,16 +116,16 @@ export class Main extends Block {
     }
 
     // updateChatsList() {
-    //     chatsController.fetchChats()
-    //       .then(() => {
+    //     // chatsController.fetchChats()
+    //     //   .then(() => {
     //           // const chats = store.getState().chats;
     //           // const arr = []
     //           // arr.push(chats[0])
     //           this.children.chatList.setProps({...this.props});
-    //       })
-    //       .catch((e) => {
-    //           console.error(e);
-    //       });
+    //       // })
+    //       // .catch((e) => {
+    //       //     console.error(e);
+    //       // });
     // }
 
     popUp(event: Event, selector){
@@ -125,20 +135,21 @@ export class Main extends Block {
         popUp.classList.add('boxBackground');
     }
 
-    protected componentDidUpdate(_oldProps, newProps): boolean {
-        if (newProps){
-            this.props = newProps;
-        }
-    }
+    // protected componentDidUpdate(_oldProps, newProps): boolean {
+    //     if (newProps){
+    //         this.props = newProps;
+    //     }
+    // }
 
     render(): string {
         return this.compile(mainTpl, this.props);
     }
 }
 
-const withMain = withStore((state) => ({
-    chats: { ...state.chats },
-    user: { ...state.user },
-}));
+// const withMain = withStore((state) => ({
+//     chats: { ...state.chats },
+//     user: { ...state.user },
+// }));
+//
+// export const MainPage = withMain(Main);
 
-export const MainPage = withMain(Main);
