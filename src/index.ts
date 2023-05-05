@@ -37,5 +37,3 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   }
 })
-
-

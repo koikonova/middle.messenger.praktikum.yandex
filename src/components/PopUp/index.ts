@@ -103,3 +103,4 @@ export class PopUp extends Block {
     return this.compile(popUpTpl, this.props);
   }
 }
+

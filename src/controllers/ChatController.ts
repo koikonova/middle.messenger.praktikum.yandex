@@ -55,3 +55,4 @@ class ChatsController {
 }
 
 export const chatsController = new ChatsController()
+

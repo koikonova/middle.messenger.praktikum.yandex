@@ -142,3 +142,4 @@ const withMain = withStore((state) => ({
 }));
 
 export const MainPage = withMain(Main);
+
