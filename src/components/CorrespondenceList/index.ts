@@ -1,11 +1,9 @@
 import { Block } from '../../utils/Block';
 import {correspondence} from "../Correspondence";
 import {chatsController} from "../../controllers/ChatController";
-import {ChatInfo} from "../../utils/Types";
-import {store, withStore} from "../../utils/Store";
-// import {isEqual} from "../../utils/Helpers";
-// import {messagesController} from "../../controllers/MessageController";
-// import {store} from "../../utils/Store";
+import {ChatInfo, CorrespondenceProps} from "../../utils/Types";
+import {withStore} from "../../utils/Store";
+import {isEqual} from "../../utils/Helpers";
 
 const correspondenceListTpl = `{{{chats}}}`;
 
@@ -20,14 +18,20 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
+  _init() {
+    if (this.props.chats == undefined){
+    } else {
+      this.children.chats = this.createChatsList(this.props.chats);
+    }
+  }
+
   chatHistory(){
     const chat = document.querySelector('.chat-box');
     chat.classList.remove('displayNone');
   }
 
   createChatsList(props) {
-   return Object.keys(props).map((chat) => {
-      // console.log(chat)
+    return Object.keys(props).map((chat) => {
       return new correspondence({
         last_message: props[chat].last_message,
         title: props[chat].title,
@@ -35,11 +39,7 @@ export class CorrespondenceList extends Block<Chatlist> {
         events: {
           click: (event: Event) => {
             event.preventDefault();
-            chatsController.selectChat(props[chat].id)
-              .then(() => {
-                console.log('props[chat].id')
-                console.log(props[chat].id)
-              })
+            chatsController.selectChat(props[chat].id);
             // this.chatHistory();
           }
         }
@@ -48,18 +48,31 @@ export class CorrespondenceList extends Block<Chatlist> {
   }
 
   protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
-    this.children.chats = this.createChatsList(newProps.chats);
-    return true;
+    if (_oldProps){
+      // console.log('_oldProps')
+      // console.log(_oldProps)
+      this.children.chats = this.createChatsList(this.props.chats);
+    } else
+      if (newProps){
+      // console.log('newProps')
+      // console.log(newProps.chats)
+      this.children.chats = this.createChatsList(newProps.chats);
+      return true;
+    }
   }
 
   render(): string {
-   return this.compile(correspondenceListTpl, this.props);
+    // if (this.props.chats == undefined){
+    // } else {
+    //   this.children.chats = this.createChatsList(this.props.chats);
+    // }
+
+    return this.compile(correspondenceListTpl, this.props);
   }
 }
 
 const withChats = withStore((state) => ({
-  chats: [...(state.chats || [])]
+  chats: { ...state.chats }
 }));
 
 export const ChatsList = withChats(CorrespondenceList)
-

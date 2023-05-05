@@ -8,7 +8,6 @@ import {router} from "../../utils/Router";
 import {chatsController} from "../../controllers/ChatController";
 import {ChatsList} from "../../components/CorrespondenceList";
 import {chatHistory} from "../../components/ChatHistory";
-import {messagesController} from "../../controllers/MessageController";
 
 const mainTpl = `
     {{{addChat}}}
@@ -32,16 +31,10 @@ export class Main extends Block {
     }
 
     _init() {
-        chatsController.fetchChats()
-          .then(() => {
-              // const chats = store.getState().chats
-              // Object.keys(chats).map((chat) => {
-              //   messagesController.connect(chats[chat].id, chats[chat].token)
-              // });
-          })
+        chatsController.fetchChats();
 
-        this.children.chatList = new ChatsList();
         this.children.chatHistory = new chatHistory();
+        this.children.chatList = new ChatsList();
 
         this.children.addChat = new PopUp({
             // updateChatsList: this.updateChatsList.bind(this),
@@ -113,7 +106,16 @@ export class Main extends Block {
     }
 
     // updateChatsList() {
-    //     this.children.chatList.setProps({...this.props});
+    //     chatsController.fetchChats()
+    //       .then(() => {
+    //           // const chats = store.getState().chats;
+    //           // const arr = []
+    //           // arr.push(chats[0])
+    //           this.children.chatList.setProps({...this.props});
+    //       })
+    //       .catch((e) => {
+    //           console.error(e);
+    //       });
     // }
 
     popUp(event: Event, selector){
@@ -123,20 +125,20 @@ export class Main extends Block {
         popUp.classList.add('boxBackground');
     }
 
-    // componentDidUpdate(_oldProps, newProps): boolean {
-    //     this.props = newProps;
-    // }
+    protected componentDidUpdate(_oldProps, newProps): boolean {
+        if (newProps){
+            this.props = newProps;
+        }
+    }
 
     render(): string {
         return this.compile(mainTpl, this.props);
     }
 }
 
-// const withMain = withStore((state) => ({
-//     chats: { ...state.chats },
-//     user: { ...state.user },
-// }));
-//
-// export const MainPage = withMain(Main);
+const withMain = withStore((state) => ({
+    chats: { ...state.chats },
+    user: { ...state.user },
+}));
 
-
+export const MainPage = withMain(Main);
