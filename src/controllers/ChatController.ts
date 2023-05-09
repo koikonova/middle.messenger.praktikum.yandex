@@ -1,6 +1,5 @@
 import {store} from "../utils/Store";
 import {chatsApi, ChatsApi} from "../api/ChatApi";
-import {messagesController} from "./MessageController";
 
 class ChatsController {
     private readonly api: ChatsApi

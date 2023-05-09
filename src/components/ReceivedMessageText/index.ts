@@ -4,9 +4,6 @@ const receivedMessageTpl = `
     <h5 class="received-message">
       {{{content}}}
     </h5>
-<!--    <h7 class="message-time received-message-time">-->
-<!--      {{{receivedMessageDate}}}-->
-<!--    </h7>-->
 `;
 
 interface ReceivedMessageProps{

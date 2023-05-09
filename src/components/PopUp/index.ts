@@ -17,7 +17,6 @@ const popUpTpl = `
 
 interface PopUpProps{
   classBox: string;
-  // updateChatsList: () => void;
 }
 
 export class PopUp extends Block {
@@ -61,10 +60,7 @@ export class PopUp extends Block {
   createNewChat() {
     const value = this.getValue('#chatName');
     if (value) {
-      chatsController.create(value)
-        .then(() => {
-          // this.props.updateChatsList();
-        })
+      chatsController.create(value.textContent)
         .catch((e) => {
           console.error(e);
         });
@@ -77,7 +73,7 @@ export class PopUp extends Block {
   addId() {
     const value = this.getValue('#addId');
     if (value) {
-      const ID = [Number(value)]
+      const ID = [Number(value.textContent)]
       const selectedChat = store.getState().selectedChat
       chatsController.addUser(ID, selectedChat)
     }
@@ -89,7 +85,7 @@ export class PopUp extends Block {
   deleteId() {
     const value = this.getValue('#deleteId');
     if (value) {
-      const ID = [Number(value)]
+      const ID = [Number(value.textContent)]
       const selectedChat = store.getState().selectedChat
       chatsController.deleteUser(ID, selectedChat)
         .then(() => {console.log('user delete')})
@@ -103,4 +99,3 @@ export class PopUp extends Block {
     return this.compile(popUpTpl, this.props);
   }
 }
-

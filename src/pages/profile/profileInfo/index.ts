@@ -152,8 +152,8 @@ export class ProfileInfo extends Block{
 
     changeAvatar(event: Event){
         event.preventDefault();
-        const changeAvatarBox = document.querySelectorAll('.changeAvatarBoxBackground');
-        changeAvatarBox[0].classList.remove('displayNone');
+        const changeAvatarBox = document.querySelector('.changeAvatarBoxBackground');
+        changeAvatarBox.classList.remove('displayNone');
     }
 
     onClick(event: Event) {

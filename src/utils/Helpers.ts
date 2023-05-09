@@ -37,10 +37,6 @@ export const set = (object: Indexed | unknown, path: string, value: unknown): In
 
   return merge(object as Indexed, result)
 }
-// eslint-disable-next-line no-unused-vars
-// type IsEqual = (lhs: string, rhs: string) => boolean
-
-// export const isEqual: IsEqual = (lhs, rhs) => lhs === rhs
 
 function isObject(object: Indexed) {
   return object != null && typeof object === "object";

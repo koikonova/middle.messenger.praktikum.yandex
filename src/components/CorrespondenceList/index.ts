@@ -64,7 +64,6 @@ export class CorrespondenceList extends Block<Chatlist> {
           click: (event: Event) => {
             event.preventDefault();
             chatsController.selectChat(props[chat].id);
-            console.log('click')
             // this.chatHistory();
           }
         }

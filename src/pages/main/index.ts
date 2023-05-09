@@ -3,13 +3,12 @@ import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
 import {PopUp} from "../../components/PopUp";
-import {store, withStore} from "../../utils/Store";
+import {store} from "../../utils/Store";
 import {router} from "../../utils/Router";
 import {chatsController} from "../../controllers/ChatController";
 import {chatsList} from "../../components/CorrespondenceList";
 import {chatHistory} from "../../components/ChatHistory";
 import {messagesController} from "../../controllers/MessageController";
-import {correspondence} from "../../components/Correspondence";
 
 const mainTpl = `
     {{{addChat}}}
@@ -24,7 +23,29 @@ const mainTpl = `
         {{{addChatButton}}}
       </div>
     </div>
-    {{{chatHistory}}}
+    <div class="chat-box">
+        <div class="chat-info">
+            <div class="chat-avatar"></div>
+                <div class="buttons">
+                    {{{addButton}}}
+                    {{{deleteButton}}}
+                </div>
+            <hr class="separatory-line">
+        </div>
+        <div class="chat-history">
+          {{{chatHistory}}}
+        </div>
+        <div class="send-message-box">
+           <hr class="separatory-line">
+           {{{attachButton}}}
+           <form action="send" class="send-message">
+                <div class="message">
+                    {{{inputSendMessage}}}
+                </div>
+                {{{sendButton}}}
+           </form>
+        </div>
+    </div>
 `;
 
 export class Main extends Block {
@@ -47,8 +68,6 @@ export class Main extends Block {
         this.children.chatHistory = new chatHistory();
 
         this.children.addChat = new PopUp({
-            // updateChatsList: this.updateChatsList.bind(this),
-
             classBox: 'addChat',
             name: 'chatName',
             type: 'text',
@@ -58,9 +77,8 @@ export class Main extends Block {
             buttonTitle: 'Добавить',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
-            buttonType: 'button',
+            buttonType: 'submit',
         });
-
         this.children.addId = new PopUp({
             classBox: 'addId',
             name: 'addId',
@@ -71,9 +89,8 @@ export class Main extends Block {
             buttonTitle: 'Добавить',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
-            buttonType: 'button',
+            buttonType: 'submit',
         });
-
         this.children.deleteId = new PopUp({
             classBox: 'deleteId',
             name: 'deleteId',
@@ -84,7 +101,7 @@ export class Main extends Block {
             buttonTitle: 'Удалить',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
-            buttonType: 'button',
+            buttonType: 'submit',
         });
 
         this.children.profileButton = new Button({
@@ -103,7 +120,6 @@ export class Main extends Block {
             placeholder: 'Поиск',
             className: 'search',
         });
-
         this.children.addChatButton = new Button({
             buttonTitle: 'Добавить чат',
             buttonClassName: 'button',
@@ -113,20 +129,57 @@ export class Main extends Block {
                 }
             },
         });
+
+        this.children.addButton = new Button({
+            buttonTitle: 'Добавить пользователя',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.popUp(e,'.addId');
+                }
+            },
+        });
+        this.children.deleteButton = new Button({
+            buttonTitle: 'Удалить пользователя',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.popUp(e,'.deleteId');
+                }
+            },
+        });
+
+        this.children.attachButton = new Button({
+            buttonClassName: 'attach',
+            events: {
+                click: () => {
+                    console.log('attach');
+                }
+            },
+        });
+        this.children.inputSendMessage = new Input({
+            type: 'message',
+            name: 'message',
+            value: 'Сообщение',
+        });
+        this.children.sendButton = new Button({
+            buttonClassName: 'send',
+            buttonType: 'submit',
+            events: {
+                click: (e) => this.send(e)
+            },
+        });
     }
 
-    // updateChatsList() {
-    //     // chatsController.fetchChats()
-    //     //   .then(() => {
-    //           // const chats = store.getState().chats;
-    //           // const arr = []
-    //           // arr.push(chats[0])
-    //           this.children.chatList.setProps({...this.props});
-    //       // })
-    //       // .catch((e) => {
-    //       //     console.error(e);
-    //       // });
-    // }
+    getValue(selector) {
+        return document.querySelector(selector).value;
+    }
+
+    send(event: Event){
+        event.preventDefault();
+        const message = this.getValue('#message');
+        messagesController.sendMessage(store.getState().selectedChat, message.textContent)
+    }
 
     popUp(event: Event, selector){
         event.preventDefault();
@@ -135,21 +188,7 @@ export class Main extends Block {
         popUp.classList.add('boxBackground');
     }
 
-    // protected componentDidUpdate(_oldProps, newProps): boolean {
-    //     if (newProps){
-    //         this.props = newProps;
-    //     }
-    // }
-
     render(): string {
         return this.compile(mainTpl, this.props);
     }
 }
-
-// const withMain = withStore((state) => ({
-//     chats: { ...state.chats },
-//     user: { ...state.user },
-// }));
-//
-// export const MainPage = withMain(Main);
-

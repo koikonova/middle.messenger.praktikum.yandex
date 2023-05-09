@@ -37,7 +37,6 @@ export class Correspondence extends Block {
 }
 
 export const withSelectedChat = withStore((state) => ({
-  // selectedChat: { ...state.chats }
   selectedChat: (state.chats || [])
     .find(({ id }) => id === state.selectedChat),
 }));

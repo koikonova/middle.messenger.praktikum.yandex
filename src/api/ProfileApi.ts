@@ -26,5 +26,3 @@ export class ProfileApi extends BaseApi {
 }
 
 export const profileApi = new ProfileApi()
-
-
