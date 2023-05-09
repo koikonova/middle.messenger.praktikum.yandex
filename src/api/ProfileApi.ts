@@ -1,4 +1,4 @@
-import { BaseApi } from './BaseApi';
+import {BaseApi} from "./BaseApi";
 import {User, ChangePassword} from "../utils/Types";
 
 export type UserFields = Omit<User, 'password' | 'avatar'>
