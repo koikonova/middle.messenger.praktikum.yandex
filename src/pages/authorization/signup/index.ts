@@ -98,6 +98,17 @@ export class Signup extends Block{
         });
     }
 
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     getValue(selector) {
         return document.querySelector(selector).value;
     }
@@ -106,7 +117,9 @@ export class Signup extends Block{
         const inputs = document.querySelectorAll('input');
         const data: Record<string, unknown> = {};
         Array.from(inputs).forEach((input) => {
-            data[input.name] = input.value;
+            if (this.sanitizeInput(input.value)){
+                data[input.name] = input.value;
+            }
         });
 
         const password = this.getValue('#password');

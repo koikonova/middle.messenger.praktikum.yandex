@@ -61,6 +61,17 @@ export class ChangePassword extends Block{
         });
     }
 
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     getValue(selector) {
         return document.querySelector(selector).value;
     }
@@ -71,10 +82,12 @@ export class ChangePassword extends Block{
         const newPasswordValue = this.getValue('#newPassword');
         const repeatPasswordValue = this.getValue('#repeatNewPassword');
         const data = { oldPassword: oldPasswordValue, newPassword: newPasswordValue }
-        if (newPasswordValue === repeatPasswordValue){
-            if (oldPasswordValue !== newPasswordValue) {
-                profileController.changePassword(data)
-                router.go('/settings')
+        if (this.sanitizeInput(oldPasswordValue) && this.sanitizeInput(newPasswordValue) && this.sanitizeInput(repeatPasswordValue)){
+            if (newPasswordValue === repeatPasswordValue){
+                if (oldPasswordValue !== newPasswordValue) {
+                    profileController.changePassword(data)
+                    router.go('/settings')
+                }
             }
         }
     }

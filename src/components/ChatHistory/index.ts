@@ -22,7 +22,6 @@ export class ChatHistory extends Block {
       if (messages != 0) {
         for (let i = -1; i < messages.length; i++){
           if (messages[i] != undefined){
-            console.log(messages[i])
             messages[i].remove();
           }
         }

@@ -171,6 +171,17 @@ export class Main extends Block {
         });
     }
 
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     getValue(selector) {
         return document.querySelector(selector).value;
     }
@@ -178,7 +189,9 @@ export class Main extends Block {
     send(event: Event){
         event.preventDefault();
         const message = this.getValue('#message');
-        messagesController.sendMessage(store.getState().selectedChat, message.textContent)
+        if (this.sanitizeInput(message)){
+            messagesController.sendMessage(store.getState().selectedChat, message);
+        }
     }
 
     popUp(event: Event, selector){

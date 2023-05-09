@@ -53,6 +53,17 @@ export class PopUp extends Block {
     }
   }
 
+  sanitizeInput(input) {
+    const scriptRegex = /<\s*[sS][^>]*>/;
+    const linkRegex = /<a\b[^>]*>/gi;
+
+    if (scriptRegex.test(input) || linkRegex.test(input)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   getValue(selector) {
     return document.querySelector(selector).value;
   }
@@ -60,10 +71,12 @@ export class PopUp extends Block {
   createNewChat() {
     const value = this.getValue('#chatName');
     if (value) {
-      chatsController.create(value.textContent)
-        .catch((e) => {
-          console.error(e);
-        });
+      if (this.sanitizeInput(value)){
+        chatsController.create(value)
+          .catch((e) => {
+            console.error(e);
+          });
+      }
     }
     const addChat = document.querySelector('.addChat');
     addChat.classList.remove('boxBackground');
@@ -73,9 +86,11 @@ export class PopUp extends Block {
   addId() {
     const value = this.getValue('#addId');
     if (value) {
-      const ID = [Number(value.textContent)]
-      const selectedChat = store.getState().selectedChat
-      chatsController.addUser(ID, selectedChat)
+      if (this.sanitizeInput(value)){
+        const ID = [Number(value)]
+        const selectedChat = store.getState().selectedChat
+        chatsController.addUser(ID, selectedChat)
+      }
     }
     const addChat = document.querySelector('.addId');
     addChat.classList.remove('boxBackground');
@@ -85,10 +100,12 @@ export class PopUp extends Block {
   deleteId() {
     const value = this.getValue('#deleteId');
     if (value) {
-      const ID = [Number(value.textContent)]
-      const selectedChat = store.getState().selectedChat
-      chatsController.deleteUser(ID, selectedChat)
-        .then(() => {console.log('user delete')})
+      if (this.sanitizeInput(value)){
+        const ID = [Number(value)]
+        const selectedChat = store.getState().selectedChat
+        chatsController.deleteUser(ID, selectedChat)
+          .then(() => {console.log('user delete')})
+      }
     }
     const addChat = document.querySelector('.deleteId');
     addChat.classList.remove('boxBackground');
