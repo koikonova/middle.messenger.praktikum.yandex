@@ -17,6 +17,9 @@ class AuthController {
             router.go('/messenger')
         } catch (e) {
             console.error(e)
+            if (e.reason === "User already in system"){
+                router.go("/messenger");
+            }
         }
     }
 
@@ -27,6 +30,9 @@ class AuthController {
             router.go('/messenger')
         } catch (e) {
             console.error(e)
+            if (e.reason === "User already in system"){
+                router.go("/messenger");
+            }
         }
     }
 
