@@ -12,5 +12,5 @@ https://www.figma.com/file/tIG9jZli3Ao8KJmr4wh3h7/Chat_external_link?node-id=0%3
 - `npm run dev` — build and run using Parcel to work on the project.
 - `npm run build` — build the project using Parcel.
 
-## Pull request Sprint_2:
-https://github.com/chelseajoint/middle.messenger.praktikum.yandex/pull/3
+## Pull request Sprint_3:
+https://github.com/chelseajoint/middle.messenger.praktikum.yandex/pull/4
