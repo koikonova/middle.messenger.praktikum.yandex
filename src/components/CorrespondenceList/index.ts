@@ -25,6 +25,16 @@ export class CorrespondenceList extends Block<Chatlist> {
       if (sumNewChats > 1){
         this.children.chats = this.createChatsList(newProps.chats);
         return true;
+      } else if (sumNewChats === -1){
+        const chats = document.querySelectorAll('.chatHistory');
+        if (chats)
+        for (let i = -1; i < chats.length; i++){
+          if (chats[i] != undefined){
+            chats[i].remove();
+          }
+        }
+        this.children.chats = this.createChatsList(newProps.chats);
+        return true;
       } else {
         const props = newProps.chats[Object.keys(newProps.chats).length - 1];
 
@@ -34,13 +44,21 @@ export class CorrespondenceList extends Block<Chatlist> {
           });
 
         this.children.chats = new correspondence({
-          last_message: props.last_message,
-          title: props.title,
-          unread_count: props.unread_count,
+          ...props,
+          classId: `classId${props.id}`,
+          buttonClassNameSpecial: `classButton${props.id}`,
           events: {
             click: (event: Event) => {
               event.preventDefault();
-              chatsController.selectChat(props.id);
+
+              chatsController.selectChat(props.id)
+                .then(() => {
+                  this.chatHistory();
+                  this.changeBg(props.id);
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
             }
           }
         });
@@ -49,22 +67,51 @@ export class CorrespondenceList extends Block<Chatlist> {
     }
   }
 
+  changeBg(props){
+    const chat = document.querySelector(`.classId${props}`);
+    const chats = document.querySelectorAll('.chatHistory');
+    if (chats)
+      for (let i = -1; i < chats.length; i++){
+        if (chats[i] != undefined){
+          chats[i].classList.remove('correspondence-info-bg');
+        }
+      }
+    chat.classList.add('correspondence-info-bg');
+
+    const button = document.querySelector(`.classButton${props}`);
+    const buttons = document.querySelectorAll('.deleteChat');
+    if (buttons)
+      for (let i = -1; i < chats.length; i++){
+        if (buttons[i] != undefined){
+          buttons[i].classList.add('displayNone');
+        }
+      }
+    button.classList.remove('displayNone');
+  }
+
   chatHistory(){
     const chat = document.querySelector('.chat-box');
     chat.classList.remove('displayNone');
+    chat.classList.add('displayFlex');
   }
 
   createChatsList(props) {
     return Object.keys(props).map((chat) => {
       return new correspondence({
-        last_message: props[chat].last_message,
-        title: props[chat].title,
-        unread_count: props[chat].unread_count,
+        ...props[chat],
+        classId: `classId${props[chat].id}`,
+        buttonClassNameSpecial: `classButton${props[chat].id}`,
         events: {
           click: (event: Event) => {
             event.preventDefault();
-            chatsController.selectChat(props[chat].id);
-            // this.chatHistory();
+            chatsController.selectChat(props[chat].id)
+              .then(() => {
+                this.chatHistory();
+                this.changeBg(props[chat].id);
+              })
+              .catch((e) => {
+                console.error(e);
+              });
           }
         }
       });

@@ -6,6 +6,7 @@ import {store} from "../../utils/Store";
 
 const popUpTpl = `
   <div class="popUpBox">
+    {{{close}}}
     <h3 class="popUpText">Введите данные</h3>
     <form class="popUpForm">
       {{{chatName}}}
@@ -26,12 +27,24 @@ export class PopUp extends Block {
 
   _init() {
     this.element!.classList.add(this.props.classBox, 'displayNone');
+    this.children.close = new Button({
+      buttonTitle: 'x',
+      buttonClassName: 'close',
+      buttonType: 'button',
+      events: {
+        click: () => {
+          const addChat = document.querySelector('.boxBackground');
+          addChat.classList.remove('boxBackground');
+          addChat.classList.add('displayNone');
+        }
+      },
+    })
     this.children.chatName = new LabelInput(this.props);
     if (this.props.classBox === 'addChat'){
       this.children.button = new Button({
         ...this.props,
         events: {
-          click: () => this.createNewChat(),
+          click: (e) => this.createNewChat(e),
         }
       });
     }
@@ -39,7 +52,7 @@ export class PopUp extends Block {
       this.children.button = new Button({
         ...this.props,
         events: {
-          click: () => this.addId(),
+          click: (e) => this.addId(e),
         }
       });
     }
@@ -47,7 +60,7 @@ export class PopUp extends Block {
       this.children.button = new Button({
         ...this.props,
         events: {
-          click: () => this.deleteId(),
+          click: (e) => this.deleteId(e),
         }
       });
     }
@@ -68,7 +81,8 @@ export class PopUp extends Block {
     return document.querySelector(selector).value;
   }
 
-  createNewChat() {
+  createNewChat(event: Event) {
+    event.preventDefault();
     const value = this.getValue('#chatName');
     if (value) {
       if (this.sanitizeInput(value)){
@@ -83,7 +97,8 @@ export class PopUp extends Block {
     addChat.classList.add('displayNone');
   }
 
-  addId() {
+  addId(event: Event) {
+    event.preventDefault();
     const value = this.getValue('#addId');
     if (value) {
       if (this.sanitizeInput(value)){
@@ -97,7 +112,8 @@ export class PopUp extends Block {
     addChat.classList.add('displayNone');
   }
 
-  deleteId() {
+  deleteId(event: Event) {
+    event.preventDefault();
     const value = this.getValue('#deleteId');
     if (value) {
       if (this.sanitizeInput(value)){

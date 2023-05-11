@@ -16,6 +16,20 @@ type Options = {
   data?: any;
 };
 
+// eslint-disable-next-line no-unused-vars
+type HTTPMethod = (path: string, data?: unknown) => Promise<unknown>;
+
+function queryStringify(data) {
+  if (typeof data !== 'object') {
+    throw new Error('Data must be object');
+  }
+
+  const keys = Object.keys(data);
+  return keys.reduce((result, key, index) => {
+    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+  }, '?');
+}
+
 export class HTTPTransport {
   static API_URL = 'https://ya-praktikum.tech/api/v2';
 
@@ -25,40 +39,47 @@ export class HTTPTransport {
     this.endpoint = `${HTTPTransport.API_URL}${endpoint}`
   }
 
-  public get<Response>(path = '/'): Promise<Response> {
-    return this.request<Response>(this.endpoint + path)
-  }
+  public get: HTTPMethod = (path, data) => {
+    return this.request(this.endpoint + path,{
+      method: Method.Get,
+      data,
+      });
+  };
 
-  public post<Response = void>(path: string, data?: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+  public post: HTTPMethod = (path, data) => {
+    return this.request(this.endpoint + path,{
       method: Method.Post,
       data,
-    })
-  }
+    });
+  };
 
-  public put<Response = void>(path: string, data: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+  public put: HTTPMethod = (path, data) => {
+    return this.request(this.endpoint + path,{
       method: Method.Put,
       data,
-    })
-  }
+    });
+  };
 
-  public patch<Response = void>(path: string, data: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+  public patch: HTTPMethod = (path, data) => {
+    return this.request(this.endpoint + path,{
       method: Method.Patch,
       data,
-    })
-  }
+    });
+  };
 
-  public delete<Response>(path: string, data?: unknown): Promise<Response> {
-    return this.request<Response>(this.endpoint + path, {
+  public delete: HTTPMethod = (path, data) => {
+    return this.request(this.endpoint + path,{
       method: Method.Delete,
       data,
-    })
-  }
+    });
+  };
 
   private request<Response>(url: string, options: Options = { method: Method.Get }): Promise<Response> {
     const { method, data } = options
+
+    if (method === Method.Get && data) {
+      url = url + queryStringify(data);
+    }
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()

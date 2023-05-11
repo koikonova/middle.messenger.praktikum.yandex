@@ -42,10 +42,16 @@ class ChatsController {
 
     async addUser(userId: number[], chatId: number) {
         this.api.addUsers(userId, chatId)
+          .then(() => {
+              console.log(`user ${userId} добавлен в чат ${chatId}`)
+          })
     }
 
     async deleteUser(userId: number[], chatId: number) {
         this.api.deleteUsers(userId, chatId)
+          .then(() => {
+              console.log(`user ${userId} удален из чата ${chatId}`)
+          })
     }
 
     async delete(id: number) {
@@ -63,9 +69,6 @@ class ChatsController {
     async selectChat(id: number) {
         store.set('selectedChat', id)
     }
-
-
-
 }
 
 export const chatsController = new ChatsController()
