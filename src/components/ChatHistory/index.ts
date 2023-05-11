@@ -16,6 +16,10 @@ export class ChatHistory extends Block {
     super('div', props);
   }
 
+  _init() {
+    this.element!.classList.add('chat-history-messages');
+  }
+
   protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
     if (_oldProps != undefined && !isEqual(_oldProps, newProps.messages)){
       const messages = document.querySelectorAll('.received-message-text-box');

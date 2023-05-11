@@ -73,6 +73,10 @@
   }
 }
 
+.correspondence-info-bg{
+  background-color: $base-light-blue;
+}
+
 .correspondence-avatar{
   width: 47px;
   height: 100%;
@@ -131,7 +135,6 @@
 }
 
 .chat-box{
-  @include flex-column;
   width: calc(100vw - 350px);
   height: 100vh;
   top: 0;
@@ -139,6 +142,10 @@
   margin: 0 20px;
   position: absolute;
   justify-content: space-between;
+}
+
+.displayFlex{
+  @include flex-column;
 }
 
 .chat-avatar{
@@ -187,6 +194,11 @@
   position: absolute;
   bottom: 84px;
   justify-content: flex-end;
+}
+
+.chat-history-messages{
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .chat-date{
@@ -333,6 +345,7 @@
   height: 230px;
   background: $base-white;
   border-radius: 12px;
+  position: relative;
 }
 
 .popUpText{
@@ -368,4 +381,29 @@
 
 .labelInputPopUp .validationError{
   margin-top: 22px;
+}
+
+.deleteChat, .close{
+  @include h3;
+  border: none;
+  background-color: transparent;
+  color: $base-gray;
+  position: absolute;
+  right: 9px;
+  cursor: pointer;
+}
+
+.deleteChat{
+  top: 5px;
+}
+
+.close{
+  top: 11px;
+}
+
+.chatListAvatar{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }

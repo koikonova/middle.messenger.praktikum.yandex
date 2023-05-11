@@ -68,6 +68,7 @@ export interface ChatInfo {
 }
 
 export interface CorrespondenceProps{
+  avatar: string;
   last_message: number;
   title: string;
   unread_count: number;
@@ -75,4 +76,5 @@ export interface CorrespondenceProps{
   events: {
     click: () => void;
   }
+  classId: string;
 }

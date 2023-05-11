@@ -23,7 +23,7 @@ const mainTpl = `
         {{{addChatButton}}}
       </div>
     </div>
-    <div class="chat-box">
+    <div class="chat-box displayNone">
         <div class="chat-info">
             <div class="chat-avatar"></div>
                 <div class="buttons">
@@ -160,7 +160,7 @@ export class Main extends Block {
         this.children.inputSendMessage = new Input({
             type: 'message',
             name: 'message',
-            value: 'Сообщение',
+            placeholder: 'Сообщение',
         });
         this.children.sendButton = new Button({
             buttonClassName: 'send',
@@ -189,9 +189,12 @@ export class Main extends Block {
     send(event: Event){
         event.preventDefault();
         const message = this.getValue('#message');
-        if (this.sanitizeInput(message)){
+        if (this.sanitizeInput(message) && message != ''){
             messagesController.sendMessage(store.getState().selectedChat, message);
         }
+        // eslint-disable-next-line
+        let input = document.querySelector('#message');
+        input.value = '';
     }
 
     popUp(event: Event, selector){
