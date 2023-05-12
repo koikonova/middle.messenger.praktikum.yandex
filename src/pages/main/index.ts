@@ -2,67 +2,206 @@ import './style.scss'
 import {Block} from "../../utils/Block";
 import {Button} from "../../components/Button";
 import {Input} from "../../components/Input";
-import {Correspondence} from "../../components/Correspondence";
-import {ChatHistory} from "../../components/ChatHistory";
+import {PopUp} from "../../components/PopUp";
+import {store} from "../../utils/Store";
+import {router} from "../../utils/Router";
+import {chatsController} from "../../controllers/ChatController";
+import {chatsList} from "../../components/CorrespondenceList";
+import {chatHistory} from "../../components/ChatHistory";
+import {messagesController} from "../../controllers/MessageController";
 
 const mainTpl = `
+    {{{addChat}}}
+    {{{addId}}}
+    {{{deleteId}}}
     <div class="chats">
       <div class="chats--content">
         {{{profileButton}}}
         {{{search}}}
         <hr class="separatory-line">
-        {{{correspondence1}}}
-        {{{correspondence2}}}
+        {{{chatList}}}
+        {{{addChatButton}}}
       </div>
     </div>
-    {{{chatHistory}}}
+    <div class="chat-box displayNone">
+        <div class="chat-info">
+            <div class="chat-avatar"></div>
+                <div class="buttons">
+                    {{{addButton}}}
+                    {{{deleteButton}}}
+                </div>
+            <hr class="separatory-line">
+        </div>
+        <div class="chat-history">
+          {{{chatHistory}}}
+        </div>
+        <div class="send-message-box">
+           <hr class="separatory-line">
+           {{{attachButton}}}
+           <form action="send" class="send-message">
+                <div class="message">
+                    {{{inputSendMessage}}}
+                </div>
+                {{{sendButton}}}
+           </form>
+        </div>
+    </div>
 `;
 
 export class Main extends Block {
-    constructor(props) {
-        super('main', props);
+    constructor() {
+        super('main' );
     }
 
     _init() {
+        chatsController.fetchChats()
+          .then(() => {
+              Object.keys(store.getState().chats).map((chat) => {
+                  messagesController.connect(store.getState().chats[chat].id, store.getState().chats[chat].token)
+                    .then(() => {
+                        console.log(`чат ${store.getState().chats[chat].id} подключен`);
+                    });
+              });
+          });
+
+        this.children.chatList = new chatsList();
+        this.children.chatHistory = new chatHistory();
+
+        this.children.addChat = new PopUp({
+            classBox: 'addChat',
+            name: 'chatName',
+            type: 'text',
+            className: 'chatName',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'Название чата',
+            buttonTitle: 'Добавить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'submit',
+        });
+        this.children.addId = new PopUp({
+            classBox: 'addId',
+            name: 'addId',
+            type: 'text',
+            className: 'addId',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'ID пользователя',
+            buttonTitle: 'Добавить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'submit',
+        });
+        this.children.deleteId = new PopUp({
+            classBox: 'deleteId',
+            name: 'deleteId',
+            type: 'text',
+            className: 'deleteId',
+            labelInputClassName: 'labelInputPopUp',
+            labelTitle: 'ID пользователя',
+            buttonTitle: 'Удалить',
+            buttonClassName: 'button',
+            buttonClassNameSpecial: 'popUpButton',
+            buttonType: 'submit',
+        });
+
         this.children.profileButton = new Button({
             buttonTitle: 'Профиль >',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'link-profile',
             events: {
                 click: () => {
-                    console.log('/profile');
+                    router.go('/settings')
                 }
             },
-            buttonHref: '/profile',
         });
         this.children.search = new Input({
+            name: 'search',
             type: 'search',
             placeholder: 'Поиск',
             className: 'search',
         });
-        this.children.correspondence1 = new Correspondence({
-            name: 'Илья',
-            message: 'Друзья, у меня для вас особенный выпуск новостей!...',
-            date: '15:12',
-            unread: '2',
+        this.children.addChatButton = new Button({
+            buttonTitle: 'Добавить чат',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.popUp(e,'.addChat');
+                }
+            },
         });
-        this.children.correspondence2 = new Correspondence({
-            name: 'тет-а-теты',
-            message: 'И Human Interface Guidelines и Material Design рекомендуют...',
-            date: 'Ср',
-            unread: '4',
+
+        this.children.addButton = new Button({
+            buttonTitle: 'Добавить пользователя',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.popUp(e,'.addId');
+                }
+            },
         });
-        this.children.chatHistory = new ChatHistory({
-            chatLogin: 'Вадим',
-            chatDate: '19 июня',
-            receivedMessage:'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.\n' +
-              '<br>\n' +
-              '<br>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-            receivedMessageDate: '11:56',
-            receivedMessageImgDate: '11:56',
-            sentMessage: 'Круто!',
-            sentMessageDate: '12:00',
+        this.children.deleteButton = new Button({
+            buttonTitle: 'Удалить пользователя',
+            buttonClassName: 'button',
+            events: {
+                click: (e) => {
+                    this.popUp(e,'.deleteId');
+                }
+            },
         });
+
+        this.children.attachButton = new Button({
+            buttonClassName: 'attach',
+            events: {
+                click: () => {
+                    console.log('attach');
+                }
+            },
+        });
+        this.children.inputSendMessage = new Input({
+            type: 'message',
+            name: 'message',
+            placeholder: 'Сообщение',
+        });
+        this.children.sendButton = new Button({
+            buttonClassName: 'send',
+            buttonType: 'submit',
+            events: {
+                click: (e) => this.send(e)
+            },
+        });
+    }
+
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    getValue(selector) {
+        return document.querySelector(selector).value;
+    }
+
+    send(event: Event){
+        event.preventDefault();
+        const message = this.getValue('#message');
+        if (this.sanitizeInput(message) && message != ''){
+            messagesController.sendMessage(store.getState().selectedChat, message);
+        }
+        // eslint-disable-next-line
+        let input = document.querySelector('#message');
+        input.value = '';
+    }
+
+    popUp(event: Event, selector){
+        event.preventDefault();
+        const popUp = document.querySelector(selector);
+        popUp.classList.remove('displayNone');
+        popUp.classList.add('boxBackground');
     }
 
     render(): string {

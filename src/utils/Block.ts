@@ -101,14 +101,14 @@ export class Block<Props extends Record<string, any> = unknown> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: any, newProps: any) {
+  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
   // eslint-disable-next-line no-unused-vars
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(oldProps: unknown, newProps: unknown) {
     return true;
   }
 
@@ -140,7 +140,11 @@ export class Block<Props extends Record<string, any> = unknown> {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+          if (Array.isArray(component)) {
+            contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`).join('')
+          } else {
+            contextAndStubs[name] = `<div data-id="${component.id}"></div>`
+          }
     })
 
     const tpl = Handlebars.compile(template);
@@ -148,17 +152,27 @@ export class Block<Props extends Record<string, any> = unknown> {
     const temp = document.createElement('template');
     temp.innerHTML = html;
 
-    Object.entries(this.children).forEach(([, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+      const replaceStub = (component: Block) => {
+        const stub = temp.content.querySelector(`[data-id="${component.id}"]`)
 
-      if (!stub){
-        return;
-      }
+        if (!stub) {
+          return
+        }
 
-      stub.replaceWith(component.getContent()!);
-    });
+        component.getContent()?.append(...Array.from(stub.childNodes))
 
-    return temp.content;
+        stub.replaceWith(component.getContent()!)
+      };
+      // eslint-disable-next-line
+      Object.entries(this.children).forEach(([_, component]) => {
+        if (Array.isArray(component)) {
+          component.forEach(replaceStub)
+        } else {
+          replaceStub(component)
+        }
+      });
+
+      return temp.content;
   }
 
   getContent() {

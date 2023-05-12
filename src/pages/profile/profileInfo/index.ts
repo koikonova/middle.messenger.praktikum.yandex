@@ -3,13 +3,20 @@ import {Block} from "../../../utils/Block";
 import {Back} from "../../../components/Back";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
+import {Avatar} from "../../../components/Avatar";
+import {ChangeAvatar} from "../changeAvatar";
+import {authController} from "../../../controllers/AuthController";
+import {store, withStore} from "../../../utils/Store";
+import {profileController} from "../../../controllers/ProfileController";
+import {router} from "../../../utils/Router";
+import {User} from "../../../utils/Types";
 
 const profileInfoTpl = `
     {{{buttonBack}}}
+    {{{changeAvatar}}}
     <main class="profile-box">
-      <div class="avatar"></div>
-      <h3 class="chat-name">Иван</h3>
+      {{{avatar}}}
+      {{{chat_name}}}
       <form action="" class="profile">
         {{{email}}}
         <hr class="separatory-line">
@@ -23,14 +30,34 @@ const profileInfoTpl = `
         <hr class="separatory-line">
         {{{phone}}}
       </form>
-      <div class="profile-box--buttons">
+      <div class="profile-box--buttons">  
         {{{changeDate}}}
         <hr class="separatory-line">
         {{{changePassword}}}
         <hr class="separatory-line">
-        {{{signout}}}
+        {{{logout}}}
       </div>
     </main>`;
+
+const chatNameTpl = `{{name}}`;
+
+interface ChatNameProps{
+    name: string;
+}
+
+class ChatName extends Block{
+    constructor(props: ChatNameProps) {
+        super('h3', props);
+    }
+
+    _init() {
+        this.element!.classList.add('chat-name');
+    }
+
+    render(): string {
+        return this.compile(chatNameTpl, this.props);
+    }
+}
 
 export class ProfileInfo extends Block{
     constructor(props) {
@@ -39,12 +66,20 @@ export class ProfileInfo extends Block{
 
     _init() {
         this.children.buttonBack = new Back({});
+        this.children.changeAvatar = new ChangeAvatar({});
+        this.children.avatar = new Avatar({
+            src: `https://ya-praktikum.tech/api/v2/resources${store.getState().user.avatar}`,
+            events: {
+                click: (e) => this.changeAvatar(e),
+            }
+        })
+        this.children.chat_name = new ChatName({name: this.props.first_name});
         this.children.email = new LabelInput({
             name: 'email',
             labelInputClassName: 'profileInput',
             type: 'email',
             labelTitle: 'Почта',
-            value: 'pochta@yandex.ru',
+            value: this.props.email,
             bottomError: 'bottomErrorProfile',
         });
         this.children.login = new LabelInput({
@@ -52,7 +87,7 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Логин',
-            value: 'ivanivanov',
+            value: this.props.login,
             bottomError: 'bottomErrorProfile',
         });
         this.children.first_name = new LabelInput({
@@ -60,7 +95,7 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя',
-            value: 'Иван',
+            value: this.props.first_name,
             bottomError: 'bottomErrorProfile',
         });
         this.children.second_name = new LabelInput({
@@ -68,7 +103,7 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Фамилия',
-            value: 'Иванов',
+            value: this.props.second_name,
             bottomError: 'bottomErrorProfile',
         });
         this.children.display_name = new LabelInput({
@@ -76,7 +111,7 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'text',
             labelTitle: 'Имя в чате',
-            value: 'Иван',
+            value: this.props.display_name,
             bottomError: 'bottomErrorProfile',
         });
         this.children.phone = new LabelInput({
@@ -84,7 +119,7 @@ export class ProfileInfo extends Block{
             labelInputClassName: 'profileInput',
             type: 'tel',
             labelTitle: 'Телефон',
-            value: '+7 (909) 967 30 30',
+            value: this.props.phone,
             bottomError: 'bottomErrorProfile',
         });
         this.children.changeDate = new Button({
@@ -92,34 +127,70 @@ export class ProfileInfo extends Block{
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-date',
             events: {
-                click: formSubmit
-            },
+                click: (e) => this.onClick(e),
+            }
         });
         this.children.changePassword = new Button({
             buttonTitle: 'Изменить пароль',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-password',
             events: {
-                click: () => {
-                    console.log('/changePassword');
-                }
-            },
-            buttonHref: '/changePassword',
+                click: () => router.go('/settings/password'),
+            }
         });
-        this.children.signout = new Button({
+        this.children.logout = new Button({
             buttonTitle: 'Выйти',
             buttonClassName: 'link',
-            buttonClassNameSpecial: 'signout',
+            buttonClassNameSpecial: 'logout',
             events: {
                 click: () => {
-                    console.log('/');
+                    authController.logout();
                 }
-            },
-            buttonHref: '/',
+            }
         });
+    }
+
+    changeAvatar(event: Event){
+        event.preventDefault();
+        const changeAvatarBox = document.querySelector('.changeAvatarBoxBackground');
+        changeAvatarBox.classList.remove('displayNone');
+    }
+
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    onClick(event: Event) {
+        event.preventDefault();
+        const inputs = document.querySelectorAll('input');
+        const data: Record<string, unknown> = {};
+        Array.from(inputs).forEach((input) => {
+            if (this.sanitizeInput(input.value)){
+                data[input.name] = input.value;
+            }
+        });
+
+        profileController.updateProfile(data);
+    }
+
+    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        if (newProps){
+            this.props = newProps;
+        }
     }
 
     render(): string {
         return this.compile(profileInfoTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ProfileInfoPage = withUser(ProfileInfo);

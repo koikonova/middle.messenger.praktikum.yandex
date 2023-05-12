@@ -3,7 +3,10 @@ import {Block} from "../../../utils/Block";
 import {Back} from "../../../components/Back";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
+import {withStore} from "../../../utils/Store";
+import {profileController} from "../../../controllers/ProfileController";
+import {router} from "../../../utils/Router";
+import {User} from "../../../utils/Types";
 
 const changePasswordTpl = `
     {{{buttonBack}}}
@@ -32,7 +35,6 @@ export class ChangePassword extends Block{
             labelInputClassName: 'profileInput',
             type: 'password',
             labelTitle: 'Старый пароль',
-            value: '1111',
             bottomError: 'bottomErrorProfile',
         });
         this.children.newPassword = new LabelInput({
@@ -54,12 +56,53 @@ export class ChangePassword extends Block{
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: formSubmit
+                click: (event) => this.changePassword(event),
             },
         });
+    }
+
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    getValue(selector) {
+        return document.querySelector(selector).value;
+    }
+
+    changePassword(event: Event) {
+        event.preventDefault()
+        const oldPasswordValue = this.getValue('#oldPassword');
+        const newPasswordValue = this.getValue('#newPassword');
+        const repeatPasswordValue = this.getValue('#repeatNewPassword');
+        const data = { oldPassword: oldPasswordValue, newPassword: newPasswordValue }
+        if (this.sanitizeInput(oldPasswordValue) && this.sanitizeInput(newPasswordValue) && this.sanitizeInput(repeatPasswordValue)){
+            if (newPasswordValue === repeatPasswordValue){
+                if (oldPasswordValue !== newPasswordValue) {
+                    profileController.changePassword(data)
+                    router.go('/settings')
+                }
+            }
+        }
+    }
+
+    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+        if (newProps){
+            this.props = newProps;
+        }
     }
 
     render(): string {
         return this.compile(changePasswordTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ChangePasswordPage = withUser(ChangePassword);

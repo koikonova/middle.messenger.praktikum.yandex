@@ -65,8 +65,16 @@
   justify-content: space-between;
   align-items: center;
   height: 47px;
-  margin: 10px 0;
+  padding: 10px 0;
   position: relative;
+  cursor: pointer;
+  &:hover{
+    background-color: $base-light-blue;
+  }
+}
+
+.correspondence-info-bg{
+  background-color: $base-light-blue;
 }
 
 .correspondence-avatar{
@@ -75,26 +83,29 @@
   background: $base-light-gray;
   border-radius: 50%;
   margin-right: 10px;
+  margin-left: 5px;
 }
 
 .user-info{
   width: 190px;
-  margin-right: 45px;
+  margin-right: 40px;
 }
 
 .user-login{
   @include h4;
   @include absolute-margin;
   color: $base-black;
-  top: 0;
+  top: 10px;
   font-weight: 600;
 }
 
 .message-info{
   @include chat-history-text;
   color: $base-gray;
-  margin: 20px 0 0 0;
+  margin: 0;
   font-weight: 500;
+  position: absolute;
+  bottom: 15px;
 }
 
 .date-info{
@@ -113,7 +124,8 @@
   @include absolute-margin;
   width: 20px;
   height: 20px;
-  bottom: 0;
+  bottom: 10px;
+  right: 10px;
   background: $base-blue;
   border-radius: 50%;
   font-size: 11px;
@@ -123,7 +135,6 @@
 }
 
 .chat-box{
-  @include flex-column;
   width: calc(100vw - 350px);
   height: 100vh;
   top: 0;
@@ -131,6 +142,10 @@
   margin: 0 20px;
   position: absolute;
   justify-content: space-between;
+}
+
+.displayFlex{
+  @include flex-column;
 }
 
 .chat-avatar{
@@ -141,13 +156,19 @@
   margin: 10px 0;
 }
 
-.chat-login{
-  @include h5;
-  position: absolute;
-  left: 45px;
-  top: 20px;
-  margin: 0;
-  color: $base-black;
+.chat-info{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-info .buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-info .button{
+  margin-left: 10px;
 }
 
 .options{
@@ -173,6 +194,11 @@
   position: absolute;
   bottom: 84px;
   justify-content: flex-end;
+}
+
+.chat-history-messages{
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .chat-date{
@@ -293,4 +319,91 @@
 .send-message-box .separatory-line{
   position: absolute;
   bottom: 54px;
+}
+
+.chats--content .button{
+  margin-top: 20px;
+  width: 290px;
+}
+
+.boxBackground{
+  @include flex-center;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: #1e1e1ead;
+  position: absolute;
+}
+
+.popUpBox{
+  @include flex-column;
+  justify-content: space-between;
+  align-items: center;
+  width: 340px;
+  height: 230px;
+  background: $base-white;
+  border-radius: 12px;
+  position: relative;
+}
+
+.popUpText{
+  @include h3;
+  margin-top: 40px;
+}
+
+.labelInputPopUp{
+  @include flex-column;
+  @include h7;
+  align-items: flex-start;
+  color: $base-gray;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.popUpForm #chatName,
+.popUpForm #addId,
+.popUpForm #deleteId{
+  @include h4;
+  width: 100%;
+  border:none;
+  border-bottom: 1px solid $base-blue;
+  padding: 7px 0;
+  outline: none;
+  color: $base-black;
+}
+
+.popUpButton{
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.labelInputPopUp .validationError{
+  margin-top: 22px;
+}
+
+.deleteChat, .close{
+  @include h3;
+  border: none;
+  background-color: transparent;
+  color: $base-gray;
+  position: absolute;
+  right: 9px;
+  cursor: pointer;
+}
+
+.deleteChat{
+  top: 5px;
+}
+
+.close{
+  top: 11px;
+}
+
+.chatListAvatar{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }

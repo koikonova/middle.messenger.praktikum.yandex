@@ -1,5 +1,6 @@
 import { Block } from '../../utils/Block';
 import {Button} from "../Button";
+import {router} from "../../utils/Router";
 
 const errorTpl = `
     <h1 class="error">{{error}}</h1>
@@ -25,10 +26,9 @@ export class Error extends Block {
       buttonClassNameSpecial: 'error-link',
       events: {
         click: () => {
-          console.log('/main');
+          router.go('/messenger');
         }
-      },
-      buttonHref: '/main',
+      }
     });
   }
 

@@ -6,6 +6,7 @@ interface ButtonProps{
   buttonTitle?: string;
   buttonClassName: string;
   buttonClassNameSpecial?: string;
+  buttonClassDisplayNone?: string;
   buttonType?: string;
   events: { click: () => void; };
   buttonHref?: string;
@@ -17,6 +18,8 @@ export class Button extends Block {
   }
 
   _init() {
+    this.element!.addEventListener('click', this.props.events.click)
+
     if (this.props.buttonClassNameSpecial){
       this.element!.classList.add(this.props.buttonClassName, this.props.buttonClassNameSpecial);
     } else {
@@ -27,6 +30,9 @@ export class Button extends Block {
     }
     if(this.props.buttonType){
       this.element!.setAttribute('type', this.props.buttonType);
+    }
+    if (this.props.buttonClassDisplayNone){
+      this.element!.classList.add(this.props.buttonClassDisplayNone);
     }
   }
 

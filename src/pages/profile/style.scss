@@ -31,18 +31,6 @@
   position: relative;
 }
 
-.avatar{
-  width: 130px;
-  height: 130px;
-  margin: auto;
-  margin-bottom: 20px;
-  background-image: url("../img/avatar.png");
-
-  &:hover{
-    background-image: url("../img/avatar-mousehover.png");
-  }
-}
-
 .chat-name{
   @include h3;
   color: $base-black;

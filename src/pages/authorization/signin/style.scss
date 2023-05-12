@@ -3,13 +3,13 @@
 .signin-box{
   @include box;
   width: 340px;
-  height: 615px;
-  margin-top: -307.5px;
+  height: 460px;
+  margin-top: -230px;
   margin-left: -170px;
 }
 
 .signin-box--content{
   @include box--content;
   width: 280px;
-  height: 615px;
+  height: 460px;
 }

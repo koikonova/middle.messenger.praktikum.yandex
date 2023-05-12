@@ -2,19 +2,16 @@ import './style.scss';
 import {Block} from "../../../utils/Block";
 import {Button} from "../../../components/Button";
 import {LabelInput} from "../../../components/LabelInput";
-import {formSubmit} from "../../../utils/InputEvents";
+import {authController} from "../../../controllers/AuthController";
+import {withStore} from "../../../utils/Store";
+import {router} from "../../../utils/Router";
 
-const loginTpl =
-  ` <div class="signin-box--content">
-        <h2 class="title">Регистрация</h2>
+const signinTpl =
+    ` <div class="signin-box--content">
+        <h2 class="title">Вход</h2>
         <form class="authorization">
-            {{{email}}}
             {{{login}}}
-            {{{first_name}}}
-            {{{second_name}}}
-            {{{phone}}}
             {{{password}}}
-            {{{repeatPassword}}}
             {{{formButton}}}
         </form>
         {{{link}}}
@@ -27,38 +24,10 @@ export class Signin extends Block{
 
     _init() {
         this.element!.classList.add('signin-box');
-        this.children.email = new LabelInput({
-            name: 'email',
-            type: 'email',
-            labelTitle: 'Почта',
-            labelInputClassName: 'labelInputSignin',
-            bottomError: 'bottomErrorAuthorization',
-        });
         this.children.login = new LabelInput({
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
-            labelInputClassName: 'labelInputSignin',
-            bottomError: 'bottomErrorAuthorization',
-        });
-        this.children.first_name = new LabelInput({
-            name: 'first_name',
-            type: 'text',
-            labelTitle: 'Имя',
-            labelInputClassName: 'labelInputSignin',
-            bottomError: 'bottomErrorAuthorization',
-        });
-        this.children.second_name = new LabelInput({
-            name: 'second_name',
-            type: 'text',
-            labelTitle: 'Фамилия',
-            labelInputClassName: 'labelInputSignin',
-            bottomError: 'bottomErrorAuthorization',
-        });
-        this.children.phone = new LabelInput({
-            name: 'phone',
-            type: 'tel',
-            labelTitle: 'Телефон',
             labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -69,34 +38,54 @@ export class Signin extends Block{
             labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
-        this.children.repeatPassword = new LabelInput({
-            name: 'repeatPassword',
-            type: 'password',
-            labelTitle: 'Пароль (ещё раз)',
-            labelInputClassName: 'labelInputSignin',
-            bottomError: 'bottomErrorAuthorization',
-        });
         this.children.formButton = new Button({
-            buttonTitle: 'Зарегистрироваться',
+            buttonTitle: 'Войти',
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
-                click: formSubmit
+                click: (e) => this.onClick(e),
             },
         });
         this.children.link = new Button({
-            buttonTitle: 'Войти',
+            buttonTitle: 'Нет аккаунта?',
             buttonClassName: 'link',
             events: {
                 click: () => {
-                    console.log('/');
+                    router.go('/sign-up')
                 }
             },
-            buttonHref: '/',
         });
     }
 
+    sanitizeInput(input) {
+        const scriptRegex = /<\s*[sS][^>]*>/;
+        const linkRegex = /<a\b[^>]*>/gi;
+
+        if (scriptRegex.test(input) || linkRegex.test(input)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    onClick(event: Event) {
+        event.preventDefault()
+        const inputs = document.querySelectorAll('input');
+        const data: Record<string, unknown> = {};
+        Array.from(inputs).forEach((input) => {
+            if (this.sanitizeInput(input.value)){
+                data[input.name] = input.value;
+            }
+        });
+
+        authController.signin(data);
+    }
+
     render(): string {
-        return this.compile(loginTpl, this.props);
+        return this.compile(signinTpl, this.props);
     }
 }
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const SigninPage = withUser(Signin);
