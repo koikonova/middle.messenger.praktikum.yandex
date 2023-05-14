@@ -29,6 +29,7 @@ export class ChangePassword extends Block{
     }
 
     _init() {
+        this.element!.classList.add('ChangePassword');
         this.children.buttonBack = new Back({});
         this.children.oldPassword = new LabelInput({
             ...this.props,

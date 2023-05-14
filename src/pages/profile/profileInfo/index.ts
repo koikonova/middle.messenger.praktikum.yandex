@@ -65,6 +65,7 @@ export class ProfileInfo extends Block{
     }
 
     _init() {
+        this.element!.classList.add('ProfileInfo');
         this.children.buttonBack = new Back({});
         this.children.changeAvatar = new ChangeAvatar({});
         this.children.avatar = new Avatar({

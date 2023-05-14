@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "sprint_2",
   "scripts": {
-    "dev": "parcel static/index.html",
-    "build": "parcel build static/index.html",
-    "start": "parcel build static/index.html && node server.ts",
+    "dev": "webpack serve --open",
+    "build": "node ./node_modules/.bin/webpack",
+    "start": "node server.ts",
     "stylelint": "stylelint '**/*{.css,.scss}'",
     "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
     "eslint": "node_modules/.bin/eslint .",
-    "eslint:fix": "node_modules/.bin/eslint . --fix",
-    "webpack": "node ./node_modules/.bin/webpack"
+    "eslint:fix": "node_modules/.bin/eslint . --fix"
   },
   "keywords": [],
   "author": "Mariia Koikonova",
@@ -21,15 +20,20 @@
     "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
+    "css-minimizer-webpack-plugin": "^5.0.0",
     "eslint": "^8.36.0",
     "eslint-config-airbnb": "^19.0.4",
     "express": "^4.18.2",
     "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.5",
     "parcel": "^2.8.3",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "stylelint": "^15.3.0",
+    "terser-webpack-plugin": "^5.3.8",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
     "webpack": "^5.82.1",
@@ -39,7 +43,6 @@
   "dependencies": {
     "@parcel/transformer-inline-string": "^2.8.3",
     "handlebars": "^4.7.7",
-    "html-webpack-plugin": "^5.5.1",
     "nanoid": "^4.0.1",
     "stylelint-scss": "^4.6.0"
   }
