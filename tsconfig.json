@@ -5,7 +5,9 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "lib": ["es2017", "dom", "dom.iterable", "scripthost"]
-  }
+    "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", ".github", ".idea", ".parcel-cache", "dist", ".DS_Store"]
 }
 

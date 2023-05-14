@@ -2,7 +2,7 @@ import { Block } from '../../utils/Block';
 
 const labelTpl = `{{labelTitle}}`;
 
-interface LabelProps{
+export interface LabelProps{
   name: string;
   labelTitle: string;
 }
@@ -16,7 +16,7 @@ export class Label extends Block {
     this.element!.setAttribute('for', this.props.name);
   }
 
-  render(): string {
+  render() {
     return this.compile(labelTpl, this.props);
   }
 }

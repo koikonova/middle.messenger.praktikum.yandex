@@ -3,17 +3,16 @@ import {User} from "../../utils/Types";
 
 const inputTpl = '';
 
-interface InputProps extends User {
+export interface InputProps extends User {
   type: string;
   name: string;
   placeholder?: string;
   value?: string;
   className?: string;
   events?: {
-    // eslint-disable-next-line no-unused-vars
     focus: (event: Event) => void;
-    // eslint-disable-next-line no-unused-vars
-    blur: (event: Event) => void };
+    blur: (event: Event) => void;
+  }
 }
 
 export class Input extends Block {
@@ -40,7 +39,7 @@ export class Input extends Block {
     return (this.element as HTMLInputElement).value;
   }
 
-  render(): string {
+  render() {
     return this.compile(inputTpl, this.props);
   }
 }

@@ -24,13 +24,14 @@ const changePasswordTpl = `
     </main>`;
 
 export class ChangePassword extends Block{
-    constructor(props) {
+    constructor(props: any) {
         super('div', props);
     }
 
     _init() {
         this.children.buttonBack = new Back({});
         this.children.oldPassword = new LabelInput({
+            ...this.props,
             name: 'oldPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
@@ -38,6 +39,7 @@ export class ChangePassword extends Block{
             bottomError: 'bottomErrorProfile',
         });
         this.children.newPassword = new LabelInput({
+            ...this.props,
             name: 'newPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
@@ -45,6 +47,7 @@ export class ChangePassword extends Block{
             bottomError: 'bottomErrorProfile',
         });
         this.children.repeatPassword = new LabelInput({
+            ...this.props,
             name: 'repeatNewPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
@@ -61,7 +64,7 @@ export class ChangePassword extends Block{
         });
     }
 
-    sanitizeInput(input) {
+    sanitizeInput(input: any) {
         const scriptRegex = /<\s*[sS][^>]*>/;
         const linkRegex = /<a\b[^>]*>/gi;
 
@@ -72,7 +75,7 @@ export class ChangePassword extends Block{
         }
     }
 
-    getValue(selector) {
+    getValue(selector: any) {
         return document.querySelector(selector).value;
     }
 
@@ -92,13 +95,13 @@ export class ChangePassword extends Block{
         }
     }
 
-    protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+    componentDidUpdate(_oldProps: User, newProps: User): any {
         if (newProps){
             this.props = newProps;
         }
     }
 
-    render(): string {
+    render() {
         return this.compile(changePasswordTpl, this.props);
     }
 }

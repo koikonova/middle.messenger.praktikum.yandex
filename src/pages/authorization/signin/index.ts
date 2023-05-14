@@ -18,13 +18,14 @@ const signinTpl =
       </div>`;
 
 export class Signin extends Block{
-    constructor(props) {
+    constructor(props: any) {
         super('main', props);
     }
 
     _init() {
         this.element!.classList.add('signin-box');
         this.children.login = new LabelInput({
+            ...this.props,
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
@@ -32,6 +33,7 @@ export class Signin extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
+            ...this.props,
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
@@ -57,7 +59,7 @@ export class Signin extends Block{
         });
     }
 
-    sanitizeInput(input) {
+    sanitizeInput(input: any) {
         const scriptRegex = /<\s*[sS][^>]*>/;
         const linkRegex = /<a\b[^>]*>/gi;
 
@@ -71,7 +73,7 @@ export class Signin extends Block{
     onClick(event: Event) {
         event.preventDefault()
         const inputs = document.querySelectorAll('input');
-        const data: Record<string, unknown> = {};
+        const data: any = {};
         Array.from(inputs).forEach((input) => {
             if (this.sanitizeInput(input.value)){
                 data[input.name] = input.value;
@@ -81,7 +83,7 @@ export class Signin extends Block{
         authController.signin(data);
     }
 
-    render(): string {
+    render() {
         return this.compile(signinTpl, this.props);
     }
 }

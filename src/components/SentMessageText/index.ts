@@ -22,7 +22,7 @@ export class SentMessage extends Block {
     this.element!.classList.add('sent-message-box');
   }
 
-  render(): string {
+  render() {
     return this.compile(sentMessageTpl, this.props);
   }
 }

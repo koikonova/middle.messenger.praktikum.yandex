@@ -8,7 +8,6 @@ const correspondenceTpl = `
   <div class="correspondence-info">
     <div class="correspondence-avatar">
       {{{avatar}}}
-<!--      <img class="chatListAvatar" src="{{avatar}}"/>-->
     </div>
     <div class="user-info">
       <h4 class="user-login">{{title}}</h4>
@@ -49,13 +48,13 @@ export class Correspondence extends Block {
     })
   }
 
-  protected componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): boolean {
+  componentDidUpdate(_oldProps: CorrespondenceProps, newProps: CorrespondenceProps): any {
     if (newProps){
         this.props = newProps;
       }
   }
 
-  render(): string {
+  render() {
     return this.compile(correspondenceTpl, {
       ...this.props,
       avatar: this.props.avatar ? `<img class="chatListAvatar" src="https://ya-praktikum.tech/api/v2/resources${this.props.avatar}"/>` : '',

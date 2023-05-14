@@ -1,12 +1,11 @@
 import {BaseApi} from "./BaseApi";
-import {User, ChatInfo} from "../utils/Types";
 
 export class ChatsApi extends BaseApi {
     constructor() {
         super('/chats')
     }
 
-    read(): Promise<ChatInfo[]> {
+    read(): Promise<any> {
         return this.http.get('/')
     }
 
@@ -18,7 +17,7 @@ export class ChatsApi extends BaseApi {
         return this.http.delete('/', { chatId: id })
     }
 
-    getUsers(id: number): Promise<Array<User & { role: string }>> {
+    getUsers(id: number): Promise<any> {
         return this.http.get(`/${id}/users`)
     }
 
@@ -31,7 +30,8 @@ export class ChatsApi extends BaseApi {
     }
 
     async getToken(id: number): Promise<string | undefined> {
-        const response = await this.http.post<{ token: string }>(`/token/${id}`)
+        //@ts-ignore
+        const response: any = await this.http.post<{ token: string }>(`/token/${id}`)
         return response.token
     }
 }
