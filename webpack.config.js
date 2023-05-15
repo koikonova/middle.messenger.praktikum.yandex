@@ -16,6 +16,10 @@ module.exports = {
     alias: {
       handlebars: 'handlebars/dist/handlebars.min.js',
     },
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+    }
   },
   devServer: {
     port: 3000

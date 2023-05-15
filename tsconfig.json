@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -8,6 +9,11 @@
     "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", ".github", ".idea", ".parcel-cache", "dist", ".DS_Store"]
+  "ts-node": { "files": true },
+  "exclude": ["node_modules", ".github", ".idea", ".parcel-cache", "dist", ".DS_Store"],
+  "paths": {
+    "crypto": ["node_modules/crypto-browserify"],
+    "stream": ["node_modules/stream-browserify"]
+  }
 }
 

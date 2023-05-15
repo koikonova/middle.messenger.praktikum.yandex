@@ -34,7 +34,7 @@ export class Input extends Block {
       this.element!.classList.add(this.props.className);
     }
   }
-
+  //@ts-ignore
   get value() {
     return (this.element as HTMLInputElement).value;
   }
