@@ -10,7 +10,8 @@
     "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
     "eslint": "node_modules/.bin/eslint .",
     "eslint:fix": "node_modules/.bin/eslint . --fix",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "Mariia Koikonova",
@@ -33,6 +34,7 @@
     "express": "^4.18.2",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.1",
+    "husky": "^8.0.3",
     "jsdom": "^22.0.0",
     "mini-css-extract-plugin": "^2.7.5",
     "mocha": "^10.2.0",
