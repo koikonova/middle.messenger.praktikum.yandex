@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "sprint_2",
   "scripts": {
-    "dev": "webpack serve --open",
+    "dev": "webpack serve",
     "build": "node ./node_modules/.bin/webpack",
     "start": "node server.ts",
     "stylelint": "stylelint '**/*{.css,.scss}'",

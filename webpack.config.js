@@ -6,17 +6,18 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './static/index.html',
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      handlebars: 'handlebars/dist/handlebars.min.js',
+    },
   },
   devServer: {
-//     contentBase: 'dist',
-//     compress: true,
     port: 3000
   },
   module: {
@@ -43,10 +44,6 @@ module.exports = {
           test: /\.html$/i,
           loader: "html-loader",
         },
-//         {
-//           test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-//           type: 'asset/resource',
-//         },
     ]
   },
    plugins: [
