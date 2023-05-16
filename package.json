@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "sprint_4",
   "scripts": {
+    "prepare": "husky install",
     "dev": "webpack serve",
     "build": "node ./node_modules/.bin/webpack",
     "start": "node server.ts",
@@ -10,13 +11,7 @@
     "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
     "eslint": "node_modules/.bin/eslint .",
     "eslint:fix": "node_modules/.bin/eslint . --fix",
-    "test": "./node_modules/.bin/mocha",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run stylelint:fix && npm run eslint:fix && npm run test"
-    }
+    "test": "./node_modules/.bin/mocha"
   },
   "keywords": [],
   "author": "Mariia Koikonova",
