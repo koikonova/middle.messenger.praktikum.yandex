@@ -13,6 +13,11 @@
     "test": "./node_modules/.bin/mocha",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run stylelint:fix && npm run eslint:fix && npm run test"
+    }
+  },
   "keywords": [],
   "author": "Mariia Koikonova",
   "license": "ISC",
