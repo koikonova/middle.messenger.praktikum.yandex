@@ -124,10 +124,8 @@ export class Signup extends Block{
 
         const password = this.getValue('#password');
         const repeatPassword = this.getValue('#repeatPassword');
-        if (this.sanitizeInput(password) && this.sanitizeInput(repeatPassword)){
-            if (password === repeatPassword){
-                authController.signup(data as SignupData);
-            }
+        if (password === repeatPassword){
+            authController.signup(data as SignupData);
         }
     }
 

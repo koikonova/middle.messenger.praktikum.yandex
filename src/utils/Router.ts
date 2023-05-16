@@ -9,7 +9,7 @@ export const render = (query: string, block: Block) => {
   }
 
   root.innerHTML = '';
-
+  
   root.append(block.getContent());
 
   block.dispatchComponentDidMoun();
@@ -28,7 +28,7 @@ export class Route {
   private readonly blockClass: typeof Block;
   private readonly query: string;
 
-  constructor(pathname, view, query) {
+  constructor(pathname: string, view: typeof Block, query: string) {
     this.pathname = pathname;
     this.blockClass = view;
     this.query = query;
@@ -63,7 +63,7 @@ export class Router {
 
   private history = window.history
 
-  constructor(rootQuery) {
+  constructor(rootQuery: any) {
     this.rootQuery = rootQuery;
 
     if (Router.__instance) {

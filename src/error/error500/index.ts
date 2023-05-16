@@ -5,7 +5,7 @@ import {Error} from "../../components/Error";
 const error500Tpl = '{{{error}}}';
 
 export class Error500 extends Block {
-    constructor(props) {
+    constructor(props: any) {
         super('div', props);
     }
 
@@ -16,7 +16,7 @@ export class Error500 extends Block {
         })
     }
 
-    render(): string {
+    render() {
         return this.compile(error500Tpl, this.props);
     }
 }

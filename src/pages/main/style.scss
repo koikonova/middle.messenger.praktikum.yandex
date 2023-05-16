@@ -52,7 +52,7 @@
   color: $base-black;
   border: 0;
   border-radius: 5px;
-  background: $base-light-gray url("./img/search.svg") no-repeat 102px center;
+  background: $base-light-gray url("../../assets/search.svg") no-repeat 102px center;
   margin-bottom: 14px;
 
   &::placeholder {
@@ -178,7 +178,7 @@
   margin-right: 10px;
   width: 3.5px;
   height: 16px;
-  background-image: url("./img/options.svg");
+  background-image: url("../../assets/options.svg");
   background-size: cover;
 }
 
@@ -238,7 +238,7 @@
   box-sizing: border-box;
   border: 1px solid $base-white-back;
   border-radius: 12px;
-  background-image: url("./img/received_img.png");
+  background-image: url("../../assets/received_img.png");
   background-size: cover;
   margin-bottom: 10px;
   position: relative;
@@ -272,7 +272,7 @@
   width: 9.3px;
   height: 4px;
   margin: 0 4px 12px 0;
-  background-image: url("./img/delivery_check.svg");
+  background-image: url("../../assets/delivery_check.svg");
   background-size: cover;
 }
 
@@ -285,7 +285,7 @@
   width: 32px;
   height: 32px;
   bottom: 11px;
-  background-image: url("./img/attach.svg");
+  background-image: url("../../assets/attach.svg");
 }
 
 #message{
@@ -313,7 +313,7 @@
   height: 28px;
   right: 0;
   bottom: 13px;
-  background-image: url("./img/send.png");
+  background-image: url("../../assets/send.png");
 }
 
 .send-message-box .separatory-line{

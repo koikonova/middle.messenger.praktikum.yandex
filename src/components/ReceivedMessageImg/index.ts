@@ -19,7 +19,7 @@ export class ReceivedMessageImg extends Block {
     this.element!.classList.add('received-message-img-box');
   }
 
-  render(): string {
+  render() {
     return this.compile(receivedMessageImgTpl, this.props);
   }
 }

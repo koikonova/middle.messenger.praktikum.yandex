@@ -68,6 +68,7 @@ export class Main extends Block {
         this.children.chatHistory = new chatHistory();
 
         this.children.addChat = new PopUp({
+            ...this.props,
             classBox: 'addChat',
             name: 'chatName',
             type: 'text',
@@ -80,6 +81,7 @@ export class Main extends Block {
             buttonType: 'submit',
         });
         this.children.addId = new PopUp({
+            ...this.props,
             classBox: 'addId',
             name: 'addId',
             type: 'text',
@@ -92,6 +94,7 @@ export class Main extends Block {
             buttonType: 'submit',
         });
         this.children.deleteId = new PopUp({
+            ...this.props,
             classBox: 'deleteId',
             name: 'deleteId',
             type: 'text',
@@ -115,6 +118,7 @@ export class Main extends Block {
             },
         });
         this.children.search = new Input({
+            ...this.props,
             name: 'search',
             type: 'search',
             placeholder: 'Поиск',
@@ -158,6 +162,7 @@ export class Main extends Block {
             },
         });
         this.children.inputSendMessage = new Input({
+            ...this.props,
             type: 'message',
             name: 'message',
             placeholder: 'Сообщение',
@@ -171,7 +176,7 @@ export class Main extends Block {
         });
     }
 
-    sanitizeInput(input) {
+    sanitizeInput(input: any) {
         const scriptRegex = /<\s*[sS][^>]*>/;
         const linkRegex = /<a\b[^>]*>/gi;
 
@@ -182,7 +187,7 @@ export class Main extends Block {
         }
     }
 
-    getValue(selector) {
+    getValue(selector: any) {
         return document.querySelector(selector).value;
     }
 
@@ -193,18 +198,20 @@ export class Main extends Block {
             messagesController.sendMessage(store.getState().selectedChat, message);
         }
         // eslint-disable-next-line
-        let input = document.querySelector('#message');
-        input.value = '';
+        let input: HTMLInputElement | null= document.querySelector('#message');
+        if (input !== null){
+            input.value = '';
+        }
     }
 
-    popUp(event: Event, selector){
+    popUp(event: Event, selector: any){
         event.preventDefault();
         const popUp = document.querySelector(selector);
         popUp.classList.remove('displayNone');
         popUp.classList.add('boxBackground');
     }
 
-    render(): string {
+    render() {
         return this.compile(mainTpl, this.props);
     }
 }

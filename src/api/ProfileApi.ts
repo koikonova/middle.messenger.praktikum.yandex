@@ -8,19 +8,19 @@ export class ProfileApi extends BaseApi {
         super('/user')
     }
 
-    read(identifier: string): Promise<UserFields> {
+    read(identifier: string): Promise<any> {
         return this.http.get(`/${identifier}`)
     }
 
-    update(data: Record<string, unknown>): Promise<User> {
+    update(data: Record<string, unknown>): Promise<any> {
         return this.http.put('/profile', data)
     }
 
-    changeAvatar(data: FormData): Promise<UserFields> {
+    changeAvatar(data: FormData): Promise<any> {
         return this.http.put('/profile/avatar', data)
     }
 
-    changePassword(data: ChangePassword): Promise<UserFields> {
+    changePassword(data: ChangePassword): Promise<any> {
         return this.http.put('/password', data)
     }
 }

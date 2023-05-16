@@ -32,7 +32,7 @@ export class Error extends Block {
     });
   }
 
-  render(): string {
+  render() {
     return this.compile(errorTpl, this.props);
   }
 }

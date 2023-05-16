@@ -24,22 +24,19 @@ export class Store extends EventBus {
 
 export const store = new Store()
 // eslint-disable-next-line no-unused-vars
-export function withStore<SP extends Partial<any>>(mapStateToProps: (state: State) => SP) {
-  return function wrap<P>(Component: typeof Block<SP & P>) {
-    return class WithStore extends Component {
-      constructor(props: Omit<P, keyof SP>) {
-        let mappedState = mapStateToProps(store.getState())
+export const withStore = <T>(mapStateToProps: (state: State) => any) => {
+  return (Component: typeof Block) => {
+    return class extends Component {
+      constructor(props: T) {
+        const mappedState = mapStateToProps(store.getState());
+        super({ ...props, ...mappedState });
 
-        super({ ...(props as P), ...mappedState })
+        store.on(StoreEvents.Updated, (newState: State) => {
+          const newMappedState = mapStateToProps(newState);
 
-        store.on(StoreEvents.Updated, () => {
-          const stateProps = mapStateToProps(store.getState())
-
-          mappedState = stateProps
-
-          this.setProps({ ...stateProps })
-        })
+          this.setProps(newMappedState);
+        });
       }
-    }
-  }
-}
+    } as typeof Block;
+  };
+};
