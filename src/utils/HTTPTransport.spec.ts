@@ -10,7 +10,8 @@ describe('HTTPTransport', () => {
   XHR.onCreate = (xhr) => {
     requests.push(xhr);
   };
-//@ts-ignore
+  
+// @ts-ignore
   global.XMLHttpRequest = XHR;
 
   afterEach(() => {

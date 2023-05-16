@@ -8,6 +8,7 @@ const avatarTpl = `
 
 interface AvatarProps{
   src: string;
+  // eslint-disable-next-line no-unused-vars
   events: { click: (event: Event) => void; };
 }
 

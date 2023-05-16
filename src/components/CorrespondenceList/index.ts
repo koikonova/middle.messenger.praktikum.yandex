@@ -24,6 +24,7 @@ export class CorrespondenceList extends Block<Chatlist> {
       if (newProps.chats !== undefined){
         const sumNewChats = Object.keys(newProps.chats).length - Object.keys(_oldProps).length;
         if (sumNewChats > 1){
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           //@ts-ignore
           this.children.chats = this.createChatsList(newProps.chats);
           return true;
@@ -35,10 +36,12 @@ export class CorrespondenceList extends Block<Chatlist> {
                 chats[i].remove();
               }
             }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           //@ts-ignore
           this.children.chats = this.createChatsList(newProps.chats);
           return true;
         } else {
+          
           //@ts-ignore
           const props = newProps.chats[Object.keys(newProps.chats).length - 1];
 

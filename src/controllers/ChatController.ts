@@ -9,6 +9,7 @@ class ChatsController {
     }
 
     async create(title: string) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         //@ts-ignore
         const { id } = await this.api.create(title);
         const token = await this.api.getToken(id);

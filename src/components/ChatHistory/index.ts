@@ -30,6 +30,7 @@ export class ChatHistory extends Block {
           }
         }
       }
+      
       // @ts-ignore
       this.children.messages = this.createMessages(newProps);
       return true;

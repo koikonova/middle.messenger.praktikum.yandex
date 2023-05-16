@@ -3,8 +3,8 @@ import { nanoid } from "nanoid";
 // @ts-ignore
 import Handlebars from "handlebars";
 
-// eslint-disable-next-line no-unused-vars
 //@ts-ignore
+// eslint-disable-next-line
 export class Block<Props extends Record<string, any> = unknown> {
   static EVENTS = {
     INIT: 'init',
@@ -80,7 +80,7 @@ export class Block<Props extends Record<string, any> = unknown> {
     this._element = this._createDocumentElement(tagName);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
  _init() {
   }
 
@@ -94,7 +94,7 @@ export class Block<Props extends Record<string, any> = unknown> {
     this.componentDidMount();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
   componentDidMount() {
   }
 
@@ -107,9 +107,9 @@ export class Block<Props extends Record<string, any> = unknown> {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
-
-  // eslint-disable-next-line no-unused-vars
+  
   //@ts-ignore
+  // eslint-disable-next-line
   componentDidUpdate(oldProps: any, newProps: any) {
     return true;
   }
@@ -121,6 +121,7 @@ export class Block<Props extends Record<string, any> = unknown> {
 
     Object.assign(this.props, nextProps);
   };
+  
 //@ts-ignore
   get element() {
     return this._element;

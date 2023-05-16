@@ -15,6 +15,7 @@ const popUpTpl = `
     </form>
   </div>
 `;
+
 //@ts-ignore
 interface PopUpProps extends LabelInputProps, ButtonProps{
   classBox: string;

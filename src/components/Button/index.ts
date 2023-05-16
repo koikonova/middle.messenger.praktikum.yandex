@@ -8,7 +8,8 @@ export interface ButtonProps{
   buttonClassNameSpecial?: string;
   buttonClassDisplayNone?: string;
   buttonType?: string;
-  events: { 
+  events: {
+    // eslint-disable-next-line no-unused-vars
     click: (event: Event) => void; 
   };
   buttonHref?: string;
