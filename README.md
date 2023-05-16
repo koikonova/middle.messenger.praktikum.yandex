@@ -13,5 +13,5 @@ https://www.figma.com/file/tIG9jZli3Ao8KJmr4wh3h7/Chat_external_link?node-id=0%3
 - `npm run build` — build the project using Webpack.
 - `npm run test` — run chai test.
 
-## Pull request Sprint_2:
-https://github.com/chelseajoint/middle.messenger.praktikum.yandex/pull/3
+## Pull request Sprint_4:
+https://github.com/chelseajoint/middle.messenger.praktikum.yandex/pull/5
