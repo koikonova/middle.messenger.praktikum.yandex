@@ -1,6 +1,7 @@
 FROM node
 WORKDIR /var/www
-COPY package.json /app
+ADD . /var/www
+ADD package.json /var/www/package.json
 RUN npm install
 COPY . .
 RUN npm run buil
