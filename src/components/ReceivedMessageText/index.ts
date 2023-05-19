@@ -8,7 +8,6 @@ const receivedMessageTpl = `
 
 interface ReceivedMessageProps{
   content: string;
-  isMine: string;
 }
 
 export class ReceivedMessage extends Block {
@@ -20,7 +19,7 @@ export class ReceivedMessage extends Block {
     this.element!.classList.add('received-message-text-box');
   }
 
-  render(): string {
+  render() {
     return this.compile(receivedMessageTpl, this.props);
   }
 }

@@ -24,13 +24,14 @@ const signupTpl =
       </div>`;
 
 export class Signup extends Block{
-    constructor(props) {
+    constructor(props: any) {
         super('main', props);
     }
 
     _init() {
         this.element!.classList.add('signup-box');
         this.children.email = new LabelInput({
+            ...this.props,
             name: 'email',
             type: 'email',
             labelTitle: 'Почта',
@@ -38,6 +39,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.login = new LabelInput({
+            ...this.props,
             name: 'login',
             type: 'text',
             labelTitle: 'Логин',
@@ -45,6 +47,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.first_name = new LabelInput({
+            ...this.props,
             name: 'first_name',
             type: 'text',
             labelTitle: 'Имя',
@@ -52,6 +55,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.second_name = new LabelInput({
+            ...this.props,
             name: 'second_name',
             type: 'text',
             labelTitle: 'Фамилия',
@@ -59,6 +63,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.phone = new LabelInput({
+            ...this.props,
             name: 'phone',
             type: 'tel',
             labelTitle: 'Телефон',
@@ -66,6 +71,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.password = new LabelInput({
+            ...this.props,
             name: 'password',
             type: 'password',
             labelTitle: 'Пароль',
@@ -73,6 +79,7 @@ export class Signup extends Block{
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.repeatPassword = new LabelInput({
+            ...this.props,
             name: 'repeatPassword',
             type: 'password',
             labelTitle: 'Пароль (ещё раз)',
@@ -98,7 +105,7 @@ export class Signup extends Block{
         });
     }
 
-    sanitizeInput(input) {
+    sanitizeInput(input: any) {
         const scriptRegex = /<\s*[sS][^>]*>/;
         const linkRegex = /<a\b[^>]*>/gi;
 
@@ -109,13 +116,13 @@ export class Signup extends Block{
         }
     }
 
-    getValue(selector) {
+    getValue(selector: any) {
         return document.querySelector(selector).value;
     }
 
     onSubmit() {
         const inputs = document.querySelectorAll('input');
-        const data: Record<string, unknown> = {};
+        const data: any = {};
         Array.from(inputs).forEach((input) => {
             if (this.sanitizeInput(input.value)){
                 data[input.name] = input.value;
@@ -129,7 +136,7 @@ export class Signup extends Block{
         }
     }
 
-    render(): string {
+    render() {
         return this.compile(signupTpl, this.props);
     }
 }

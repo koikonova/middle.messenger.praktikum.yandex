@@ -1,5 +1,9 @@
 @import '../style';
 
+.ProfileInfo .button-back{
+  background: url("../../../assets/back.png") no-repeat;
+}
+
 .avatar, .changImgBox, .avatarImg {
   width: 130px;
   height: 130px;
@@ -9,7 +13,7 @@
 .avatar{
   margin: auto;
   margin-bottom: 20px;
-  background-image: url("../img/avatar.png");
+  background-image: url("../../../assets/avatar.png");
   position: relative;
 }
 

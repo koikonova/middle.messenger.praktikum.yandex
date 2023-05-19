@@ -21,7 +21,7 @@ export class Back extends Block {
     });
   }
 
-  render(): string {
+  render() {
     return this.compile(backTpl, this.props);
   }
 }

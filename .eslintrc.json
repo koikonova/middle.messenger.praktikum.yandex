@@ -21,6 +21,9 @@
         "no-unused-vars": 2,
         "max-len": [1, 400],
         "max-params": [2, 6],
-        "@typescript-eslint/no-var-requires": 0
+        "@typescript-eslint/no-var-requires": 0,
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
     }
 }

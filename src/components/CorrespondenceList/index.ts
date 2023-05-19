@@ -19,56 +19,64 @@ export class CorrespondenceList extends Block<Chatlist> {
     super('div' );
   }
 
-  protected componentDidUpdate(_oldProps: Chatlist, newProps: Chatlist): boolean {
+  componentDidUpdate(_oldProps: any, newProps: any): any {
     if (_oldProps != undefined && !isEqual(_oldProps, newProps.chats)){
-      const sumNewChats = Object.keys(newProps.chats).length - Object.keys(_oldProps).length;
-      if (sumNewChats > 1){
-        this.children.chats = this.createChatsList(newProps.chats);
-        return true;
-      } else if (sumNewChats === -1){
-        const chats = document.querySelectorAll('.chatHistory');
-        if (chats)
-        for (let i = -1; i < chats.length; i++){
-          if (chats[i] != undefined){
-            chats[i].remove();
-          }
-        }
-        this.children.chats = this.createChatsList(newProps.chats);
-        return true;
-      } else {
-        const props = newProps.chats[Object.keys(newProps.chats).length - 1];
-
-        messagesController.connect(props.id, props.token)
-          .then(() => {
-            console.log(`чат ${props.id} подключен`);
-          });
-
-        this.children.chats = new correspondence({
-          ...props,
-          classId: `classId${props.id}`,
-          buttonClassNameSpecial: `classButton${props.id}`,
-          events: {
-            click: (event: Event) => {
-              event.preventDefault();
-
-              chatsController.selectChat(props.id)
-                .then(() => {
-                  this.chatHistory();
-                  this.changeBg(props.id);
-                })
-                .catch((e) => {
-                  console.error(e);
-                });
+      if (newProps.chats !== undefined){
+        const sumNewChats = Object.keys(newProps.chats).length - Object.keys(_oldProps).length;
+        if (sumNewChats > 1){
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          //@ts-ignore
+          this.children.chats = this.createChatsList(newProps.chats);
+          return true;
+        } else if (sumNewChats === -1){
+          const chats = document.querySelectorAll('.chatHistory');
+          if (chats)
+            for (let i = -1; i < chats.length; i++){
+              if (chats[i] != undefined){
+                chats[i].remove();
+              }
             }
-          }
-        });
-        return true;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          //@ts-ignore
+          this.children.chats = this.createChatsList(newProps.chats);
+          return true;
+        } else {
+          
+          //@ts-ignore
+          const props = newProps.chats[Object.keys(newProps.chats).length - 1];
+
+          messagesController.connect(props.id, props.token)
+            .then(() => {
+              console.log(`чат ${props.id} подключен`);
+            });
+
+          this.children.chats = new correspondence({
+            ...props,
+            classId: `classId${props.id}`,
+            buttonClassNameSpecial: `classButton${props.id}`,
+            events: {
+              click: (event: Event) => {
+                event.preventDefault();
+
+                chatsController.selectChat(props.id)
+                  .then(() => {
+                    this.chatHistory();
+                    this.changeBg(props.id);
+                  })
+                  .catch((e) => {
+                    console.error(e);
+                  });
+              }
+            }
+          });
+          return true;
+        }
       }
     }
   }
 
-  changeBg(props){
-    const chat = document.querySelector(`.classId${props}`);
+  changeBg(props: number){
+    const chat: HTMLDivElement | null = document.querySelector(`.classId${props}`);
     const chats = document.querySelectorAll('.chatHistory');
     if (chats)
       for (let i = -1; i < chats.length; i++){
@@ -76,9 +84,11 @@ export class CorrespondenceList extends Block<Chatlist> {
           chats[i].classList.remove('correspondence-info-bg');
         }
       }
-    chat.classList.add('correspondence-info-bg');
+    if (chat !== null){
+      chat.classList.add('correspondence-info-bg');
+    }
 
-    const button = document.querySelector(`.classButton${props}`);
+    const button: HTMLButtonElement | null = document.querySelector(`.classButton${props}`);
     const buttons = document.querySelectorAll('.deleteChat');
     if (buttons)
       for (let i = -1; i < chats.length; i++){
@@ -86,16 +96,20 @@ export class CorrespondenceList extends Block<Chatlist> {
           buttons[i].classList.add('displayNone');
         }
       }
-    button.classList.remove('displayNone');
+    if (button !== null){
+      button.classList.remove('displayNone');
+    }
   }
 
   chatHistory(){
-    const chat = document.querySelector('.chat-box');
-    chat.classList.remove('displayNone');
-    chat.classList.add('displayFlex');
+    const chat: HTMLDivElement | null = document.querySelector('.chat-box');
+    if (chat !== null){
+      chat.classList.remove('displayNone');
+      chat.classList.add('displayFlex');
+    }
   }
 
-  createChatsList(props) {
+  createChatsList(props: any) {
     return Object.keys(props).map((chat) => {
       return new correspondence({
         ...props[chat],
@@ -118,7 +132,7 @@ export class CorrespondenceList extends Block<Chatlist> {
     });
   }
 
-  render(): string {
+  render() {
     return this.compile(correspondenceListTpl, this.props);
   }
 }

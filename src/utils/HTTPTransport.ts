@@ -19,7 +19,7 @@ type Options = {
 // eslint-disable-next-line no-unused-vars
 type HTTPMethod = (path: string, data?: unknown) => Promise<unknown>;
 
-function queryStringify(data) {
+function queryStringify(data: any) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }

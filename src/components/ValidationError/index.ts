@@ -16,7 +16,7 @@ export class ValidationError extends Block {
     this.element!.classList.add('validationError', 'displayNone', this.props.bottomError);
   }
 
-  render(): string {
+  render() {
     return this.compile(validationErrorTpl, this.props);
   }
 }

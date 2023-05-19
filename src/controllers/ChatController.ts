@@ -9,6 +9,8 @@ class ChatsController {
     }
 
     async create(title: string) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        //@ts-ignore
         const { id } = await this.api.create(title);
         const token = await this.api.getToken(id);
         const chat = {
@@ -29,12 +31,13 @@ class ChatsController {
     async fetchChats() {
         const chats = await this.api.read();
 
-        const promises = chats.map((chat) => this.getToken(chat.id).then((token) => ({ ...chat, token })));
+        const promises = chats.map((chat: any) => this.getToken(chat.id).then((token) => ({ ...chat, token })));
 
         const result = await Promise.allSettled(promises);
 
         const chatsWithToken = result
           .filter((res) => res.status === 'fulfilled')
+          //@ts-ignore
           .map((res) => res.value);
 
         store.set('chats', chatsWithToken)

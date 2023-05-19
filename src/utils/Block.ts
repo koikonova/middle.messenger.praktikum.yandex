@@ -1,9 +1,10 @@
 import EventBus from './EventBus';
 import { nanoid } from "nanoid";
+// @ts-ignore
 import Handlebars from "handlebars";
 
-// noinspection TypeScriptValidateTypes
-// eslint-disable-next-line no-unused-vars
+//@ts-ignore
+// eslint-disable-next-line
 export class Block<Props extends Record<string, any> = unknown> {
   static EVENTS = {
     INIT: 'init',
@@ -13,10 +14,10 @@ export class Block<Props extends Record<string, any> = unknown> {
   };
 
   public id = nanoid(5);
-  protected props: Record<string, unknown>;
+  protected props: any;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
-  private _meta: { tagName: string; props: any; };
+  private _meta: { tagName: any; props: any; };
   protected children: Record<string, Block>;
 
   /** JSDoc
@@ -25,7 +26,7 @@ export class Block<Props extends Record<string, any> = unknown> {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", propsWithChildren: any = {}) {
+  constructor(tagName: any = "div", propsWithChildren: any = {}) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -79,7 +80,7 @@ export class Block<Props extends Record<string, any> = unknown> {
     this._element = this._createDocumentElement(tagName);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
  _init() {
   }
 
@@ -93,7 +94,7 @@ export class Block<Props extends Record<string, any> = unknown> {
     this.componentDidMount();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
   componentDidMount() {
   }
 
@@ -101,14 +102,15 @@ export class Block<Props extends Record<string, any> = unknown> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
+  _componentDidUpdate(oldProps: any, newProps: any) {
     if (this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
-
-  // eslint-disable-next-line no-unused-vars
-  componentDidUpdate(oldProps: unknown, newProps: unknown) {
+  
+  //@ts-ignore
+  // eslint-disable-next-line
+  componentDidUpdate(oldProps: any, newProps: any) {
     return true;
   }
 
@@ -119,7 +121,8 @@ export class Block<Props extends Record<string, any> = unknown> {
 
     Object.assign(this.props, nextProps);
   };
-
+  
+//@ts-ignore
   get element() {
     return this._element;
   }
@@ -132,11 +135,11 @@ export class Block<Props extends Record<string, any> = unknown> {
   }
 
 
-  render(): string{
-    return'';
+  render(): DocumentFragment{
+    return new DocumentFragment();
   }
 
-  compile(template: string, context: any) {
+  compile(template: string, context: any): DocumentFragment {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
@@ -175,7 +178,7 @@ export class Block<Props extends Record<string, any> = unknown> {
       return temp.content;
   }
 
-  getContent() {
+  getContent(): any {
     return this.element;
   }
 

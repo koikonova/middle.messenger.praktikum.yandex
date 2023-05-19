@@ -2,13 +2,16 @@ import { Block } from '../../utils/Block';
 
 const buttonTpl = `{{buttonTitle}}`;
 
-interface ButtonProps{
+export interface ButtonProps{
   buttonTitle?: string;
   buttonClassName: string;
   buttonClassNameSpecial?: string;
   buttonClassDisplayNone?: string;
   buttonType?: string;
-  events: { click: () => void; };
+  events: {
+    // eslint-disable-next-line no-unused-vars
+    click: (event: Event) => void; 
+  };
   buttonHref?: string;
 }
 
@@ -36,7 +39,7 @@ export class Button extends Block {
     }
   }
 
-  render(): string {
+  render() {
     return this.compile(buttonTpl, this.props);
   }
 }

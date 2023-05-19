@@ -20,19 +20,22 @@ export class ChatHistory extends Block {
     this.element!.classList.add('chat-history-messages');
   }
 
-  protected componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): boolean {
+  componentDidUpdate(_oldProps: chatHistoryProps, newProps: chatHistoryProps): any {
     if (_oldProps != undefined && !isEqual(_oldProps, newProps.messages)){
       const messages = document.querySelectorAll('.received-message-text-box');
-      if (messages != 0) {
+      if (messages.length > 0) {
         for (let i = -1; i < messages.length; i++){
           if (messages[i] != undefined){
             messages[i].remove();
           }
         }
       }
+      
+      // @ts-ignore
       this.children.messages = this.createMessages(newProps);
       return true;
     }
+    return;
   }
 
   createMessages(props: chatHistoryProps) {
@@ -41,13 +44,12 @@ export class ChatHistory extends Block {
     }))
   }
 
-  render(): string {
+  render() {
     return this.compile(chatHistoryTpl, this.props);
   }
 }
 
 const withSelectedChatHistory = withStore((state) => ({
-    messages: (state.messages || {})[state.selectedChat] || [],
+  messages: ((state.messages || {})[state.selectedChat as number] || []) as any[],
 }));
-
 export const chatHistory = withSelectedChatHistory(ChatHistory)

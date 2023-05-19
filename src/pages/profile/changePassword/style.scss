@@ -1,5 +1,9 @@
 @import '../style';
 
+.ChangePassword .button-back{
+  background: url("../../../assets/back.png") no-repeat;
+}
+
 #oldPassword, #newPassword, #repeatNewPassword{
   width: 300px;
   border:none;

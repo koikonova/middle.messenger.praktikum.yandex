@@ -8,7 +8,8 @@ const avatarTpl = `
 
 interface AvatarProps{
   src: string;
-  events: { click: () => void; };
+  // eslint-disable-next-line no-unused-vars
+  events: { click: (event: Event) => void; };
 }
 
 export class Avatar extends Block {
@@ -20,7 +21,7 @@ export class Avatar extends Block {
     this.element!.classList.add('avatar');
   }
 
-  render(): string {
+  render() {
     return this.compile(avatarTpl, this.props);
   }
 }

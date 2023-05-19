@@ -1,6 +1,6 @@
 import { Block } from '../../utils/Block';
-import {LabelInput} from "../LabelInput";
-import {Button} from "../Button";
+import {LabelInput, LabelInputProps} from "../LabelInput";
+import {Button, ButtonProps} from "../Button";
 import {chatsController} from "../../controllers/ChatController";
 import {store} from "../../utils/Store";
 
@@ -16,7 +16,8 @@ const popUpTpl = `
   </div>
 `;
 
-interface PopUpProps{
+//@ts-ignore
+interface PopUpProps extends LabelInputProps, ButtonProps{
   classBox: string;
 }
 
@@ -33,9 +34,11 @@ export class PopUp extends Block {
       buttonType: 'button',
       events: {
         click: () => {
-          const addChat = document.querySelector('.boxBackground');
-          addChat.classList.remove('boxBackground');
-          addChat.classList.add('displayNone');
+          const addChat: HTMLDivElement | null = document.querySelector('.boxBackground');
+          if (addChat !== null){
+            addChat.classList.remove('boxBackground');
+            addChat.classList.add('displayNone'); 
+          }
         }
       },
     })
@@ -66,7 +69,7 @@ export class PopUp extends Block {
     }
   }
 
-  sanitizeInput(input) {
+  sanitizeInput(input: any) {
     const scriptRegex = /<\s*[sS][^>]*>/;
     const linkRegex = /<a\b[^>]*>/gi;
 
@@ -77,7 +80,7 @@ export class PopUp extends Block {
     }
   }
 
-  getValue(selector) {
+  getValue(selector: any) {
     return document.querySelector(selector).value;
   }
 
@@ -92,9 +95,11 @@ export class PopUp extends Block {
           });
       }
     }
-    const addChat = document.querySelector('.addChat');
-    addChat.classList.remove('boxBackground');
-    addChat.classList.add('displayNone');
+    const addChat: HTMLDivElement | null = document.querySelector('.addChat');
+    if (addChat !== null){
+      addChat.classList.remove('boxBackground');
+      addChat.classList.add('displayNone');
+    }
   }
 
   addId(event: Event) {
@@ -107,9 +112,11 @@ export class PopUp extends Block {
         chatsController.addUser(ID, selectedChat)
       }
     }
-    const addChat = document.querySelector('.addId');
-    addChat.classList.remove('boxBackground');
-    addChat.classList.add('displayNone');
+    const addChat: HTMLDivElement | null = document.querySelector('.addId');
+    if (addChat !== null){
+      addChat.classList.remove('boxBackground');
+      addChat.classList.add('displayNone');
+    }
   }
 
   deleteId(event: Event) {
@@ -123,12 +130,14 @@ export class PopUp extends Block {
           .then(() => {console.log('user delete')})
       }
     }
-    const addChat = document.querySelector('.deleteId');
-    addChat.classList.remove('boxBackground');
-    addChat.classList.add('displayNone');
+    const addChat: HTMLDivElement | null = document.querySelector('.deleteId');
+    if (addChat !== null){
+      addChat.classList.remove('boxBackground');
+      addChat.classList.add('displayNone');
+    }
   }
 
-  render(): string {
+  render() {
     return this.compile(popUpTpl, this.props);
   }
 }

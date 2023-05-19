@@ -18,7 +18,7 @@ const changeAvatarTpl = `
 `;
 
 export class ChangeAvatar extends Block {
-  constructor(props) {
+  constructor(props: any) {
     super('div', props);
   }
 
@@ -29,6 +29,7 @@ export class ChangeAvatar extends Block {
       labelTitle: 'Выбрать файл',
     });
     this.children.input = new Input({
+      ...this.props,
       type: 'file',
       name: 'changeAvatar',
       className: 'changeAvatar',
@@ -47,26 +48,28 @@ export class ChangeAvatar extends Block {
   changeAvatar(event: Event) {
     event.preventDefault()
     const input = document.querySelector('.changeAvatar') as HTMLInputElement;
-    const file = input.files[0];
-    if (file !== undefined) {
-      const formData = new FormData();
-      formData.append('avatar', file, file.name);
-      profileController.changeAvatar(formData)
-        .then(() => {
-          window.location.reload();
-        })
+    if (input.files !== null){
+      const file = input.files[0];
+      if (file !== undefined) {
+        const formData = new FormData();
+        formData.append('avatar', file, file.name);
+        profileController.changeAvatar(formData)
+          .then(() => {
+            window.location.reload();
+          })
+      }
     }
     const changeAvatarBox = document.querySelectorAll('.changeAvatarBoxBackground');
     changeAvatarBox[0].classList.add('displayNone');
   }
 
-  protected componentDidUpdate(_oldProps: User, newProps: User): boolean {
+  componentDidUpdate(_oldProps: User, newProps: User): any {
     if (newProps){
       this.props = newProps;
     }
   }
 
-  render(): string {
+  render() {
     return this.compile(changeAvatarTpl, this.props);
   }
 }
