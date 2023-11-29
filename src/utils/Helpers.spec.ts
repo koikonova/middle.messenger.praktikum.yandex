@@ -4,7 +4,7 @@ import { Indexed, merge, set, isEqual } from './Helpers';
 describe('Проверяем Helpers', () => {
 
   describe('merge', () => {
-    it('Должен объединить два объекта', () => {
+    it('Must merge two objects', () => {
       const lhs: Indexed = {
         prop1: 'value1',
         prop2: {
@@ -39,7 +39,7 @@ describe('Проверяем Helpers', () => {
   });
 
   describe('set', () => {
-    it('Должен установить значение по указанному пути', () => {
+    it('Must set the value at the specified path', () => {
       const object: Indexed = {
         prop1: {
           prop2: {
@@ -64,7 +64,7 @@ describe('Проверяем Helpers', () => {
       expect(result).to.deep.equal(expected);
     });
 
-    it('Должен возвращать тот же объект, если он не является объектом или нулевым значением', () => {
+    it('Should return the same object if it is not an object or a null value', () => {
       const value = 'someValue';
 
       expect(set(value, 'path', value)).to.equal(value);
@@ -73,7 +73,7 @@ describe('Проверяем Helpers', () => {
   });
 
   describe('isEqual', () => {
-    it('Должен возвращать true, если два объекта равны', () => {
+    it('Should return true if the two objects are equal', () => {
       const obj1 = {
         prop1: 'value1',
         prop2: {
@@ -91,7 +91,7 @@ describe('Проверяем Helpers', () => {
       expect(isEqual(obj1, obj2)).to.be.true;
     });
 
-    it('Должен возвращать false, если два объекта не являются равными', () => {
+    it('Should return false if the two objects are not equal', () => {
       const obj1 = {
         prop1: 'value1',
         prop2: {

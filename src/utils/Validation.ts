@@ -8,59 +8,59 @@ class Validation {
   > = {
     login: {
       pattern: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
-      errorMessage: 'Некорректный логин',
+      errorMessage: 'Invalid login',
     },
     email: {
       pattern: /.+@[^@]+[a-z]+\.[^@]{2,}$/,
-      errorMessage: 'Некорректный email',
+      errorMessage: 'Invalid email',
     },
     password: {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
-      errorMessage: 'Некорректный пароль',
+      errorMessage: 'Invalid password',
     },
     repeatPassword: {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
-      errorMessage: 'Некорректный пароль',
+      errorMessage: 'Invalid password',
     },
     oldPassword: {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
-      errorMessage: 'Некорректный пароль',
+      errorMessage: 'Invalid password',
     },
     repeatNewPassword: {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
-      errorMessage: 'Некорректный пароль',
+      errorMessage: 'Invalid password',
     },
     newPassword: {
       pattern: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
-      errorMessage: 'Некорректный пароль',
+      errorMessage: 'Invalid password',
     },
     first_name: {
       pattern: /^[А-ЯЁA-Z][А-ЯЁA-Zа-яёa-z-]+$/,
-      errorMessage: 'Некорректное имя',
+      errorMessage: 'Invalid first name',
     },
     second_name: {
       pattern: /^[А-ЯЁA-Z][А-ЯЁA-Zа-яёa-z-]+$/,
-      errorMessage: 'Некорректная фамилия',
+      errorMessage: 'Invalid second name',
     },
     display_name: {
       pattern: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
-      errorMessage: 'Некорректное имя',
+      errorMessage: 'Invalid display name',
     },
     phone: {
       pattern: /^[+-d]?\d{10,15}$/,
-      errorMessage: 'Некорректный номер телефона',
+      errorMessage: 'Invalid phone',
     },
     chatName: {
       pattern: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]){3,20}$/,
-      errorMessage: 'Некорректное имя',
+      errorMessage: 'Invalid name',
     },
     addId: {
       pattern: /^\d+$/,
-      errorMessage: 'Некорректный номер',
+      errorMessage: 'Invalid ID',
     },
     deleteId: {
       pattern: /^\d+$/,
-      errorMessage: 'Некорректный номер',
+      errorMessage: 'Invalid ID',
     },
   };
 

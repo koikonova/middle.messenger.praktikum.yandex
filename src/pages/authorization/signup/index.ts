@@ -9,7 +9,7 @@ import {router} from "../../../utils/Router";
 
 const signupTpl =
   ` <div class="signup-box--content">
-        <h2 class="title">Регистрация</h2>
+        <h2 class="title">Sign up</h2>
         <form class="authorization">
             {{{email}}}
             {{{login}}}
@@ -34,7 +34,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'email',
             type: 'email',
-            labelTitle: 'Почта',
+            labelTitle: 'Email',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -42,7 +42,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'login',
             type: 'text',
-            labelTitle: 'Логин',
+            labelTitle: 'Login',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -50,7 +50,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'first_name',
             type: 'text',
-            labelTitle: 'Имя',
+            labelTitle: 'First name',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -58,7 +58,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'second_name',
             type: 'text',
-            labelTitle: 'Фамилия',
+            labelTitle: 'Second name',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -66,7 +66,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'phone',
             type: 'tel',
-            labelTitle: 'Телефон',
+            labelTitle: 'Phone',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -74,7 +74,7 @@ export class Signup extends Block{
             ...this.props,
             name: 'password',
             type: 'password',
-            labelTitle: 'Пароль',
+            labelTitle: 'Password',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -82,12 +82,12 @@ export class Signup extends Block{
             ...this.props,
             name: 'repeatPassword',
             type: 'password',
-            labelTitle: 'Пароль (ещё раз)',
+            labelTitle: 'Repeat password',
             labelInputClassName: 'labelInputSignup',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
-            buttonTitle: 'Зарегистрироваться',
+            buttonTitle: 'Sign up',
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
@@ -95,7 +95,7 @@ export class Signup extends Block{
             },
         });
         this.children.link = new Button({
-            buttonTitle: 'Войти',
+            buttonTitle: 'Sign in',
             buttonClassName: 'link',
             events: {
                 click: () => {

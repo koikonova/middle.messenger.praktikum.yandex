@@ -4,7 +4,7 @@ import {router} from './Router';
 describe('Проверяем переходы у Роута', () => {
 
   describe('Метод go', () => {
-    it('Переход на новую страницу должен менять состояние сущности history', () => {
+    it('Moving to a new page must change the state of the history entity', () => {
       const before = window.history.length;
       router.go('/login');
       const after = window.history.length;
@@ -13,7 +13,7 @@ describe('Проверяем переходы у Роута', () => {
   });
 
   describe('Метод back', () => {
-    it('Переход на предыдущую страницу должен менять состояние сущности history', () => {
+    it('Going to the previous page should change the state of the history entity', () => {
       const before = window.history.length;
       router.go('/login');
       router.back();

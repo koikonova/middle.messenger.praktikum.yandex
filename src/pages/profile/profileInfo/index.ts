@@ -80,7 +80,7 @@ export class ProfileInfo extends Block{
             name: 'email',
             labelInputClassName: 'profileInput',
             type: 'email',
-            labelTitle: 'Почта',
+            labelTitle: 'Email',
             value: this.props.email,
             bottomError: 'bottomErrorProfile',
         });
@@ -89,7 +89,7 @@ export class ProfileInfo extends Block{
             name: 'login',
             labelInputClassName: 'profileInput',
             type: 'text',
-            labelTitle: 'Логин',
+            labelTitle: 'Login',
             value: this.props.login,
             bottomError: 'bottomErrorProfile',
         });
@@ -98,7 +98,7 @@ export class ProfileInfo extends Block{
             name: 'first_name',
             labelInputClassName: 'profileInput',
             type: 'text',
-            labelTitle: 'Имя',
+            labelTitle: 'First name',
             value: this.props.first_name,
             bottomError: 'bottomErrorProfile',
         });
@@ -107,7 +107,7 @@ export class ProfileInfo extends Block{
             name: 'second_name',
             labelInputClassName: 'profileInput',
             type: 'text',
-            labelTitle: 'Фамилия',
+            labelTitle: 'Second name',
             value: this.props.second_name,
             bottomError: 'bottomErrorProfile',
         });
@@ -116,7 +116,7 @@ export class ProfileInfo extends Block{
             name: 'display_name',
             labelInputClassName: 'profileInput',
             type: 'text',
-            labelTitle: 'Имя в чате',
+            labelTitle: 'Display name',
             value: this.props.display_name,
             bottomError: 'bottomErrorProfile',
         });
@@ -125,12 +125,12 @@ export class ProfileInfo extends Block{
             name: 'phone',
             labelInputClassName: 'profileInput',
             type: 'tel',
-            labelTitle: 'Телефон',
+            labelTitle: 'Phone',
             value: this.props.phone,
             bottomError: 'bottomErrorProfile',
         });
         this.children.changeDate = new Button({
-            buttonTitle: 'Изменить данные',
+            buttonTitle: 'Change date',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-date',
             events: {
@@ -138,7 +138,7 @@ export class ProfileInfo extends Block{
             }
         });
         this.children.changePassword = new Button({
-            buttonTitle: 'Изменить пароль',
+            buttonTitle: 'Change password',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'change-password',
             events: {
@@ -146,7 +146,7 @@ export class ProfileInfo extends Block{
             }
         });
         this.children.logout = new Button({
-            buttonTitle: 'Выйти',
+            buttonTitle: 'Logout',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'logout',
             events: {

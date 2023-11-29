@@ -26,7 +26,7 @@ export class ChangeAvatar extends Block {
     this.element!.classList.add('changeAvatarBoxBackground', 'displayNone');
     this.children.label = new Label({
       name: 'changeAvatar',
-      labelTitle: 'Выбрать файл',
+      labelTitle: 'Select file',
     });
     this.children.input = new Input({
       ...this.props,
@@ -35,7 +35,7 @@ export class ChangeAvatar extends Block {
       className: 'changeAvatar',
     });
     this.children.button = new Button({
-      buttonTitle: 'Загрузить',
+      buttonTitle: 'Upload',
       buttonClassName: 'button',
       buttonClassNameSpecial: 'changeAvatarButton',
       buttonType: 'button',

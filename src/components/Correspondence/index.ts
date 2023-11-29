@@ -58,7 +58,7 @@ export class Correspondence extends Block {
     return this.compile(correspondenceTpl, {
       ...this.props,
       avatar: this.props.avatar ? `<img class="chatListAvatar" src="https://ya-praktikum.tech/api/v2/resources${this.props.avatar}"/>` : '',
-      last_message: this.props.last_message ? 'Тут должна быть сообщенька' : 'Нет сообщений',
+      last_message: this.props.last_message ? 'There should be a message here.' : 'No messages.',
       title: this.props.title,
       unread_count: this.props.unread_count,
       isSelected: this.props.id === this.props.selectedChat?.id,

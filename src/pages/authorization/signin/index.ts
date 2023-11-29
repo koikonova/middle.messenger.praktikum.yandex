@@ -8,7 +8,7 @@ import {router} from "../../../utils/Router";
 
 const signinTpl =
     ` <div class="signin-box--content">
-        <h2 class="title">Вход</h2>
+        <h2 class="title">Sign in</h2>
         <form class="authorization">
             {{{login}}}
             {{{password}}}
@@ -28,7 +28,7 @@ export class Signin extends Block{
             ...this.props,
             name: 'login',
             type: 'text',
-            labelTitle: 'Логин',
+            labelTitle: 'Login',
             labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
@@ -36,12 +36,12 @@ export class Signin extends Block{
             ...this.props,
             name: 'password',
             type: 'password',
-            labelTitle: 'Пароль',
+            labelTitle: 'Password',
             labelInputClassName: 'labelInputSignin',
             bottomError: 'bottomErrorAuthorization',
         });
         this.children.formButton = new Button({
-            buttonTitle: 'Войти',
+            buttonTitle: 'Sign in',
             buttonClassName: 'button',
             buttonType: 'button',
             events: {
@@ -49,7 +49,7 @@ export class Signin extends Block{
             },
         });
         this.children.link = new Button({
-            buttonTitle: 'Нет аккаунта?',
+            buttonTitle: 'Sign up',
             buttonClassName: 'link',
             events: {
                 click: () => {

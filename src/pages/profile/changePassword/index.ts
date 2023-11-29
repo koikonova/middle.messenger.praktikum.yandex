@@ -36,7 +36,7 @@ export class ChangePassword extends Block{
             name: 'oldPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
-            labelTitle: 'Старый пароль',
+            labelTitle: 'Old password',
             bottomError: 'bottomErrorProfile',
         });
         this.children.newPassword = new LabelInput({
@@ -44,7 +44,7 @@ export class ChangePassword extends Block{
             name: 'newPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
-            labelTitle: 'Новый пароль',
+            labelTitle: 'New password',
             bottomError: 'bottomErrorProfile',
         });
         this.children.repeatPassword = new LabelInput({
@@ -52,11 +52,11 @@ export class ChangePassword extends Block{
             name: 'repeatNewPassword',
             labelInputClassName: 'profileInput',
             type: 'password',
-            labelTitle: 'Повторите новый пароль',
+            labelTitle: 'Repeat new password',
             bottomError: 'bottomErrorProfile',
         });
         this.children.formButton = new Button({
-            buttonTitle: 'Сохранить',
+            buttonTitle: 'Save',
             buttonClassName: 'button',
             buttonType: 'button',
             events: {

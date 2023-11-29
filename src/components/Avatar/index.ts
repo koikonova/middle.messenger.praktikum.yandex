@@ -3,7 +3,7 @@ import { Block } from '../../utils/Block';
 const avatarTpl = `
   <img class="avatarImg" src="{{src}}"/>
   <div class="changImgBox">
-    <h4 class="changeImg">Поменять<br>аватар</h4>
+    <h4 class="changeImg">Change<br>avatar</h4>
   </div>`;
 
 interface AvatarProps{

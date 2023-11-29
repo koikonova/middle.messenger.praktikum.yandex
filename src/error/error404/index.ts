@@ -12,7 +12,7 @@ export class Error404 extends Block {
     _init() {
         this.children.error = new Error({
             error: '404',
-            title: 'Не туда попали',
+            title: 'Wrong place to go',
         })
     }
 

@@ -12,7 +12,7 @@ export class Error500 extends Block {
     _init() {
         this.children.error = new Error({
             error: '500',
-            title: 'Мы уже фиксим',
+            title: 'We are already fixing',
         })
     }
 
