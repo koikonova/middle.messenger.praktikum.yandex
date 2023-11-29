@@ -59,7 +59,7 @@ export class Main extends Block {
               Object.keys(store.getState().chats).map((chat) => {
                   messagesController.connect(store.getState().chats[chat].id, store.getState().chats[chat].token)
                     .then(() => {
-                        console.log(`чат ${store.getState().chats[chat].id} подключен`);
+                        console.log(`chat ${store.getState().chats[chat].id} on`);
                     });
               });
           });
@@ -74,8 +74,8 @@ export class Main extends Block {
             type: 'text',
             className: 'chatName',
             labelInputClassName: 'labelInputPopUp',
-            labelTitle: 'Название чата',
-            buttonTitle: 'Добавить',
+            labelTitle: 'Chat name',
+            buttonTitle: 'Add',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
             buttonType: 'submit',
@@ -87,8 +87,8 @@ export class Main extends Block {
             type: 'text',
             className: 'addId',
             labelInputClassName: 'labelInputPopUp',
-            labelTitle: 'ID пользователя',
-            buttonTitle: 'Добавить',
+            labelTitle: 'User ID',
+            buttonTitle: 'Add',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
             buttonType: 'submit',
@@ -100,15 +100,15 @@ export class Main extends Block {
             type: 'text',
             className: 'deleteId',
             labelInputClassName: 'labelInputPopUp',
-            labelTitle: 'ID пользователя',
-            buttonTitle: 'Удалить',
+            labelTitle: 'User ID',
+            buttonTitle: 'Delete',
             buttonClassName: 'button',
             buttonClassNameSpecial: 'popUpButton',
             buttonType: 'submit',
         });
 
         this.children.profileButton = new Button({
-            buttonTitle: 'Профиль >',
+            buttonTitle: 'Profile >',
             buttonClassName: 'link',
             buttonClassNameSpecial: 'link-profile',
             events: {
@@ -121,11 +121,11 @@ export class Main extends Block {
             ...this.props,
             name: 'search',
             type: 'search',
-            placeholder: 'Поиск',
+            placeholder: 'Search',
             className: 'search',
         });
         this.children.addChatButton = new Button({
-            buttonTitle: 'Добавить чат',
+            buttonTitle: 'Add chat',
             buttonClassName: 'button',
             events: {
                 click: (e) => {
@@ -135,7 +135,7 @@ export class Main extends Block {
         });
 
         this.children.addButton = new Button({
-            buttonTitle: 'Добавить пользователя',
+            buttonTitle: 'Add user',
             buttonClassName: 'button',
             events: {
                 click: (e) => {
@@ -144,7 +144,7 @@ export class Main extends Block {
             },
         });
         this.children.deleteButton = new Button({
-            buttonTitle: 'Удалить пользователя',
+            buttonTitle: 'Delete user',
             buttonClassName: 'button',
             events: {
                 click: (e) => {
@@ -165,7 +165,7 @@ export class Main extends Block {
             ...this.props,
             type: 'message',
             name: 'message',
-            placeholder: 'Сообщение',
+            placeholder: 'Message',
         });
         this.children.sendButton = new Button({
             buttonClassName: 'send',

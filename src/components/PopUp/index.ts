@@ -7,7 +7,7 @@ import {store} from "../../utils/Store";
 const popUpTpl = `
   <div class="popUpBox">
     {{{close}}}
-    <h3 class="popUpText">Введите данные</h3>
+    <h3 class="popUpText">Enter data</h3>
     <form class="popUpForm">
       {{{chatName}}}
       {{{addId}}}

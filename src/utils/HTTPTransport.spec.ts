@@ -18,7 +18,7 @@ describe('HTTPTransport', () => {
     requests.length = 0;
   });
 
-  it('Должен запросить Get с помощью метода get', () => {
+  it('Must request Get using the get method', () => {
     const transport = new HTTPTransport('/path');
 
     transport.get('/path');
@@ -26,7 +26,7 @@ describe('HTTPTransport', () => {
     expect(requests[0].method).to.equal('Get');
   });
 
-  it('Должен запросить Post с помощью метода post', () => {
+  it('Must request Post using the post method', () => {
     const transport = new HTTPTransport('/path');
 
     transport.post('/url', { data: { test: 'test' } });
@@ -34,7 +34,7 @@ describe('HTTPTransport', () => {
     expect(requests[0].method).to.equal('Post');
   });
 
-  it('Должен запросить Delete с помощью метода delete', () => {
+  it('Must request Delete using the delete method', () => {
     const transport = new HTTPTransport('/path');
 
     transport.delete('/url', { data: { test: 'test' } });
@@ -42,7 +42,7 @@ describe('HTTPTransport', () => {
     expect(requests[0].method).to.equal('Delete');
   });
 
-  it('Должен запросить Put с помощью метода put', () => {
+  it('Must request Put using the put method', () => {
     const transport = new HTTPTransport('/path');
 
     transport.put('/url', { data: { test: 'test' } });
